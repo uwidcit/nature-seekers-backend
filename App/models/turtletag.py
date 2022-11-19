@@ -1,6 +1,4 @@
 from App.database import db
-from sqlalchemy.ext.mutable import MutableDict, MutableList
-from sqlalchemy import PickleType
 import enum
 
 class TagStatus(enum.Enum):
@@ -8,12 +6,23 @@ class TagStatus(enum.Enum):
     REPLACED = "replaced"
     ACTIVE = "active"
 
+class LocationStatus(enum.Enum):
+    LEFTFLIPPER = "L-flipper"
+    RIGHTFLIPPER = "R-flipper"
+    PIT = "Pit"
+
 class TurtleTag(db.Model):
     turtletagid = db.Column(db.Integer, primary_key=True)
-    tageventid = db.relationship(
-        "Tag", backref="tagevent", lazy=True, cascade="all, delete-orphan"
-    )
+    tageventid = db.Column(db.Integer, db.ForeignKey('TagEvent.tageventid'))
     code = db.Column(db.String, nullable=False)
     status = db.Column(db.Enum(TagStatus))
-    location = db.Column(MutableList.as_mutable(PickleType),
-        default=["L-flipper", "R-flipper", "Pit"])
+    location = db.Column(db.Enum(LocationStatus))
+
+    def toJSON(self):
+        return {
+            'turtletagid': self.turtletagid,
+            'tageventid': self.tageventid,
+            'code': self.code,
+            'status': self.status,
+            'location': self.location
+        }

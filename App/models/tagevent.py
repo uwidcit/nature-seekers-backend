@@ -1,19 +1,25 @@
 from App.database import db
 
 class TagEvent(db.Model):
-    turtleEventid = db.Column(db.Integer, primary_key=True)
-    tagid = db.relationship(
-        "Tag", backref="tagevent", lazy=True, cascade="all, delete-orphan"
-    )
-    turtleid = db.relationship(
-        "Turtle", backref="tagevent", lazy=True, cascade="all, delete-orphan"
-    )
-    userid = db.relationship(
-        "User", backref="tagevent", lazy=True, cascade="all, delete-orphan"
-    )
+    tageventid = db.Column(db.Integer, primary_key=True)
+    turtleid = db.Column(db.Integer, db.ForeignKey('Turtle.turtleid'))
+    userid = db.Column(db.Integer, db.ForeignKey('User.id'))
     comments =  db.Column(db.String, nullable=False)
     timestamp =  db.Column(db.DateTime, nullable=False)
     weight =  db.Column(db.Integer, nullable=False)
     length =  db.Column(db.Integer, nullable=False)
     lat =  db.Column(db.Float, nullable=False)
     lon =  db.Column(db.Float, nullable=False)
+
+    def toJSON(self):
+        return {
+            'tageventid': self.tageventid,
+            'turtleid': self.turtleid,
+            'userid': self.userid,
+            'comments': self.comments,
+            'timestamp': self.timestamp,
+            'weight': self.weight,
+            'length': self.length,
+            'latitude': self.lat,
+            'longitude': self.lon
+        }
