@@ -3,6 +3,7 @@ from flask_jwt import JWT
 from App.models import User, Admin, Contributor
 
 
+# Authenticate Admins / Contributors
 def authenticate(username, password):
     admin = Admin.query.filter_by(username=username).first()
     if admin and admin.check_password(password):
