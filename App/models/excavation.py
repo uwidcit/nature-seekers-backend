@@ -2,7 +2,7 @@ from App.database import db
 
 class Excavation(db.Model):
     excavationid = db.Column(db.Integer, primary_key=True)
-    userid = db.Column(db.Integer, db.ForeignKey('User.id'))
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
     timestamp = db.Column(db.DateTime, nullable=False)
     description =  db.Column(db.String, nullable=False)
     lat =  db.Column(db.Float, nullable=False)

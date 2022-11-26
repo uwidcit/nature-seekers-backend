@@ -13,7 +13,7 @@ class LocationStatus(enum.Enum):
 
 class TurtleTag(db.Model):
     turtletagid = db.Column(db.Integer, primary_key=True)
-    tageventid = db.Column(db.Integer, db.ForeignKey('TagEvent.tageventid'))
+    tageventid = db.Column(db.Integer, db.ForeignKey('tagevent.tageventid'))
     code = db.Column(db.String, nullable=False)
     status = db.Column(db.Enum(TagStatus))
     location = db.Column(db.Enum(LocationStatus))
