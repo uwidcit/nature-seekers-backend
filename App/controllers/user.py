@@ -7,14 +7,14 @@ def create_user(username, password):
     db.session.commit()
     return newuser
 
-def create_admin(username, password):
-    newuser = Admin(username=username, password=password)
-    try:
-        db.session.add(newuser)
-        db.session.commit()
-        return newuser
-    except:
-        return None
+# def create_admin(username, password):
+#     newuser = Admin(username=username, password=password)
+#     try:
+#         db.session.add(newuser)
+#         db.session.commit()
+#         return newuser
+#     except:
+#         return None
 
 def create_contributor(username, password):
     newuser = Contributor(username=username, password=password)
@@ -34,8 +34,8 @@ def get_user(id):
 def get_contributor(id):
     return Contributor.query.get(id)
 
-def is_admin(id):
-    return Admin.query.get(id) !=None
+# def is_admin(id):
+#     return Admin.query.get(id) !=None
 
 def get_all_users():
     return User.query.all()
@@ -50,15 +50,15 @@ def get_all_contributors_json():
         users.append(c.toJSON())
     return users
 
-def get_all_admins_json():
-    admin = Admin.query.all()
-    users = []
-    if not (admin):
-        return []
+# def get_all_admins_json():
+#     admin = Admin.query.all()
+#     users = []
+#     if not (admin):
+#         return []
     
-    for a in admin:
-        users.append(a.toJSON())
-    return users
+#     for a in admin:
+#         users.append(a.toJSON())
+#     return users
 
 def get_all_users_json():
     users = User.query.all()
