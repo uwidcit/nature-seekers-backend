@@ -7,22 +7,24 @@ def create_user(username, password):
     db.session.commit()
     return newuser
 
-# def create_admin(username, password):
-#     newuser = Admin(username=username, password=password)
-#     try:
-#         db.session.add(newuser)
-#         db.session.commit()
-#         return newuser
-#     except:
-#         return None
-
-def create_contributor(username, password):
-    newuser = Contributor(username=username, password=password)
+def create_admin(username, password, firstname=None, lastname=None, email=None):
+    newuser = Admin(username, password)
     try:
         db.session.add(newuser)
         db.session.commit()
         return newuser
-    except:
+    except Exception as e:
+        print(e)
+        return None
+
+def create_contributor(username, password, firstname=None, lastname=None, email=None):
+    newuser = Contributor(username, password)
+    try:
+        db.session.add(newuser)
+        db.session.commit()
+        return newuser
+    except Exception as e:
+        print(e)
         return None
 
 def get_user_by_username(username):
@@ -37,8 +39,11 @@ def get_contributor(id):
 # def is_admin(id):
 #     return Admin.query.get(id) !=None
 
-def get_all_users():
-    return User.query.all()
+def get_all_admins():
+    return Admin.query.all()
+
+def get_all_contributors():
+    return Contributor.query.all()
 
 def get_all_contributors_json():
     contributor = Contributor.query.all()
@@ -50,22 +55,25 @@ def get_all_contributors_json():
         users.append(c.toJSON())
     return users
 
-# def get_all_admins_json():
-#     admin = Admin.query.all()
-#     users = []
-#     if not (admin):
-#         return []
+def get_all_admins_json():
+    admin = Admin.query.all()
+    users = []
+    if not (admin):
+        return []
     
-#     for a in admin:
-#         users.append(a.toJSON())
-#     return users
+    for a in admin:
+        users.append(a.toJSON())
+    return users
+
+def get_all_users():
+    result = get_all_admins()
+    result += get_all_contributors()
+    return result
 
 def get_all_users_json():
-    users = User.query.all()
-    if not users:
-        return []
-    users = [user.toJSON() for user in users]
-    return users
+    result = get_all_admins_json()
+    result += get_all_contributors_json()
+    return result
     
 
 def update_user(id, username):

@@ -3,7 +3,8 @@ from flask_jwt import jwt_required, current_identity
 
 
 from App.controllers import (
-    create_user, 
+    create_contributor,
+    create_admin, 
     get_all_users,
     get_all_users_json,
 )
@@ -21,12 +22,21 @@ def get_users_action():
     users = get_all_users_json()
     return jsonify(users)
 
-@user_views.route('/api/users', methods=['POST'])
-def create_user_action():
+@user_views.route('/api/contributors', methods=['POST'])
+def create_contributor_action():
     data = request.json
-    create_user(data['username'], data['password'])
-    return jsonify({'message': f"user {data['username']} created"})
+    res = create_contributor(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
+    if res: 
+        return jsonify({'message': f"contributor user {data['username']} created"}), 201
+    return jsonify({'message': f"error creating user"}), 401
 
+@user_views.route('/api/admins', methods=['POST'])
+def create_admin_action():
+    data = request.json
+    res = create_admin(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
+    if res: 
+        return jsonify({'message': f"admin user {data['username']} created"}), 201
+    return jsonify({'message': f"error creating user"}), 401
 
 @user_views.route('/identify', methods=['GET'])
 @jwt_required()
