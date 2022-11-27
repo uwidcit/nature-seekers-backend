@@ -33,16 +33,17 @@ user_cli = AppGroup('user', help='User object commands')
 @user_cli.command("create", help="Creates a user")
 @click.argument("username", default="rob")
 @click.argument("password", default="robpass")
-def create_user_command(username, password):
-    u_type = input('Create an admin user Y/N?: ')
-    level= None
-    res=None
-    if u_type == 'Y' or u_type=='y':
+@click.argument("firstname", default="Rob")
+@click.argument("lastname", default="Smith")
+@click.argument("email", default="rob@mail.com")
+@click.option('-a', '--admin', count=True, help="makes an admin user")
+def create_user_command(username, password, firstname, lastname, email, admin):
+    if admin:
         res = create_admin(username, password)
         level = 'admin'
-    else:
+    else :
         res = create_contributor(username, password)
-        level = 'contributor'
+        level = 'contributor'        
     print(f'{username} created as {level}')
 
 # this command will be : flask user create bob bobpass

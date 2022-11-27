@@ -2,13 +2,20 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
 
 class User(db.Model):
-    __abstract__ = True
+    __tablename__ = "user"
+
     id = db.Column(db.Integer, primary_key=True)
-    username =  db.Column(db.String, nullable=False)
+    username =  db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
     firstname =  db.Column(db.String, nullable=False)
     lastname =  db.Column(db.String, nullable=False)
-    email =  db.Column(db.String, nullable=False)
+    email =  db.Column(db.String, nullable=False, unique=True)
+    type = db.Column(db.String, nullable=False)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'user',
+        "polymorphic_on": 'type'
+    }
 
     def __init__(self, username, password, firstname="bob", lastname="smith", email="bob@mail.com"):
         self.firstname = firstname
