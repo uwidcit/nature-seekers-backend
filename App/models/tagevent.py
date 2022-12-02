@@ -2,9 +2,10 @@ from App.database import db
 from datetime import datetime
 
 class TagEvent(db.Model):
+    __tablename__ = 'tagevent'
     tageventid = db.Column(db.Integer, primary_key=True)
-    turtleid = db.Column(db.Integer, db.ForeignKey('Turtle.turtleid'))
-    userid = db.Column(db.Integer, db.ForeignKey('User.id'))
+    turtleid = db.Column(db.Integer, db.ForeignKey('turtle.turtleid'))
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
     comments =  db.Column(db.String, nullable=False)
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     weight =  db.Column(db.Integer, nullable=False)

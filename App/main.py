@@ -14,20 +14,12 @@ from App.controllers import (
     setup_jwt
 )
 
-from App.views import (
-    user_views,
-    index_views
-)
+from App.views import app_views
 
 # New views must be imported and added to this list
 
-views = [
-    user_views,
-    index_views
-]
-
-def add_views(app, views):
-    for view in views:
+def add_views(app):
+    for view in app_views:
         app.register_blueprint(view)
 
 
@@ -59,7 +51,7 @@ def create_app(config={}):
     app.config['UPLOADED_PHOTOS_DEST'] = "App/uploads"
     photos = UploadSet('photos', TEXT + DOCUMENTS + IMAGES)
     configure_uploads(app, photos)
-    add_views(app, views)
+    add_views(app)
     create_db(app)
     setup_jwt(app)
     app.app_context().push()
