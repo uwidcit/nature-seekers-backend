@@ -24,3 +24,10 @@ def create_tag_event (turtleid, userid, comments, timestamp, weight, length, lat
         return new_tagevent
     
     return None
+
+# return all tagevents in json format
+def get_tagevent_json():
+    tagevents = TagEvent.query.all()
+    if not tagevents:
+        return []
+    return [tagevent.toJSON() for tagevent in tagevents]
