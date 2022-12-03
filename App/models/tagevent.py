@@ -12,7 +12,7 @@ class TagEvent(db.Model):
     length =  db.Column(db.Integer, nullable=False)
     lat =  db.Column(db.Float, nullable=False)
     lon =  db.Column(db.Float, nullable=False)
-
+    approved = db.Column(db.Boolean, nullable=False)
     def toJSON(self):
         return {
             'tageventid': self.tageventid,
@@ -23,5 +23,6 @@ class TagEvent(db.Model):
             'weight': self.weight,
             'length': self.length,
             'latitude': self.lat,
-            'longitude': self.lon
+            'longitude': self.lon,
+            'approved': self.approved
         }
