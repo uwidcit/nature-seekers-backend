@@ -1,4 +1,5 @@
 from App.database import db
+from datetime import datetime
 
 class Excavation(db.Model):
     excavationid = db.Column(db.Integer, primary_key=True)
@@ -12,7 +13,7 @@ class Excavation(db.Model):
         return {
             'excavationid': self.excavationid,
             'userid': self.userid,
-            'timestamp': self.timestamp,
+            'timestamp': self.timestamp.strftime("%Y/%m/%d, %H:%M:%S"),
             'description': self.excavationid,
             'latitude': self.lat,
             'longitude': self.lon

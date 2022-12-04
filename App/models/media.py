@@ -1,4 +1,5 @@
 from App.database import db
+from datetime import datetime
 
 class Media(db.Model):
     pictureid = db.Column(db.Integer, primary_key=True)
@@ -13,5 +14,5 @@ class Media(db.Model):
             'tageventid': self.tageventid,
             'filename': self.filename,
             'url': self.url,
-            'timestamp': self.timestamp,
+            'timestamp': self.timestamp.strftime("%Y/%m/%d, %H:%M:%S"),
         }

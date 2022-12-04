@@ -18,3 +18,6 @@ def create_tag_event (turtleid, contributorid, comments, weight, length, lat, lo
         return new_tagevent
     
     return None
+
+def get_tag_eventID (tageventid):
+    return TagEvent.query.get(tageventid)
