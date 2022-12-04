@@ -6,7 +6,7 @@ class TagEvent(db.Model):
     turtleid = db.Column(db.Integer, db.ForeignKey('turtle.turtleid'))
     userid = db.Column(db.Integer, db.ForeignKey('user.id'))
     comments =  db.Column(db.String, nullable=False)
-    timestamp =  db.Column(db.DateTime, nullable=False)
+    timestamp =  db.Column(db.DateTime, default=datetime.utcnow)
     weight =  db.Column(db.Integer, nullable=False)
     length =  db.Column(db.Integer, nullable=False)
     lat =  db.Column(db.Float, nullable=False)
