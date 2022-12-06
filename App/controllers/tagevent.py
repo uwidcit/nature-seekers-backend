@@ -11,14 +11,17 @@ from App.database import db
 def get_tag_event (tageventid):
     return TagEvent.query.get(tageventid)
 
+def get_all_tag_events():
+    return TagEvent.query.all()
+
 
 def create_tag_event (turtleid, contributorid, comments, weight, length, lat, lon):
     
     #user = get_user (userid)
     #turtle = get_turtle (turtleid)
 
-    contributor = Contributor.get_contributor(id)
-    turtle = Turtle.get_turtle(id)
+    contributor = Contributor.get_contributor(contributorid)
+    turtle = Turtle.get_turtle(turtleid)
     
     if contributor and turtle:
         new_tagevent = TagEvent (turtleid=turtleid, contributorid=contributorid, comments=comments, weight=weight, length=length, lat=lat, lon=lon)
@@ -32,7 +35,7 @@ def create_tag_event (turtleid, contributorid, comments, weight, length, lat, lo
 
 
 def get_all_tag_events_json():
-    tag_events = TagEvent.query.all()
+    tag_events = get_all_tag_events()
 
     if not tag_events:
         return []
