@@ -31,3 +31,11 @@ def update_turtleTag (id, status=None, location=None):
         return turtle_tag
 
     return None
+
+def get_all_turtletags_json():
+    turtletags = TurtleTag.query.all()
+
+    if not turtletags:
+        return []
+
+    return [turtletag.toJSON() for turtletag in turtletags]
