@@ -14,8 +14,8 @@ def get_turtle (id):
     return Turtle.query.get(id)
 
 
-def update_turtle(turtleTagid, name=None, sex=None, dob=None):
-    turtle1 = get_turtle(turtleTagid)
+def update_turtle(turtleid, name=None, sex=None, dob=None):
+    turtle1 = get_turtle(turtleid)
 
     if turtle1:
 
@@ -34,3 +34,12 @@ def update_turtle(turtleTagid, name=None, sex=None, dob=None):
         return turtle1
 
     return None
+
+
+def get_all_turtles_json():
+    turtles = Turtle.query.all()
+
+    if not turtles:
+        return []
+
+    return [turtle.toJSON() for turtle in turtles]
