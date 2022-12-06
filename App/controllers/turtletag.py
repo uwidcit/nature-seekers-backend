@@ -10,12 +10,15 @@ def create_turtle_tag (tageventid, code, status, location):
     return new_turtletag
 
 
-def get_turtle_tag (id):
-    return TurtleTag.query.get(id)
+def get_turtle_tag (turtletagid):
+    return TurtleTag.query.get(turtletagid)
+
+def get_all_turtle_tags():
+    return TurtleTag.query.all()
 
 
-def update_turtleTag (id, status=None, location=None):
-    turtle_tag = get_turtle_tag(id)
+def update_turtleTag (turtletagid, status=None, location=None):
+    turtle_tag = get_turtle_tag(turtletagid)
 
     if turtle_tag:
 
@@ -33,7 +36,7 @@ def update_turtleTag (id, status=None, location=None):
     return None
 
 def get_all_turtletags_json():
-    turtletags = TurtleTag.query.all()
+    turtletags = get_all_turtle_tags()
 
     if not turtletags:
         return []
