@@ -10,8 +10,11 @@ def create_turtle (name, sex, dob):
     return new_turtle
 
 
-def get_turtle (id):
-    return Turtle.query.get(id)
+def get_turtle (turtleid):
+    return Turtle.query.get(turtleid)
+
+def get_all_turtles():
+    return Turtle.query.all()
 
 
 def update_turtle(turtleid, name=None, sex=None, dob=None):
@@ -37,7 +40,7 @@ def update_turtle(turtleid, name=None, sex=None, dob=None):
 
 
 def get_all_turtles_json():
-    turtles = Turtle.query.all()
+    turtles = get_all_turtles()
 
     if not turtles:
         return []
