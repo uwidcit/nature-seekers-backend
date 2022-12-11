@@ -36,9 +36,7 @@ def update_turtleTag (turtletagid, status=None, location=None):
     return None
 
 def get_all_turtletags_json():
-    turtletags = get_all_turtle_tags()
-
+    turtletags = TurtleTag.query.all()
     if not turtletags:
         return []
-
     return [turtletag.toJSON() for turtletag in turtletags]

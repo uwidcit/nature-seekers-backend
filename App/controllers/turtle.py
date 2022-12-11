@@ -16,7 +16,6 @@ def get_turtle (turtleid):
 def get_all_turtles():
     return Turtle.query.all()
 
-
 def update_turtle(turtleid, name=None, sex=None, dob=None):
     turtle1 = get_turtle(turtleid)
 
@@ -37,7 +36,6 @@ def update_turtle(turtleid, name=None, sex=None, dob=None):
         return turtle1
 
     return None
-
 
 def get_all_turtles_json():
     turtles = get_all_turtles()

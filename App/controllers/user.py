@@ -1,4 +1,4 @@
-from App.models import User, Admin, Contributor
+from App.models import User, Admin, Contributor, TagEvent
 from App.database import db
 
 def create_user(username, password):
@@ -83,4 +83,9 @@ def update_user(id, username):
         db.session.add(user)
         return db.session.commit()
     return None
-    
+
+def approve(tagEventId):
+    tagevent = TagEvent.query.get(tagEventId)
+    if (tagevent):
+        tagevent.approved = True
+        return tagevent
