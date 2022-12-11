@@ -6,7 +6,7 @@ class Media(db.Model):
     tageventid = db.Column(db.Integer, db.ForeignKey('tagevent.tageventid'))
     filename = db.Column(db.String, nullable=False)
     url = db.Column(db.String, nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     def toJSON(self):
         return {

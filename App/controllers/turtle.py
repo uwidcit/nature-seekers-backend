@@ -34,3 +34,10 @@ def update_turtle(turtleid, name=None, sex=None, dob=None):
         return turtle1
 
     return None
+
+# return all turtles in json format
+def get_turtles_json():
+    turtles = Turtle.query.all()
+    if not turtles:
+        return []
+    return [turtle.toJSON() for turtle in turtles]
