@@ -14,5 +14,5 @@ class Media(db.Model):
             'tageventid': self.tageventid,
             'filename': self.filename,
             'url': self.url,
-            'timestamp': self.timestamp,
+            'timestamp': self.timestamp.strftime("%Y/%m/%d, %H:%M:%S"),
         }

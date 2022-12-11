@@ -19,7 +19,7 @@ class TagEvent(db.Model):
             'turtleid': self.turtleid,
             'userid': self.userid,
             'comments': self.comments,
-            'timestamp': self.timestamp,
+            'timestamp': self.timestamp.strftime("%Y/%m/%d, %H:%M:%S"),
             'weight': self.weight,
             'length': self.length,
             'latitude': self.lat,

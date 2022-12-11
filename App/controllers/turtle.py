@@ -14,8 +14,8 @@ def get_turtle (id):
     return Turtle.query.get(id)
 
 
-def update_turtle(turtleTagid, name=None, sex=None, dob=None):
-    turtle1 = get_turtle(turtleTagid)
+def update_turtle(turtleid, name=None, sex=None, dob=None):
+    turtle1 = get_turtle(turtleid)
 
     if turtle1:
 
