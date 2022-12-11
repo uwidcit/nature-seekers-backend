@@ -1,4 +1,4 @@
-from App.models import Turtle, User, TagEvent
+from App.models import Turtle, User, TagEvent, TurtleTag, Media
 from App.database import db
 
 
@@ -24,3 +24,29 @@ def create_tag_event (turtleid, userid, comments, timestamp, weight, length, lat
         return new_tagevent
     
     return None
+
+# return all tagevents in json format
+def get_tagevent_json():
+    tagevents = TagEvent.query.all()
+    if not tagevents:
+        return []
+    return [tagevent.toJSON() for tagevent in tagevents]
+
+
+''' do we need 
+the tagevent
+foreign keys for the 
+new object created 
+in TUrtleTag and Media? '''
+def addTag(code, location):
+    if (not code): # code doesn't exist already
+        new_turtletag = TurtleTag(code=code, location=location)
+        db.session.add(new_turtletag)
+        db.session.commit()
+        return new_turtletag 
+
+def addMedia(filename, url):
+    new_media = Media(filename=filename, url=url)
+    db.session.add(new_media)
+    db.session.commit()
+    return new_media

@@ -5,3 +5,4 @@ from .media import *
 from .turtle import *
 from .turtletag import *
 from .excavation import *
+from .admin import *
