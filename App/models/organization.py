@@ -1,7 +1,9 @@
 from App.models import Contributor
 from App.database import db
 
-class Organization(Contributor):
+class Organization(db.Model):
+    __tablename__ = "Organization"
+
     orgid = db.Column(db.Integer, primary_key=True)
     description =  db.Column(db.String, nullable=False)
     email =  db.Column(db.String, nullable=False)
