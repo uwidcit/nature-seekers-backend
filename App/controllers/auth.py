@@ -1,5 +1,5 @@
 import flask_login
-from flask_jwt import JWT
+from flask_jwt_extended import JWTManager
 from App.models import User, Admin, Contributor
 
 
@@ -30,4 +30,4 @@ def logout_user():
     flask_login.logout_user()
 
 def setup_jwt(app):
-    return JWT(app, authenticate, identity)
+    return JWTManager(app)

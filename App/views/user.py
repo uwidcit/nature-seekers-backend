@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
-from flask_jwt import jwt_required, current_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 from App.controllers import (
@@ -41,6 +41,7 @@ def create_admin_action():
 @user_views.route('/identify', methods=['GET'])
 @jwt_required()
 def identify_user_action():
+    current_identity = get_jwt_identity()
     return jsonify({'message': f"username: {current_identity.username}, id : {current_identity.id}"})
 
 @user_views.route('/static/users', methods=['GET'])
