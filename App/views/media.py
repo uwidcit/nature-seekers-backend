@@ -4,7 +4,7 @@ from flask_jwt import jwt_required, current_identity
 from App.controllers import (
     create_media,
     get_media,
-    get_all_media_json,
+    # get_all_media_json,
     get_tag_eventID,
 )
 
@@ -12,7 +12,7 @@ media_views = Blueprint('media_views', __name__, template_folder='../templates')
 
 @media_views.route('/api/media', methods=['GET'])
 def get_media_action():
-    all_media = get_all_media_json()
+    # all_media = get_all_media_json()
     return jsonify(media)
 
 @media_views.route('/api/media', methods=['POST'])
