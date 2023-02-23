@@ -1,5 +1,5 @@
 import flask_login
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import JWTManager, create_access_token
 from App.models import User, Admin, Contributor
 
 
@@ -31,3 +31,19 @@ def logout_user():
 
 def setup_jwt(app):
     return JWTManager(app)
+
+
+## login Mr. Mendez lab
+def admin_login(username, password):
+  user = Admin.query.filter_by(username=username).first()
+  if user and user.check_password(password):
+    return create_access_token(identity=username)
+  return None
+
+
+def contributor_login(username, password):
+  user = Contributor.query.filter_by(username=username).first()
+  if user and user.check_password(password):
+    return create_access_token(identity=username)
+  return None
+  

@@ -7,8 +7,8 @@ def create_user(username, password):
     db.session.commit()
     return newuser
 
-def create_admin(username, password, firstname=None, lastname=None, email=None):
-    newuser = Admin(username, password)
+def create_admin(username, password, firstname, lastname, email):
+    newuser = Admin(username, password, firstname, lastname, email)
     try:
         db.session.add(newuser)
         db.session.commit()
@@ -17,8 +17,8 @@ def create_admin(username, password, firstname=None, lastname=None, email=None):
         print(e)
         return None
 
-def create_contributor(username, password, firstname=None, lastname=None, email=None):
-    newuser = Contributor(username, password)
+def create_contributor(username, password, firstname, lastname, email):
+    newuser = Contributor(username, password, firstname, lastname, email)
     try:
         db.session.add(newuser)
         db.session.commit()
