@@ -16,7 +16,7 @@ def create_turtle_tag_action():
     turtle_tag = create_turtle_tag(tageventid=data["tageventid"], code=data["code"], status=data["status"], location=data["status"])
 
     if turtle_tag:
-        return jsonify(turtle.toJSON()), 201
+        return jsonify(turtle_tag.toJSON()), 201
 
     return jsonify({"error": "turtle tag not created"}), 400
 

@@ -10,8 +10,8 @@ from App.controllers import (
     create_admin, 
     get_all_users,
     get_all_users_json,
-    admin_login,
-    contributor_login
+    login,
+    #contributor_login
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
@@ -60,10 +60,10 @@ def static_user_page():
 
 
 #Login Users
-@user_views.route('/login/admin', methods=['POST'])
-def admin_login_view():
+@user_views.route('/login', methods=['POST'])
+def login_view():
   data = request.json
-  token = admin_login(data['username'], data['password'])
+  token = login(data['username'], data['password'])
   if not token:
     return jsonify(message='bad username or password given'), 401
   return jsonify(access_token=token)
