@@ -13,7 +13,7 @@ tag_event_views = Blueprint('tag_event_views', __name__, template_folder='../tem
 #@jwt_required()
 def create_turtle_action():
     data = request.json
-    tag_event = create_tag_event(turtleid=data["turtleid"], contributorid=data["contributorid"], comments=data["comments"], weight=data["weight"], length=data["length"], lat=data["lat"], lon=data["lon"])
+    tag_event = create_tag_event(turtleid=data["turtleid"], userid=data["userid"], comments=data["comments"], weight=data["weight"], length=data["length"], lat=data["lat"], lon=data["lon"], approved=data["approved"])
 
     if tag_event:
         return jsonify(tag_event.toJSON()), 201
@@ -27,7 +27,7 @@ def get_tag_event_action(tageventid):
     tag_event = get_tag_event(tageventid)
 
     if tag_event:
-        return jsonify(tag_event.toJSON), 200
+        return jsonify(tag_event.toJSON()), 200
 
     return jsonify({"error": "tag event not found"}), 404
 
