@@ -13,7 +13,7 @@ turtle_tag_views = Blueprint('turtle_tag_views', __name__, template_folder='../t
 #@jwt_required()
 def create_turtle_tag_action():
     data = request.json
-    turtle_tag = create_turtle_tag(tageventid=data["tageventid"], code=data["code"], status=data["status"], location=data["status"])
+    turtle_tag = create_turtle_tag(tageventid=data["tageventid"], code=data["code"], status=data["status"], location=data["location"])
 
     if turtle_tag:
         return jsonify(turtle_tag.toJSON()), 201
