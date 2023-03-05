@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
 from flask_jwt_extended import jwt_required
 
+from datetime import date, datetime
+
 from App.controllers import (
     create_turtle,
     get_turtle,
@@ -13,7 +15,13 @@ turtle_views = Blueprint('turtle_views', __name__, template_folder='../templates
 #@jwt_required()
 def create_turtle_action():
     data = request.json
-    turtle = create_turtle(name=data["name"], sex=data["sex"], dob=data["dob"])
+
+    #get data as python date object
+    date_components = data["dob"].split('-')
+    year, month, day = [int(item) for item in date_components]
+    dob = date(year, month, day)
+
+    turtle = create_turtle(name=data["name"], sex=data["sex"], dob=dob)
 
     if turtle:
         return jsonify(turtle.toJSON()), 201
@@ -27,7 +35,7 @@ def get_turtle_action(turtleid):
     turtle = get_turtle(turtleid)
 
     if turtle:
-        return jsonify(turtle.toJSON), 200
+        return jsonify(turtle.toJSON()), 200
 
     return jsonify({"error": "turtle not found"}), 404
 

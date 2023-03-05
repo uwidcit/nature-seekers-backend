@@ -12,7 +12,7 @@ class Contributor(User):
         'polymorphic_identity': 'contributor'
     }
 
-    def __init__(self, username, password, firstname="bob", lastname="bob", email="bob@mail.com"):
+    def __init__(self, username, password, firstname, lastname, email):
         super().__init__(username, password, firstname, lastname, email)
     
     def __repr__(self):

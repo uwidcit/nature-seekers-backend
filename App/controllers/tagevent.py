@@ -1,5 +1,5 @@
 
-from App.models import Turtle, TagEvent, Contributor, TurtleTag, Media
+from App.models import Turtle, TagEvent, Contributor, Admin, TurtleTag, Media
 from App.database import db
 
 
@@ -15,13 +15,19 @@ def get_tag_event (tageventid):
 def get_all_tag_events():
     return TagEvent.query.all()
 
-def create_tag_event (turtleid, contributorid, comments, weight, length, lat, lon):
+def create_tag_event (turtleid, userid, comments, weight, length, lat, lon, approved):
     
-    contributor = Contributor.query.get(contributorid)
+    contributor = Contributor.query.get(userid)
+    if contributor==None:
+        contributor = Admin.query.get(userid)
     turtle = Turtle.query.get(turtleid)
     
+    if(approved == "True"):
+        apppr=True
+    else : appr = False
+
     if contributor and turtle:
-        new_tagevent = TagEvent (turtleid=turtleid, contributorid=contributorid, comments=comments, weight=weight, length=length, lat=lat, lon=lon)
+        new_tagevent = TagEvent (turtleid=turtleid, userid=userid, comments=comments, weight=weight, length=length, lat=lat, lon=lon, approved = appr)
         
         db.session.add(new_tagevent)
         db.session.commit()

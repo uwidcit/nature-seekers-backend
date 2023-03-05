@@ -13,10 +13,10 @@ turtle_tag_views = Blueprint('turtle_tag_views', __name__, template_folder='../t
 #@jwt_required()
 def create_turtle_tag_action():
     data = request.json
-    turtle_tag = create_turtle_tag(tageventid=data["tageventid"], code=data["code"], status=data["status"], location=data["status"])
+    turtle_tag = create_turtle_tag(tageventid=data["tageventid"], code=data["code"], status=data["status"], location=data["location"])
 
     if turtle_tag:
-        return jsonify(turtle.toJSON()), 201
+        return jsonify(turtle_tag.toJSON()), 201
 
     return jsonify({"error": "turtle tag not created"}), 400
 
@@ -27,7 +27,7 @@ def get_turtle_tag_action(turtletagid):
     turtle_tag = get_turtle_tag(turtletagid)
 
     if turtle_tag:
-        return jsonify(turtle.toJSON), 200
+        return jsonify(turtle_tag.toJSON()), 200
         
     return jsonify({"error": "turtle tag not found"}), 404
 
@@ -38,4 +38,12 @@ def get_all_turtle_tag_action():
     turtle_tags = get_all_turtletags_json()
 
     return jsonify(turtle_tags)
+
+@turtle_tag_views.route('/api/turtletags', methods=['DELETE'])
+def delete_turtle_tag_action():
+    data = request.json
+    if get_turtle_tag(data['turtletagid']):
+        delete_turtle_tag(data['turtletagid'])
+        return jsonify({"message":"turtle_tag Deleted"}) 
+    return jsonify({"message":"turtle_tag Not Found"})     
 

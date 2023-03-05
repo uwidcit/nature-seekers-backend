@@ -14,7 +14,7 @@ def get_media(pictureid):
     return Media.query.get(pictureid)
 
 # return all media in json format
-def get_media_json():
+def get_all_media_json():
     medias = Media.query.all()
     if not medias:
         return []
