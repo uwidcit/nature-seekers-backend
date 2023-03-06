@@ -3,8 +3,8 @@ from App.database import db
 
 import json
 
-def create_stranding(userid, description, lat, lon):
-    newstranding = Stranding(userid=userid, description=description, lat=lat, lon=lon)
+def create_stranding(userid, turtleId, comments):
+    newstranding = Stranding(userid=userid, turtleId=turtleId, comments=comments)
     db.session.add(newstranding)
     db.session.commit()
     return newstranding

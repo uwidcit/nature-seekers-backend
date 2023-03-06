@@ -3,8 +3,8 @@ from App.database import db
 
 import json
 
-def create_report(userid, description, lat, lon):
-    newreport = Report(userid=userid, description=description, lat=lat, lon=lon)
+def create_report(userid):
+    newreport = Report(userid=userid)
     db.session.add(newreport)
     db.session.commit()
     return newreport

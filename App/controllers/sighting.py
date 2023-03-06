@@ -3,8 +3,8 @@ from App.database import db
 
 import json
 
-def create_sighting(userid, description, lat, lon):
-    newsighting = Sighting(userid=userid, description=description, lat=lat, lon=lon)
+def create_sighting(userid, turtleId, lat, lon, timestamp):
+    newsighting = Sighting(userid=userid, turtleId=turtleId, lat=lat, lon=lon, comments=comments, timestamp=timestamp)
     db.session.add(newsighting)
     db.session.commit()
     return newsighting

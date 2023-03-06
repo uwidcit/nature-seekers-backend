@@ -3,8 +3,8 @@ from App.database import db
 
 import json
 
-def create_capture(userid, description, lat, lon):
-    newcapture = Capture(userid=userid, description=description, lat=lat, lon=lon)
+def create_capture(userid, turtleId, timestamp, comments):
+    newcapture = Capture(userid=userid, turtleId=turtleId, timestamp=timestamp, comments=comments)
     db.session.add(newcapture)
     db.session.commit()
     return newcapture
@@ -18,3 +18,12 @@ def get_all_capture_json():
     if not captures:
         return []
     return [capture.toJSON() for capture in captures]
+
+
+    return {
+            'captureId': self.captureId,
+            'turtleId': self.turtleId,
+            'userId': self.userId,
+            'timestamp': self.timestamp.strftime("%Y/%m/%d, %H:%M:%S"),
+            'comments': self.comments
+        }
