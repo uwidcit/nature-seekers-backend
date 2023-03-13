@@ -6,6 +6,12 @@ from .tagevent import tag_event_views
 from .turtletag import turtle_tag_views
 from .excavation import excavation_views
 
+from .captures import captrues_views
+from .orgEvent import orgEvent_views
+from .report import report
+from .sighting import sighting_views
+from .stranding import stranding_views
+
 # new views should be add here
 
 app_views = [
