@@ -22,4 +22,3 @@ def create_capture_action():
     if res: 
         return jsonify({'message': f"capture {data['description']} created"}), 201
     return jsonify({'message': f"error creating capture"}), 401
-

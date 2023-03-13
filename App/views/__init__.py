@@ -15,5 +15,10 @@ app_views = [
     media_views,
     tag_event_views,
     turtle_tag_views,
-    excavation_views
+    excavation_views,
+    captrues_views,
+    orgEvent_views,
+    report_views,
+    sighting_views,
+    stranding_views
 ]
