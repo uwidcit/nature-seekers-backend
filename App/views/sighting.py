@@ -18,7 +18,7 @@ def get_sighting_action():
 @sighting_views.route('/api/sighting', methods=['POST'])
 def create_sighting_action():
     data = request.json
-    res = create_sighting(data['turtleId'], data['userId'], data['timestamp'], data['comments'])
+    res = create_sighting(data['turtleId'], data['userId'], data['lat'], data['long'], data['timestamp'])
     if res: 
         return jsonify({'message': f"sighting {data['description']} created"}), 201
     return jsonify({'message': f"error creating sighting"}), 401

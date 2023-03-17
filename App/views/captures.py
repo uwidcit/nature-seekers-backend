@@ -7,15 +7,15 @@ from App.controllers import (
     get_all_capture_json,
 )
 
-capture_views = Blueprint('capture_views', __name__, template_folder='../templates')
+captures_views = Blueprint('captures_views', __name__, template_folder='../templates')
 
-@capture_views.route('/api/capture', methods=['GET'])
+@captures_views.route('/api/capture', methods=['GET'])
 def get_capture_action():
      all_capture = get_all_capture_json()
      return jsonify(all_capture)
     #pass
 
-@capture_views.route('/api/capture', methods=['POST'])
+@captures_views.route('/api/capture', methods=['POST'])
 def create_capture_action():
     data = request.json
     res = create_capture(data['turtleId'], data['userId'], data['timestamp'], data['comments'])

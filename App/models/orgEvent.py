@@ -1,5 +1,5 @@
 from App.database import db
-
+from datetime import datetime
 class OrgEvent(db.Model):
     orgEventId = db.Column(db.Integer, primary_key=True)
     organizationId = db.Column(db.Integer, db.ForeignKey('organization.orgid'))

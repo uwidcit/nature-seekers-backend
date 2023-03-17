@@ -17,4 +17,4 @@ class Excavation(db.Model):
             'description': self.excavationid,
             'latitude': self.lat,
             'longitude': self.lon
-        }
+        } 

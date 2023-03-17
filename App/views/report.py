@@ -18,7 +18,7 @@ def get_report_action():
 @report_views.route('/api/report', methods=['POST'])
 def create_report_action():
     data = request.json
-    res = create_report(data['turtleId'], data['userId'], data['timestamp'], data['comments'])
+    res = create_report(data['userId'])
     if res: 
         return jsonify({'message': f"report {data['description']} created"}), 201
     return jsonify({'message': f"error creating report"}), 401

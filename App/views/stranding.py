@@ -18,7 +18,7 @@ def get_stranding_action():
 @stranding_views.route('/api/stranding', methods=['POST'])
 def create_stranding_action():
     data = request.json
-    res = create_stranding(data['turtleId'], data['userId'], data['timestamp'], data['comments'])
+    res = create_stranding(data['turtleId'], data['userId'], data['comments'])
     if res: 
         return jsonify({'message': f"stranding {data['description']} created"}), 201
     return jsonify({'message': f"error creating stranding"}), 401

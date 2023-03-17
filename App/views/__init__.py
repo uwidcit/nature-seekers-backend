@@ -6,9 +6,9 @@ from .tagevent import tag_event_views
 from .turtletag import turtle_tag_views
 from .excavation import excavation_views
 
-from .captures import captrues_views
+from .captures import captures_views
 from .orgEvent import orgEvent_views
-from .report import report
+from .report import report_views
 from .sighting import sighting_views
 from .stranding import stranding_views
 
@@ -22,7 +22,7 @@ app_views = [
     tag_event_views,
     turtle_tag_views,
     excavation_views,
-    captrues_views,
+    captures_views,
     orgEvent_views,
     report_views,
     sighting_views,

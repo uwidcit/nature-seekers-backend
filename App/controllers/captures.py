@@ -1,10 +1,10 @@
-from App.models import Capture
+from App.models import Captures
 from App.database import db
 
 import json
 
 def create_capture(userid, turtleId, timestamp, comments):
-    newcapture = Capture(userid=userid, turtleId=turtleId, timestamp=timestamp, comments=comments)
+    newcapture = Captures(userid=userid, turtleId=turtleId, timestamp=timestamp, comments=comments)
     db.session.add(newcapture)
     db.session.commit()
     return newcapture

@@ -2,7 +2,7 @@ from App.models import Contributor
 from App.database import db
 
 class Organization(db.Model):
-    __tablename__ = "Organization"
+    __tablename__ = "organization"
 
     orgid = db.Column(db.Integer, primary_key=True)
     description =  db.Column(db.String, nullable=False)
