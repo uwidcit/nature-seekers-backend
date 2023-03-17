@@ -16,7 +16,7 @@ def get_turtle (turtleid):
 def get_all_turtles():
     return Turtle.query.all()
 
-def update_turtle(turtleid, name=None, sex=None, dob=None):
+def update_turtle(turtleid, name, sex, dob):
     turtle1 = get_turtle(turtleid)
 
     if turtle1:
@@ -44,3 +44,11 @@ def get_all_turtles_json():
         return []
 
     return [turtle.toJSON() for turtle in turtles]
+
+
+def delete_turtle(id):
+    turtle = get_turtle(id)
+    if turtle:
+        db.session.delete(turtle)
+        return db.session.commit()
+    return None

@@ -7,6 +7,7 @@ from App.controllers import (
     create_turtle,
     get_turtle,
     get_all_turtles_json,
+    delete_turtle
 )
 
 turtle_views = Blueprint('turtle_views', __name__, template_folder='../templates')
@@ -47,4 +48,17 @@ def get_all_turtle_action():
     turtles = get_all_turtles_json()
 
     return jsonify(turtles)
+
+
+@turtle_views('/api/turtles/delete/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_turtle_action(id):
+  
+    turtle = get_turtle(id)
+
+    if not turtle:
+        return jsonify(error="Bad ID or unauthorized"), 401
+
+    delete_turtle(id)
+    return jsonify(message="turtle deleted!"), 200
 
