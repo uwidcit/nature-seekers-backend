@@ -50,15 +50,15 @@ def get_all_turtle_action():
     return jsonify(turtles)
 
 
-@turtle_views('/api/turtles/delete/<int:id>', methods=['DELETE'])
-@jwt_required()
-def delete_turtle_action(id):
+@turtle_views.route('/api/turtles/delete/<int:turtleid>', methods=['DELETE'])
+#@jwt_required()
+def delete_turtle_action(turtleid):
   
-    turtle = get_turtle(id)
+    turtle = get_turtle(turtleid)
 
     if not turtle:
         return jsonify(error="Bad ID or unauthorized"), 401
 
-    delete_turtle(id)
+    delete_turtle(turtleid)
     return jsonify(message="turtle deleted!"), 200
 
