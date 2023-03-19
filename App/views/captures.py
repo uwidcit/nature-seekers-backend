@@ -11,12 +11,14 @@ from App.controllers import (
 
 captures_views = Blueprint('captures_views', __name__, template_folder='../templates')
 
+#get all Captures
 @captures_views.route('/api/capture', methods=['GET'])
 def get_capture_action():
      all_capture = get_all_capture_json()
      return jsonify(all_capture)
     #pass
 
+#create capture
 @captures_views.route('/api/capture', methods=['POST'])
 @jwt_required()
 def create_capture_action():
@@ -38,4 +40,10 @@ def create_capture_action():
     if res: 
         return jsonify({'message': f"capture {data['comments']} created"}), 201
     return jsonify({'message': f"error creating capture"}), 401
+
+#get capture by capture id
+@captures_views.route('/api/capture/<int:captureId>', methods=['GET'])
+def get_capture_by_id_action(captureId):
+     capture = get_capture(captureId)
+     return jsonify(capture.toJSON()), 200
 
