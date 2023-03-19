@@ -57,7 +57,7 @@ def delete_turtle_action(turtleid):
     turtle = get_turtle(turtleid)
 
     if not turtle:
-        return jsonify(error="Bad ID or unauthorized"), 401
+        return jsonify(error="this is a custom error Bad ID or unauthorized"), 401
 
     delete_turtle(turtleid)
     return jsonify(message="turtle deleted!"), 200
