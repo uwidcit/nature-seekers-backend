@@ -7,6 +7,7 @@ from App.controllers import (
     create_capture,
     get_capture,
     get_all_capture_json,
+    delete_capture
 )
 
 captures_views = Blueprint('captures_views', __name__, template_folder='../templates')
@@ -47,3 +48,14 @@ def get_capture_by_id_action(captureId):
      capture = get_capture(captureId)
      return jsonify(capture.toJSON()), 200
 
+@captures_views.route('/api/capture/delete/<int:captureId>', methods=['DELETE'])
+@jwt_required()
+def delete_capture_action(captureId):
+  
+    capture = get_capture(captureId)
+
+    if not capture:
+        return jsonify(error="this is a custom error Bad ID or unauthorized"), 401
+
+    delete_capture(captureId)
+    return jsonify(message="capture deleted!"), 200

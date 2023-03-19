@@ -19,6 +19,12 @@ def get_all_capture_json():
         return []
     return [capture.toJSON() for capture in captures]
 
+def delete_capture(id):
+    capture = get_capture(id)
+    if capture:
+        db.session.delete(capture)
+        return db.session.commit()
+    return None
 
     return {
             'captureId': self.captureId,
