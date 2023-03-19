@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
+from App.models import User, Admin, Contributor, TagEvent
 
 from App.controllers import (
     create_capture,
@@ -16,10 +18,24 @@ def get_capture_action():
     #pass
 
 @captures_views.route('/api/capture', methods=['POST'])
+@jwt_required()
 def create_capture_action():
     data = request.json
-    res = create_capture(data['turtleId'], data['userId'], data['timestamp'], data['comments'])
+
+    username = get_jwt_identity() # convert sent token to user name
+    
+    #retrieve regular user with given username
+    contributor = Contributor.query.filter_by(username=username).first()
+    if contributor:
+        userId = contributor.id
+    
+    #retrieve admin user with given username
+    admin = Admin.query.filter_by(username=username).first()
+    if admin:
+        userId = admin.id
+
+    res = create_capture(userId, data['turtleId'], data['comments'], )
     if res: 
-        return jsonify({'message': f"capture {data['description']} created"}), 201
+        return jsonify({'message': f"capture {data['comments']} created"}), 201
     return jsonify({'message': f"error creating capture"}), 401
 

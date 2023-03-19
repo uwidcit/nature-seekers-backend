@@ -3,18 +3,18 @@ from App.database import db
 
 import json
 
-def create_capture(userid, turtleId, timestamp, comments):
-    newcapture = Captures(userid=userid, turtleId=turtleId, timestamp=timestamp, comments=comments)
+def create_capture(userId, turtleId, comments):
+    newcapture = Captures(userId=userId, turtleId=turtleId, comments=comments)
     db.session.add(newcapture)
     db.session.commit()
     return newcapture
 
 
 def get_capture(captureid):
-    return Capture.query.get(captureid)
+    return Captures.query.get(captureid)
 
 def get_all_capture_json():
-    captures = Capture.query.all()
+    captures = Captures.query.all()
     if not captures:
         return []
     return [capture.toJSON() for capture in captures]
