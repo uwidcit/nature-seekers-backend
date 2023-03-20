@@ -3,8 +3,8 @@ from App.database import db
 
 import json
 
-def create_stranding(userid, turtleId, comments):
-    newstranding = Stranding(userid=userid, turtleId=turtleId, comments=comments)
+def create_stranding(userId, turtleId, comments):
+    newstranding = Stranding(userId=userId, turtleId=turtleId, comments=comments)
     db.session.add(newstranding)
     db.session.commit()
     return newstranding
@@ -18,3 +18,10 @@ def get_all_stranding_json():
     if not strandings:
         return []
     return [stranding.toJSON() for stranding in strandings]
+
+def delete_stranding(id):
+    stranding = get_stranding(id)
+    if stranding:
+        db.session.delete(stranding)
+        return db.session.commit()
+    return None

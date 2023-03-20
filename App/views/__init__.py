@@ -11,6 +11,7 @@ from .orgEvent import orgEvent_views
 from .report import report_views
 from .sighting import sighting_views
 from .stranding import stranding_views
+#from .organization import organization_views
 
 # new views should be add here
 

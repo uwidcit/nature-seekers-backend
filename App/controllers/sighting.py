@@ -3,8 +3,8 @@ from App.database import db
 
 import json
 
-def create_sighting(userid, turtleId, lat, lon, timestamp):
-    newsighting = Sighting(userid=userid, turtleId=turtleId, lat=lat, lon=lon, comments=comments, timestamp=timestamp)
+def create_sighting(userId, turtleId, lat, lon, comments):
+    newsighting = Sighting(userId=userId, turtleId=turtleId, lat=lat, lon=lon, comments=comments)
     db.session.add(newsighting)
     db.session.commit()
     return newsighting
@@ -18,3 +18,10 @@ def get_all_sighting_json():
     if not sightings:
         return []
     return [sighting.toJSON() for sighting in sightings]
+
+def delete_sighting(id):
+    sighting = get_sighting(id)
+    if sighting:
+        db.session.delete(sighting)
+        return db.session.commit()
+    return None
