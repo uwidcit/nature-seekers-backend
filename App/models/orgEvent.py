@@ -5,7 +5,7 @@ class OrgEvent(db.Model):
     organizationId = db.Column(db.Integer, db.ForeignKey('organization.orgid'))
     userId  = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String, nullable=False)
-    time = db.Column(db.Date, nullable=False)
+    time = db.Column(db.String, nullable=False)
     location = db.Column(db.String, nullable=False)
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
@@ -14,11 +14,10 @@ class OrgEvent(db.Model):
         return {
             'orgEventId': self.orgEventId,
             'organizationId': self.organizationId,
-            'sex': self.sex,
             'userId': self.userId,
             'name': self.name,
             'time': self.time,
-            'location': self.dob,
+            'location': self.location,
             'timestamp': self.timestamp.strftime("%Y/%m/%d, %H:%M:%S"),
 
         }
