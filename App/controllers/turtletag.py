@@ -42,7 +42,7 @@ def get_all_turtletags_json():
     return [turtletag.toJSON() for turtletag in turtletags]
 
 
-def delete_turtletag(id):
+def delete_turtle_tag(id):
     tag = get_turtle_tag(id)
     if tag:
         db.session.delete(tag)

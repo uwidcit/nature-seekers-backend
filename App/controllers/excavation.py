@@ -18,3 +18,10 @@ def get_all_excavation_json():
     if not excavations:
         return []
     return [excavation.toJSON() for excavation in excavations]
+
+def delete_excavation(id):
+    excavation = get_excavation(id)
+    if excavation:
+        db.session.delete(excavation)
+        return db.session.commit()
+    return None

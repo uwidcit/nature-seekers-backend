@@ -19,3 +19,10 @@ def get_all_media_json():
     if not medias:
         return []
     return [media.toJSON() for media in medias]
+
+def delete_media(id):
+    media = get_media(id)
+    if media:
+        db.session.delete(media)
+        return db.session.commit()
+    return None

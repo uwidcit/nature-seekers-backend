@@ -23,6 +23,6 @@ class TurtleTag(db.Model):
             'turtletagid': self.turtletagid,
             'tageventid': self.tageventid,
             'code': self.code,
-            'status': self.status.type,
-            'location': self.location.type
+            'status': self.status.name,
+            'location': self.location.name
         }

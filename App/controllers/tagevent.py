@@ -56,6 +56,12 @@ def get_tagevent_json():
         return []
     return [tagevent.toJSON() for tagevent in tagevents]
 
+def delete_tag_event(id):
+    tag_event = get_tag_event(id)
+    if tag_event:
+        db.session.delete(tag_event)
+        return db.session.commit()
+    return None
 
 ''' do we need 
 the tagevent
@@ -70,8 +76,8 @@ def addTag(code, location):
         return new_turtletag 
 
 def addMedia(filename, url):
-    new_media = Media(filename=filename, url=url)
-    db.session.add(new_media)
+    new_tag_event = Media(filename=filename, url=url)
+    db.session.add(new_tag_event)
     db.session.commit()
-    return new_media
+    return new_tag_event
 '''

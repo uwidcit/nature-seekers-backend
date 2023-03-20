@@ -5,6 +5,7 @@ from App.controllers import (
     create_turtle_tag,
     get_turtle_tag,
     get_all_turtletags_json,
+    delete_turtle_tag
 )
 
 turtle_tag_views = Blueprint('turtle_tag_views', __name__, template_folder='../templates')
@@ -39,11 +40,17 @@ def get_all_turtle_tag_action():
 
     return jsonify(turtle_tags)
 
-@turtle_tag_views.route('/api/turtletags', methods=['DELETE'])
-def delete_turtle_tag_action():
-    data = request.json
-    if get_turtle_tag(data['turtletagid']):
-        delete_turtle_tag(data['turtletagid'])
-        return jsonify({"message":"turtle_tag Deleted"}) 
-    return jsonify({"message":"turtle_tag Not Found"})     
+
+#delete turtletag
+@turtle_tag_views.route('/api/turtletag/delete/<int:turtletagId>', methods=['DELETE'])
+@jwt_required()
+def delete_capture_action(turtletagId):
+  
+    turtletag = get_turtle_tag(turtletagId)
+
+    if not turtletag:
+        return jsonify(error="this is a custom error Bad ID or unauthorized"), 401
+
+    delete_turtle_tag(turtletagId)
+    return jsonify(message="turtletag deleted!"), 200   
 
