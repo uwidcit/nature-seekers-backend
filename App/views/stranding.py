@@ -7,7 +7,8 @@ from App.controllers import (
     create_stranding,
     get_stranding,
     get_all_stranding_json,
-    delete_stranding
+    delete_stranding,
+    get_stranding_by_turtleId
 )
 
 stranding_views = Blueprint('stranding_views', __name__, template_folder='../templates')
@@ -58,3 +59,9 @@ def delete_capture_action(strandingId):
 
     delete_stranding(strandingId)
     return jsonify(message="stranding deleted!"), 200
+
+#Get strandings by turtle Id
+@stranding_views.route('/api/stranding/turtle/<int:turtleId>', methods=['GET'])
+def get_stranding_by_turtle_id_action(turtleId):
+     strandings = get_stranding_by_turtleId(turtleId)
+     return jsonify(strandings), 200

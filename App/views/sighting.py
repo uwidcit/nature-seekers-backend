@@ -7,7 +7,8 @@ from App.controllers import (
     create_sighting,
     get_sighting,
     get_all_sighting_json,
-    delete_sighting
+    delete_sighting,
+    get_sighting_by_turtleId
 )
 
 sighting_views = Blueprint('sighting_views', __name__, template_folder='../templates')
@@ -58,3 +59,9 @@ def delete_capture_action(sightingId):
 
     delete_sighting(sightingId)
     return jsonify(message="sighting deleted!"), 200
+
+#Get sightings by turtle Id
+@sighting_views.route('/api/sighting/turtle/<int:turtleId>', methods=['GET'])
+def get_sighting_by_turtle_id_action(turtleId):
+     sightings = get_sighting_by_turtleId(turtleId)
+     return jsonify(sightings), 200

@@ -9,7 +9,12 @@ def create_sighting(userId, turtleId, lat, lon, comments):
     db.session.commit()
     return newsighting
 
-
+def get_sighting_by_turtleId(turtleId):
+    sightings = Sighting.query.filter_by(turtleId=turtleId).all()
+    if not sightings:
+        return[]
+    return [sighting.toJSON() for sighting in sightings]
+    
 def get_sighting(sightingid):
     return Sighting.query.get(sightingid)
 

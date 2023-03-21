@@ -25,3 +25,10 @@ def delete_stranding(id):
         db.session.delete(stranding)
         return db.session.commit()
     return None
+
+
+def get_stranding_by_turtleId(turtleId):
+    strandings = Stranding.query.filter_by(turtleId=turtleId).all()
+    if not strandings:
+        return[]
+    return [stranding.toJSON() for stranding in strandings]
