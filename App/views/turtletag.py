@@ -5,13 +5,14 @@ from App.controllers import (
     create_turtle_tag,
     get_turtle_tag,
     get_all_turtletags_json,
-    delete_turtle_tag
+    delete_turtle_tag,
+    get_turtle_tag_by_turtleId
 )
 
 turtle_tag_views = Blueprint('turtle_tag_views', __name__, template_folder='../templates')
 
 @turtle_tag_views.route('/api/turtletag', methods=['POST'])
-#@jwt_required()
+@jwt_required()
 def create_turtle_tag_action():
     data = request.json
     turtle_tag = create_turtle_tag(tageventid=data["tageventid"], code=data["code"], status=data["status"], location=data["location"])
@@ -54,3 +55,8 @@ def delete_capture_action(turtletagId):
     delete_turtle_tag(turtletagId)
     return jsonify(message="turtletag deleted!"), 200   
 
+#Get turtle_tags by turtle Id
+@turtle_tag_views.route('/api/turtletag/turtle/<int:turtleId>', methods=['GET'])
+def get_turtle_tag_by_turtle_id_action(turtleId):
+     turtle_tags = get_turtle_tag_by_turtleId(turtleId)
+     return jsonify(turtle_tags), 200

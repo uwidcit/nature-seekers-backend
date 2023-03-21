@@ -1,4 +1,4 @@
-from App.models import TurtleTag
+from App.models import TurtleTag, TagEvent
 from App.database import db
 
 def create_turtle_tag (tageventid, code, status, location):
@@ -48,3 +48,18 @@ def delete_turtle_tag(id):
         db.session.delete(tag)
         return db.session.commit()
     return None
+
+def get_turtle_tag_by_turtleId(turtleId):
+    tagEvents = TagEvent.query.filter_by(turtleid=turtleId).all()
+    if not tagEvents:
+        return ["No Tag Events"]
+    
+    turtle_tags = []
+    for tagEvent in tagEvents:
+        tag = TagEvent.query.get(tagEvent.tageventid)
+        turtle_tags += [tag]
+
+    if not turtle_tags:
+        return["No  Turtle Tags"]
+    
+    return [turtle_tag.toJSON() for turtle_tag in turtle_tags]
