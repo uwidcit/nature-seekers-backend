@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, jsonify, request, send_from_direct
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from App.models import User, Admin, Contributor, TagEvent
+from datetime import date, datetime, time, timedelta
 
 from App.controllers import (
     create_orgEvent,
@@ -35,9 +36,14 @@ def create_orgEvent_action():
     if admin:
         userId = admin.id
 
-    res = create_orgEvent(userId, data['organizationId'], data['sex'], data['name'], data['time'], data['location'], data['timestamp'])
+    #get data as python date object
+    date_components = data["time"].split('-')
+    year, month, day = [int(item) for item in date_components]
+    timeV=date(year, month, day)
+
+    res = create_orgEvent(userId, data['organizationId'], data['name'], timeV, data['location'])
     if res: 
-        return jsonify({'message': f"orgEvent {data['description']} created"}), 201
+        return jsonify({'message': f"orgEvent {data['name']} created"}), 201
     return jsonify({'message': f"error creating orgEvent"}), 401
 
 

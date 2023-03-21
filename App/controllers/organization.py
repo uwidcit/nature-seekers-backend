@@ -3,8 +3,8 @@ from App.database import db
 
 import json
 
-def create_organization(userId, organizationId, description, email, phone, website):
-    neworganization = Organization(userId=userId, organizationId=organizationId, description=description, email=email, phone=phone, website=website)
+def create_organization(description, email, phone, website):
+    neworganization = Organization(description=description, email=email, phone=phone, website=website)
     db.session.add(neworganization)
     db.session.commit()
     return neworganization

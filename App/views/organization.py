@@ -18,24 +18,13 @@ def get_organization_action():
      return jsonify(all_organization)
     
 @organization_views.route('/api/organization', methods=['POST'])
+@jwt_required()
 def create_organization_action():
     data = request.json
 
-    username = get_jwt_identity() # convert sent token to user name
-    
-    #retrieve regular user with given username
-    contributor = Contributor.query.filter_by(username=username).first()
-    if contributor:
-        userId = contributor.id
-    
-    #retrieve admin user with given username
-    admin = Admin.query.filter_by(username=username).first()
-    if admin:
-        userId = admin.id
-
-    res = create_organization(userId, data['description'], data['email'], data['phone'], data['website'])
+    res = create_organization(data['description'], data['email'], data['phone'], data['website'])
     if res: 
-        return jsonify({'message': f"organization {data['filename']} created"}), 201
+        return jsonify({'message': f"organization {data['description']} created"}), 201
     return jsonify({'message': f"error creating organization"}), 401
 
 #get organization by organization id

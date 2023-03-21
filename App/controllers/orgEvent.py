@@ -3,8 +3,8 @@ from App.database import db
 
 import json
 
-def create_orgEvent(userId, organizationId, sex, name, time, location, timestamp):
-    neworgEvent = OrgEvent(userId=userId, organizationId=organizationId, sex=sex, name=name, time=time, location=location, timestamp=timestamp)
+def create_orgEvent(userId, organizationId, name, time, location):
+    neworgEvent = OrgEvent(userId=userId, organizationId=organizationId, name=name, time=time, location=location)
     db.session.add(neworgEvent)
     db.session.commit()
     return neworgEvent

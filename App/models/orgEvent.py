@@ -5,7 +5,7 @@ class OrgEvent(db.Model):
     organizationId = db.Column(db.Integer, db.ForeignKey('organization.orgid'))
     userId  = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String, nullable=False)
-    time = db.Column(db.String, nullable=False)
+    time = db.Column(db.Date, nullable=False)
     location = db.Column(db.String, nullable=False)
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
