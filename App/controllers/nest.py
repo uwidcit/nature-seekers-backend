@@ -5,7 +5,7 @@ import json
 
 #Create nest object
 def create_nest(num_yolked, num_unyolked, location_name, latitude, longitude, zone, distance_from_vege, distance_from_high_water):
-    newnest = Nest(num_yolked, num_unyolked, location_name, latitude, longitude, zone, distance_from_vege, distance_from_high_water)
+    newnest = Nest(num_yolked=num_yolked, num_unyolked=num_unyolked, location_name=location_name, latitude=latitude, longitude=longitude, zone=zone, distance_from_vege=distance_from_vege, distance_from_high_water=distance_from_high_water)
     db.session.add(newnest)
     db.session.commit()
     return newnest
@@ -15,7 +15,7 @@ def get_nest(nest_id):
     return Nest.query.get(nest_id)
 
 #Get all nests
-def get_all_nest_json():
+def get_all_nests_json():
     nests = Nest.query.all()
     if not nests:
         return []
