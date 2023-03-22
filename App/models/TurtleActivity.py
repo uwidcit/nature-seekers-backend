@@ -15,7 +15,7 @@ class Activity(enum.Enum):
 
 class TurtleActivity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.turtle_id'))
+    turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.id'))
     activity = db.Column(db.Enum(Activity))
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 

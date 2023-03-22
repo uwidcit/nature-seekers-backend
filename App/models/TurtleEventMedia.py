@@ -3,7 +3,7 @@ from datetime import *
 
 class TurtleEventMedia(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    event_id = db.Column(db.Integer, db.ForeignKey('turtleevent.event_id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('turtleEvent.id'))
     url = db.Column(db.String, nullable=False)
     filename = db.Column(db.String, nullable=False)
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)

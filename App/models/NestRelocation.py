@@ -3,7 +3,7 @@ from App.database import db
 
 class NestRelocation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nest_id = db.Column(db.Integer, db.ForeignKey('nest.nest_id'))
+    nest_id = db.Column(db.Integer, db.ForeignKey('nest.id'))
 
     from_location_name = db.Column(db.String, nullable=False)
     from_latitude = db.Column(db.Float, nullable=False)

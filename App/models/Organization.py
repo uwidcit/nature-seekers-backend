@@ -5,9 +5,6 @@ class Organization(User):
 
     __tablename__ = 'organization'
 
-    #orgid = db.Column(db.Integer, db.ForeignKey('Organization.orgid'))
-
-
     __mapper_args__ = {
         'polymorphic_identity': 'organization'
     }

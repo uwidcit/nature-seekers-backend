@@ -13,7 +13,7 @@ class Outcome(enum.Enum):
 
 class NestOutcome(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nest_id = db.Column(db.Integer, db.ForeignKey('nest.nest_id'))
+    nest_id = db.Column(db.Integer, db.ForeignKey('nest.id'))
     outcome = db.Column(db.Enum(Outcome))
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 

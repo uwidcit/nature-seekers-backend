@@ -12,9 +12,12 @@ class IsAlive(enum.Enum):
     DEAD = "dead"
 
 class TurtleEvent(db.Model):
+
+    __tablename__ = 'turtleEvent'
+
     id = db.Column(db.Integer, primary_key=True)
-    turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.turtle_id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     beach_name = db.Column(db.String, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)

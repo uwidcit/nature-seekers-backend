@@ -3,7 +3,7 @@ from datetime import *
 
 class OrganizationEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'))
+    #organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'))
     event_name = db.Column(db.String, nullable=False)
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 

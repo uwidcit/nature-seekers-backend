@@ -3,7 +3,7 @@ from datetime import *
 
 class TurtleBio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.turtle_id'))
+    turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.id'))
     length = db.Column(db.Integer, nullable=False)
     width = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Integer, nullable=False)
