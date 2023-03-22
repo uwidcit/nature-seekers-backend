@@ -7,7 +7,8 @@ from App.controllers import (
     create_organization,
     get_organization,
     get_all_organization_json,
-    delete_organization
+    delete_organization,
+    edit_organization_data
 ) 
 
 organization_views = Blueprint('organization_views', __name__, template_folder='../templates')
@@ -45,3 +46,17 @@ def delete_capture_action(organizationId):
 
     delete_organization(organizationId)
     return jsonify(message="organization deleted!"), 200
+
+
+#Edit organization by organization id
+@organization_views.route('/api/organization/edit/<int:organizationId>', methods=['PUT'])
+def edit_organization_by_id_action(organizationId):
+    data = request.json
+
+    org = get_organization(organizationId)
+
+    if org:
+        edit_organization_data(organizationId, data["description"], data["email"], data["phone"], data["website"])
+
+    return (org.toJSON()), 200
+

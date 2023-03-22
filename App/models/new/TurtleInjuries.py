@@ -1,0 +1,16 @@
+from App.database import db
+import datetime
+
+class TurtleActivity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.turtle_id'))
+    description = db.Column(db.String, nullable=False)
+    timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    def toJSON(self):
+        return {
+            'id': self.id,
+            'turtle_id': self.turtle_id,
+            'description': self.description,
+            'timestamp': self.timestamp.strftime("%Y/%m/%d, %H:%M:%S")
+        }

@@ -17,7 +17,7 @@ class Turtle(db.Model):
     name = db.Column(db.String, nullable=False)
     sex = db.Column(db.Enum(Sex))
     dob = db.Column(db.Date, nullable=False)
-    #species = db.Column(db.Enum(Species))
+    species = db.Column(db.Enum(Species))
 
     def toJSON(self):
         return {
@@ -25,5 +25,5 @@ class Turtle(db.Model):
             'name': self.name,
             'sex': self.sex.name,
             'dateofbirth': self.dob,
-            #'species': self.species.nam\
+            'species': self.species.nam\
         }
