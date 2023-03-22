@@ -22,7 +22,7 @@ def create_turtle_action():
     year, month, day = [int(item) for item in date_components]
     dob = date(year, month, day)
 
-    turtle = create_turtle(name=data["name"], sex=data["sex"], dob=dob)
+    turtle = create_turtle(name=data["name"], sex=data["sex"], dob=dob, species=data["species"])
 
     if turtle:
         return jsonify(turtle.toJSON()), 201

@@ -8,13 +8,13 @@ def create_turtle(
                     name,
                     sex,
                     dob,
-                    species):
+                    species
+                ):
     
-    newturtle = Turtle(
-                        name,
-                        sex,
-                        dob,
-                        species
+    newturtle = Turtle(name=name,
+                        sex=sex,
+                        dob=dob,
+                        species=species
                     )
     
     db.session.add(newturtle)

@@ -8,7 +8,7 @@ class Sex(enum.Enum):
 class Species(enum.Enum):
     GREEN = "green"
     HAWKSBILL = "hawksbill"
-    LEATHERBACk = "leatherback"
+    LEATHERBACK = "leatherback"
     OTHER = "other"
     
 
@@ -25,5 +25,5 @@ class Turtle(db.Model):
             'name': self.name,
             'sex': self.sex.name,
             'dateofbirth': self.dob,
-            'species': self.species.nam\
+            'species': self.species.name
         }
