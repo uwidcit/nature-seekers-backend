@@ -1,14 +1,14 @@
 import flask_login
 from flask_jwt_extended import JWTManager, create_access_token
-from App.models import User, Admin, Contributor
+from App.models import User, Admin, Citizen
 
 
-# Authenticate Admins / Contributors
+# Authenticate Admins / Citizens
 def authenticate(username, password):
     admin = Admin.query.filter_by(username=username).first()
     if admin and admin.check_password(password):
         return admin
-    contributor = Contributor.query.filter_by(username=username).first()
+    contributor = Citizen.query.filter_by(username=username).first()
     if contributor and contributor.check_password(password):
         return contributor
     return None
@@ -18,7 +18,7 @@ def identity(payload):
     admin = Admin.query.get(payload['identity'])
     if admin:
         return admin
-    contributor = Contributor.query.get(payload['identity'])
+    contributor = Citizen.query.get(payload['identity'])
     if contributor:
         return contributor
     return None
@@ -39,7 +39,7 @@ def login(username, password):
     if user and user.check_password(password):
         return create_access_token(identity=username)
 
-    user = Contributor.query.filter_by(username=username).first()
+    user = Citizen.query.filter_by(username=username).first()
     if user and user.check_password(password):
         return create_access_token(identity=username)
 

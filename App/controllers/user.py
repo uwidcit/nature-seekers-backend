@@ -1,4 +1,4 @@
-from App.models import User, Admin, Contributor, TagEvent
+from App.models import User, Admin, Citizen, TurtleEvent
 from App.database import db
 
 def create_user(username, password):
@@ -17,8 +17,8 @@ def create_admin(username, password, firstname, lastname, email):
         print(e)
         return None
 
-def create_contributor(username, password, firstname, lastname, email):
-    newuser = Contributor(username, password, firstname, lastname, email)
+def create_citizen(username, password, firstname, lastname, email):
+    newuser = Citizen(username, password, firstname, lastname, email)
     try:
         db.session.add(newuser)
         db.session.commit()
@@ -33,8 +33,8 @@ def get_user_by_username(username):
 def get_user(id):
     return User.query.get(id)
 
-def get_contributor(id):
-    return Contributor.query.get(id)
+def get_citizen(id):
+    return Citizen.query.get(id)
 
 # def is_admin(id):
 #     return Admin.query.get(id) !=None
@@ -42,16 +42,16 @@ def get_contributor(id):
 def get_all_admins():
     return Admin.query.all()
 
-def get_all_contributors():
-    return Contributor.query.all()
+def get_all_citizens():
+    return Citizen.query.all()
 
-def get_all_contributors_json():
-    contributor = Contributor.query.all()
+def get_all_citizens_json():
+    citizen = Citizen.query.all()
     users = []
-    if not (contributor):
+    if not (citizen):
         return []
     
-    for c in contributor:
+    for c in citizen:
         users.append(c.toJSON())
     return users
 
@@ -67,12 +67,12 @@ def get_all_admins_json():
 
 def get_all_users():
     result = get_all_admins()
-    result += get_all_contributors()
+    result += get_all_citizens()
     return result
 
 def get_all_users_json():
     result = get_all_admins_json()
-    result += get_all_contributors_json()
+    result += get_all_citizens_json()
     return result
     
 
@@ -85,7 +85,7 @@ def update_user(id, username):
     return None
 
 def approve(tagEventId):
-    tagevent = TagEvent.query.get(tagEventId)
+    tagevent = TurtleEvent.query.get(tagEventId)
     if (tagevent):
         tagevent.approved = True
         return tagevent

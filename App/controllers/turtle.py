@@ -1,53 +1,54 @@
 from App.models import Turtle
 from App.database import db
 
-def create_turtle (name, sex, dob):
-    new_turtle = Turtle (name=name, sex=sex, dob=dob)
+import json
 
-    db.session.add(new_turtle)
+#Create turtle object
+def create_turtle(
+                    name,
+                    sex,
+                    dob,
+                    species):
+    
+    newturtle = Turtle(
+                        name,
+                        sex,
+                        dob,
+                        species
+                    )
+    
+    db.session.add(newturtle)
     db.session.commit()
+    return newturtle
 
-    return new_turtle
+#Get turtle by turtle_id
+def get_turtle(turtle_id):
+    return Turtle.query.get(turtle_id)
 
-
-def get_turtle (turtleid):
-    return Turtle.query.get(turtleid)
-
-def get_all_turtles():
-    return Turtle.query.all()
-
-def update_turtle(turtleid, name, sex, dob):
-    turtle1 = get_turtle(turtleid)
-
-    if turtle1:
-
-        if name:
-            turtle1.name = name
-
-        if sex:
-            turtle1.sex = sex
-
-        if dob:
-            turtle1.dob = dob
-
-        db.session.add(turtle1)
-        db.session.commit()
-
-        return turtle1
-
-    return None
-
+#Get all turtles
 def get_all_turtles_json():
-    turtles = get_all_turtles()
-
+    turtles = Turtle.query.all()
     if not turtles:
         return []
-
     return [turtle.toJSON() for turtle in turtles]
 
+#Update turtle data 
+def edit_turtle_data(turtle_id, new_name, new_sex, new_dob, new_species):
+    turtle = Turtle.query.filter_by(turtle_id=turtle_id).first()
+    if not turtle:
+        return ["Turtle not found"]
 
-def delete_turtle(id):
-    turtle = get_turtle(id)
+    turtle.name = new_name
+    turtle.sex = new_sex
+    turtle.dob = new_dob
+    turtle.species = new_species
+
+    db.session.add(turtle)
+    db.session.commit()
+    
+#Delete an turtle by excavation_id
+def delete_turtle(turtle_id):
+    turtle = get_turtle(turtle_id)
     if turtle:
         db.session.delete(turtle)
         return db.session.commit()
