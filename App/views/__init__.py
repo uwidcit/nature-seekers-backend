@@ -4,7 +4,7 @@ from .turtle import turtle_views
 # from .media import media_views
 # from .tagevent import tag_event_views
 # from .turtletag import turtle_tag_views
-# from .excavation import excavation_views
+from .excavation import excavation_views
 
 # from .captures import captures_views
 # from .orgEvent import orgEvent_views
@@ -23,7 +23,7 @@ app_views = [
 #     media_views,
 #     tag_event_views,
 #     turtle_tag_views,
-#     excavation_views,
+     excavation_views,
 #     captures_views,
 #     orgEvent_views,
 #     report_views,

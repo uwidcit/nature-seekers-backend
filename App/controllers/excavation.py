@@ -5,7 +5,7 @@ import json
 
 #Create excavation object
 def create_excavation(nest_id):
-    newexcavation = Excavation(nest_id)
+    newexcavation = Excavation(nest_id=nest_id)
     db.session.add(newexcavation)
     db.session.commit()
     return newexcavation
