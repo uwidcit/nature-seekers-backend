@@ -6,6 +6,8 @@ class TurtleEventType(enum.Enum):
     SIGHTING = "sighting"
     STRANDING = "stranding"
     CAPTURE = "capture"
+    TAG = "tag"
+    INJURY = "injury"
 
 class IsAlive(enum.Enum):
     ALIVE = "alive"
@@ -21,7 +23,7 @@ class TurtleEvent(db.Model):
     beach_name = db.Column(db.String, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
-    verified  = db.Column(db.Boolean, nullable=False)
+    verified  = db.Column(db.Boolean, nullable=False, default= False)
     event_type = db.Column(db.Enum(TurtleEventType))
     state = db.Column(db.Enum(IsAlive))
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)

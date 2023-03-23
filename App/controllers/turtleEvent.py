@@ -12,18 +12,18 @@ def create_turtleEvent(
                     longitude,
                     verified,
                     event_type,
-                    state
+                    isAlive
                     ):
     
     newturtleEvent = TurtleEvent(
-                    turtle_id,
-                    user_id,
-                    beach_name,
-                    latitude,
-                    longitude,
-                    verified,
-                    event_type,
-                    state
+                    turtle_id=turtle_id,
+                    user_id=user_id,
+                    beach_name=beach_name,
+                    latitude=latitude,
+                    longitude=longitude,
+                    verified=verified,
+                    event_type=event_type,
+                    state=isAlive
                     )
     
     db.session.add(newturtleEvent)
@@ -48,3 +48,11 @@ def delete_turtleEvent(turtleEvent_id):
         db.session.delete(turtleEvent)
         return db.session.commit()
     return None
+
+#Approve Turtle event -update verified attribute
+def approve(turtleEventId):
+    turtleEvent = TurtleEvent.query.get(turtleEventId)
+    if (turtleEvent):
+        turtleEvent.verified = True
+        db.session.add(turtleEvent)
+        return db.session.commit()

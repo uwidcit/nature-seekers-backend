@@ -8,6 +8,7 @@ from App.models import User, Admin, Citizen, TurtleEvent
 from App.controllers import (
     create_citizen,
     create_admin, 
+    create_organization,
     get_all_users,
     get_all_users_json,
     login,
@@ -43,6 +44,14 @@ def create_admin_action():
     res = create_admin(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
     if res: 
         return jsonify({'message': f"admin user {data['username']} created"}), 201
+    return jsonify({'message': f"error creating user"}), 401
+
+@user_views.route('/api/organization', methods=['POST'])
+def create_organization_action():
+    data = request.json
+    res = create_organization(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
+    if res: 
+        return jsonify({'message': f"organization user {data['username']} created"}), 201
     return jsonify({'message': f"error creating user"}), 401
 
 

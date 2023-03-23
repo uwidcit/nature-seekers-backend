@@ -5,7 +5,7 @@ import json
 
 #Create nestOutcome object
 def create_nestOutcome(nest_id, outcome):
-    newnestOutcome = NestOutcome(nest_id, outcome)
+    newnestOutcome = NestOutcome(nest_id=nest_id, outcome=outcome)
     db.session.add(newnestOutcome)
     db.session.commit()
     return newnestOutcome

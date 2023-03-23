@@ -1,9 +1,11 @@
 from .user import user_views
 from .nest import nest_views
+from .nestOutcomes import nestOutcome_views
+from .nestRelocation import nestRelocation_views
 # from .index import index_views
 from .turtle import turtle_views
 # from .media import media_views
-# from .tagevent import tag_event_views
+from .turtleEvent import turtleEvent_views
 # from .turtletag import turtle_tag_views
 from .excavation import excavation_views
 
@@ -20,10 +22,12 @@ app_views = [
     
      user_views,
      nest_views,
+     nestOutcome_views,
+     nestRelocation_views,
 #     index_views,
      turtle_views,
 #     media_views,
-#     tag_event_views,
+     turtleEvent_views,
 #     turtle_tag_views,
      excavation_views,
 #     captures_views,

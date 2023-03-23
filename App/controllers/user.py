@@ -1,4 +1,4 @@
-from App.models import User, Admin, Citizen, TurtleEvent
+from App.models import User, Admin, Citizen ,Organization
 from App.database import db
 
 def create_user(username, password):
@@ -9,6 +9,16 @@ def create_user(username, password):
 
 def create_admin(username, password, firstname, lastname, email):
     newuser = Admin(username, password, firstname, lastname, email)
+    try:
+        db.session.add(newuser)
+        db.session.commit()
+        return newuser
+    except Exception as e:
+        print(e)
+        return None
+
+def create_organization(username, password, firstname, lastname, email):
+    newuser = Organization(username, password, firstname, lastname, email)
     try:
         db.session.add(newuser)
         db.session.commit()
@@ -83,9 +93,3 @@ def update_user(id, username):
         db.session.add(user)
         return db.session.commit()
     return None
-
-def approve(tagEventId):
-    tagevent = TurtleEvent.query.get(tagEventId)
-    if (tagevent):
-        tagevent.approved = True
-        return tagevent
