@@ -24,7 +24,7 @@ def get_turtleBio_action():
 def create_turtleBio_action():
     data = request.json
 
-    res = create_turtleBio(turtle_id=data['turtle_id'], activity=data['activity'])
+    res = create_turtleBio(turtle_id=data['turtle_id'], length=data['length'], width=data['width'], weight=data['weight'])
     if res: 
         return jsonify({'message': f"turtleBio created"}), 201
     return jsonify({'message': f"error creating turtleBio"}), 401

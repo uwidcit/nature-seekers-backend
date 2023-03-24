@@ -1,7 +1,7 @@
 from App.database import db
 from datetime import *
 
-class TurtleInjuries(db.Model):
+class TurtleInjury(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.id'))
     description = db.Column(db.String, nullable=False)

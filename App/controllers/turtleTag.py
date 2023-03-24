@@ -11,9 +11,9 @@ def create_turtleTag(
                     ):
     
     newturtleTag = TurtleTag(
-                    turtle_id,
-                    status,
-                    location
+                    turtle_id=turtle_id,
+                    status=status,
+                    location=location
                     )
     
     db.session.add(newturtleTag)

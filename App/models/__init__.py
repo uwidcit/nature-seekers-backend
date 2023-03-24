@@ -9,7 +9,7 @@ from .TurtleActivity import *
 from .TurtleBio import *
 from .TurtleEvent import *
 from .TurtleEventMedia import *
-from .TurtleInjuries import *
+from .TurtleInjury import *
 from .TurtleTag import *
 from .Nest import *
 from .NestOutcome import *

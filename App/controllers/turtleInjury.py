@@ -1,4 +1,4 @@
-from App.models import TurtleInjuries
+from App.models import TurtleInjury
 from App.database import db
 
 import json
@@ -10,8 +10,8 @@ def create_turtleInjury(
                     ):
     
     newturtleInjury = TurtleInjury(
-                    turtle_id,
-                    description
+                    turtle_id=turtle_id,
+                    description=description
                     )
     
     db.session.add(newturtleInjury)
