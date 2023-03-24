@@ -10,6 +10,6 @@ from .turtleActivity import *
 from .turtleBio import *
 from .turtleEvent import *
 from .turtleEventMedia import *
-from .turtleInjuries import *
+from .turtleInjury import *
 from .turtleTag import *
 from .user import *
