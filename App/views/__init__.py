@@ -7,6 +7,8 @@ from .organizationEvent import organizationEvent_views
 from .turtle import turtle_views
 # from .media import media_views
 from .turtleEvent import turtleEvent_views
+from .turtleActivity import turtleActivity_views
+from .turtleBio import turtleBio_views
 # from .turtletag import turtle_tag_views
 from .excavation import excavation_views
 
@@ -30,6 +32,8 @@ app_views = [
      turtle_views,
 #     media_views,
      turtleEvent_views,
+     turtleActivity_views,
+     turtleBio_views,
 #     turtle_tag_views,
      excavation_views,
 #     captures_views,

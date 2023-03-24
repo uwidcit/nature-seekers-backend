@@ -6,12 +6,12 @@ import json
 #Create turtleActivity object
 def create_turtleActivity(
                         turtle_id,
-                        Activity
+                        activity
                         ):
     
     newturtleActivity = TurtleActivity(
-                                        turtle_id,
-                                        Activity
+                                        turtle_id=turtle_id,
+                                        activity=activity
                                         )
     
     db.session.add(newturtleActivity)
