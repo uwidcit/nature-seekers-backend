@@ -12,10 +12,10 @@ def create_turtleBio(
                     ):
     
     newturtle_bio = TurtleBio(
-                    turtle_id,
-                    length,
-                    width,
-                    weight
+                    turtle_id=turtle_id,
+                    length=length,
+                    width=width,
+                    weight=weight
                     )
     
     db.session.add(newturtle_bio)
