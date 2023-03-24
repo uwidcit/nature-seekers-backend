@@ -2,6 +2,7 @@ from .user import user_views
 from .nest import nest_views
 from .nestOutcomes import nestOutcome_views
 from .nestRelocation import nestRelocation_views
+from .organizationEvent import organizationEvent_views
 # from .index import index_views
 from .turtle import turtle_views
 # from .media import media_views
@@ -24,6 +25,7 @@ app_views = [
      nest_views,
      nestOutcome_views,
      nestRelocation_views,
+     organizationEvent_views,
 #     index_views,
      turtle_views,
 #     media_views,

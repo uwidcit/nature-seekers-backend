@@ -75,6 +75,16 @@ def get_all_admins_json():
         users.append(a.toJSON())
     return users
 
+def get_all_organizations_json():
+    organization = Organization.query.all()
+    users = []
+    if not (organization):
+        return []
+    
+    for o in organization:
+        users.append(o.toJSON())
+    return users
+
 def get_all_users():
     result = get_all_admins()
     result += get_all_citizens()
@@ -83,6 +93,7 @@ def get_all_users():
 def get_all_users_json():
     result = get_all_admins_json()
     result += get_all_citizens_json()
+    result += get_all_organizations_json()
     return result
     
 

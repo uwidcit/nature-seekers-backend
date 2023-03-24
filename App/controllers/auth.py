@@ -1,6 +1,6 @@
 import flask_login
 from flask_jwt_extended import JWTManager, create_access_token
-from App.models import User, Admin, Citizen
+from App.models import User, Admin, Citizen, Organization
 
 
 # Authenticate Admins / Citizens
@@ -40,6 +40,10 @@ def login(username, password):
         return create_access_token(identity=username)
 
     user = Citizen.query.filter_by(username=username).first()
+    if user and user.check_password(password):
+        return create_access_token(identity=username)
+    
+    user = Organization.query.filter_by(username=username).first()
     if user and user.check_password(password):
         return create_access_token(identity=username)
 

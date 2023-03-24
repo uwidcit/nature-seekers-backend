@@ -5,7 +5,7 @@ import json
 
 #Create organizationEvent object
 def create_organizationEvent(organization_id, event_name):
-    neworganizationEvent = OrganizationEvent(organization_id, event_name)
+    neworganizationEvent = OrganizationEvent(organization_id=organization_id, event_name=event_name)
     db.session.add(neworganizationEvent)
     db.session.commit()
     return neworganizationEvent
