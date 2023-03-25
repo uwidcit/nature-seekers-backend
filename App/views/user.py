@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_login import logout_user
 
 ##stuff for identify
 from App.models import User, Admin, Citizen, TurtleEvent
@@ -65,9 +66,10 @@ def static_user_page():
 @user_views.route('/login', methods=['POST'])
 def login_view():
   data = request.json
+  print(data['username'], data['password'])
   token = login(data['username'], data['password'])
   if not token:
-    return jsonify(message='bad username or password given'), 401
+    return jsonify(message='bad username or password givennn'), 401
   return jsonify(access_token=token)
 
 # Mr. Mendez labs
@@ -84,3 +86,9 @@ def identify_view():
   admin = Admin.query.filter_by(username=username).first()
   if admin:
     return jsonify(admin.toJSON())#jsonify admin object
+
+
+@user_views.route('/logout', methods=['GET'])
+def logout_action():
+  logout_user()
+  return jsonify(message='logged out'), 401
