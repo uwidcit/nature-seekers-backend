@@ -13,6 +13,7 @@ from App.controllers import (
     get_all_users,
     get_all_users_json,
     login,
+    get_all_organizations_json,
     #citizen_login
 )
 
@@ -55,6 +56,10 @@ def create_organization_action():
         return jsonify({'message': f"organization user {data['username']} created"}), 201
     return jsonify({'message': f"error creating user"}), 401
 
+@user_views.route('/api/organization', methods=['GET'])
+def get_all_organizations_action():
+  organizations = get_all_organizations_json()
+  return jsonify(organizations)
 
 
 @user_views.route('/static/users', methods=['GET'])
@@ -90,5 +95,5 @@ def identify_view():
 
 @user_views.route('/logout', methods=['GET'])
 def logout_action():
-  logout_user()
-  return jsonify(message='logged out'), 401
+
+  return jsonify( message='logged out'), 200

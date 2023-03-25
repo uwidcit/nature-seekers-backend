@@ -47,14 +47,3 @@ def delete_capture_action(turtleInjuryId):
 
     delete_turtleInjury(turtleInjuryId)
     return jsonify(message="turtleInjury deleted!"), 200
-
-#Approve
-@turtleInjury_views.route('/api/turtleInjury/approve/<int:turtleInjuryId>', methods=['PUT'])
-def approve_turtleInjury_by_id(turtleInjuryId):
-    event = get_turtleInjury(turtleInjuryId)
-    if not event:
-        return jsonify(error="Event not found"), 401
-    approve(turtleInjuryId)
-    if(event.verified == False):
-        return jsonify(error="not working"), 401
-    return jsonify(message="Event Approved"), 200

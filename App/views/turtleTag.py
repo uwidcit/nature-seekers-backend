@@ -47,14 +47,3 @@ def delete_capture_action(turtleTagId):
 
     delete_turtleTag(turtleTagId)
     return jsonify(message="turtleTag deleted!"), 200
-
-#Approve
-@turtleTag_views.route('/api/turtleTag/approve/<int:turtleTagId>', methods=['PUT'])
-def approve_turtleTag_by_id(turtleTagId):
-    event = get_turtleTag(turtleTagId)
-    if not event:
-        return jsonify(error="Event not found"), 401
-    approve(turtleTagId)
-    if(event.verified == False):
-        return jsonify(error="not working"), 401
-    return jsonify(message="Event Approved"), 200

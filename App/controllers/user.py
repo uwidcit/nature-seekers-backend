@@ -55,6 +55,9 @@ def get_all_admins():
 def get_all_citizens():
     return Citizen.query.all()
 
+def get_all_organizations():
+    return Organization.query.all()
+
 def get_all_citizens_json():
     citizen = Citizen.query.all()
     users = []

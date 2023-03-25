@@ -27,7 +27,7 @@ class TurtleEvent(db.Model):
     event_type = db.Column(db.Enum(TurtleEventType))
     state = db.Column(db.Enum(IsAlive))
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-
+    
     def toJSON(self):
         return {
             'id': self.id,
