@@ -7,7 +7,8 @@ from App.controllers import (
     create_organizationEvent,
     get_organizationEvent,
     get_all_organizationEvent_json,
-    delete_organizationEvent
+    delete_organizationEvent,
+    edit_organizationEvent_name
 )
 
 organizationEvent_views = Blueprint('organizationEvent_views', __name__, template_folder='../templates')
@@ -68,3 +69,16 @@ def delete_organizationEvent_action(organizationEventid):
     delete_organizationEvent(organizationEventid)
     return jsonify(message="organizationEvent deleted!"), 200
 
+@organizationEvent_views.route('/api/organizationEvents/edit/<int:organizationEventid>', methods=['PUT'])
+def edit_organizationEvent_action(organizationEventid):
+    data = request.json
+
+    orgEvent = get_organizationEvent(organizationEventid)
+
+    if not orgEvent:
+        return jsonify(message="Organization Event not Found!"), 418
+    
+    orgEvent = edit_organizationEvent_name(organizationEventid=organizationEventid, new_event_name=data["name"])
+    if( orgEvent.event_name == data["name"]):
+        return orgEvent.toJSON()
+    return jsonify(message="Organization Event not Changed!"), 400

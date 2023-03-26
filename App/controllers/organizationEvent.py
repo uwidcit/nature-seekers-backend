@@ -22,14 +22,15 @@ def get_all_organizationEvent_json():
     return [organizationEvent.toJSON() for organizationEvent in organizationEvents]
 
 #Update organization event name 
-def edit_organizationEvent_name(organizationEvent_id, new_event_name):
-    orgEvent = OrganizationEvent.query.filter_by(organizationEvent_id=organizationEvent_id).first()
+def edit_organizationEvent_name(organizationEventid, new_event_name):
+    orgEvent = OrganizationEvent.query.filter_by(id=organizationEventid).first()
     if not orgEvent:
         return ["No Organization Event found"]
 
     orgEvent.event_name = new_event_name
     db.session.add(orgEvent)
     db.session.commit()
+    return orgEvent
     
 #Delete an organizationEvent by excavation_id
 def delete_organizationEvent(organizationEvent_id):
