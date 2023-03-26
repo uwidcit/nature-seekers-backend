@@ -8,6 +8,7 @@ from App.controllers import (
     get_turtleEvent,
     get_all_turtleEvent_json,
     delete_turtleEvent, 
+    update_turtleEvent,
     approve
 )
 
@@ -79,3 +80,29 @@ def approve_turtleEvent_by_id(turtleEventId):
     if(event.verified == False):
         return jsonify(error="not working"), 401
     return jsonify(message="Event Approved"), 200
+
+
+@turtleEvent_views.route('/api/turtleEvent/edit/<int:turtleEvent_id>', methods=["PUT"])
+#@login_required
+def edit_turtleEvent_action(turtleEvent_id):
+    data = request.json
+
+    turtleEvent=get_turtleEvent(turtleEvent_id)
+    
+    if not turtleEvent:
+        return jsonify(message="Turtle Event not Found!"), 418
+
+    turtleEvent = update_turtleEvent(
+                        turtleEvent_id=turtleEvent_id,
+                        turtle_id=data["turtle_id"],
+                        user_id=data["user_id"],
+                        beach_name=data['beach_name'],
+                        latitude=data["latitude"],
+                        longitude=data["longitude"],
+                        event_type=data["event_type"],
+                        isAlive=data["isAlive"]
+                       )
+
+    #if turtleEvent:
+    return jsonify(turtleEvent.toJSON()), 201
+    #return jsonify(message="Nest not Changed!"), 418

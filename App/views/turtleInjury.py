@@ -8,7 +8,7 @@ from App.controllers import (
     get_turtleInjury,
     get_all_turtleInjury_json,
     delete_turtleInjury, 
-    approve
+    edit_turtleInjury
 )
 
 turtleInjury_views = Blueprint('turtleInjury_views', __name__, template_folder='../templates')
@@ -47,3 +47,18 @@ def delete_capture_action(turtleInjuryId):
 
     delete_turtleInjury(turtleInjuryId)
     return jsonify(message="turtleInjury deleted!"), 200
+
+@turtleInjury_views.route('/api/turtleInjury/edit/<int:turtleInjuryid>', methods=['PUT'])
+def edit_turtleInjury_action(turtleInjuryid):
+    data = request.json
+
+    turtleInjury = get_turtleInjury(turtleInjuryid)
+
+    if not turtleInjury:
+        return jsonify(message="Turtle Injury not Found!"), 418
+    
+    turtleInjury = edit_turtleInjury(turtleInjuryid=turtleInjuryid, description=data["description"])
+    if( turtleInjury.description == data["description"]):
+        return turtleInjury.toJSON()
+    
+    return jsonify(message="Turtle Injury not Changed!"), 400

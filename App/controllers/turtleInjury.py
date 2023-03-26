@@ -36,3 +36,14 @@ def delete_turtleInjury(turtleInjury_id):
         db.session.delete(turtleInjury)
         return db.session.commit()
     return None
+
+#Update organization event name 
+def edit_turtleInjury(turtleInjuryid, description):
+    turtleInjury = TurtleInjury.query.filter_by(id=turtleInjuryid).first()
+    if not turtleInjury:
+        return ["No Turtle Injury found"]
+
+    turtleInjury.description = description
+    db.session.add(turtleInjury)
+    db.session.commit()
+    return turtleInjury

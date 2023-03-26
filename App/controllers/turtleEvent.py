@@ -56,3 +56,34 @@ def approve(turtleEventId):
         turtleEvent.verified = True
         db.session.add(turtleEvent)
         return db.session.commit()
+    
+
+# Update a turtleEvent
+def update_turtleEvent(
+                turtleEvent_id, 
+                turtle_id,
+                user_id,
+                beach_name,
+                latitude,
+                longitude,
+                event_type,
+                isAlive,
+                ):
+
+    turtleEvent = get_turtleEvent(turtleEvent_id)
+    
+    if not turtleEvent:
+        return []
+    
+    turtleEvent.turtle_id = turtle_id
+    turtleEvent.user_id = user_id
+    turtleEvent.beach_name = beach_name
+    turtleEvent.latitude = latitude
+    turtleEvent.longitude = longitude
+    turtleEvent.event_type  = event_type
+    turtleEvent.isAlive = isAlive
+    
+    db.session.add(turtleEvent)
+    db.session.commit()
+    
+    return turtleEvent
