@@ -9,6 +9,7 @@ from App.controllers import (
     get_all_turtleEvent_json,
     delete_turtleEvent, 
     update_turtleEvent,
+    get_unverified_turtleEvents,
     approve
 )
 
@@ -106,3 +107,9 @@ def edit_turtleEvent_action(turtleEvent_id):
     #if turtleEvent:
     return jsonify(turtleEvent.toJSON()), 201
     #return jsonify(message="Nest not Changed!"), 418
+
+
+@turtleEvent_views.route('/api/turtleEvent/unverified')
+def get_unverified_turtleEvents_action():
+    turtleEvents=get_unverified_turtleEvents()
+    return jsonify( turtleEvents)

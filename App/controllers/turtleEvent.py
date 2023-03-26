@@ -87,3 +87,11 @@ def update_turtleEvent(
     db.session.commit()
     
     return turtleEvent
+
+
+#Get Unverified Turtle Events
+def get_unverified_turtleEvents():
+    turtleEvents=TurtleEvent.query.filter_by(verified = False)
+    if not turtleEvents:
+        return []
+    return [turtleEvent.toJSON() for turtleEvent in turtleEvents]
