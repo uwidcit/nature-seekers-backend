@@ -34,7 +34,7 @@ def get_all_turtles_json():
 
 #Update turtle data 
 def edit_turtle_data(turtle_id, new_name, new_sex, new_dob, new_species):
-    turtle = Turtle.query.filter_by(turtle_id=turtle_id).first()
+    turtle = Turtle.query.filter_by(id=turtle_id).first()
     if not turtle:
         return ["Turtle not found"]
 
@@ -45,6 +45,7 @@ def edit_turtle_data(turtle_id, new_name, new_sex, new_dob, new_species):
 
     db.session.add(turtle)
     db.session.commit()
+    return turtle
     
 #Delete an turtle by excavation_id
 def delete_turtle(turtle_id):

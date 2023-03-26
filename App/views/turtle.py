@@ -7,7 +7,8 @@ from App.controllers import (
     create_turtle,
     get_turtle,
     get_all_turtles_json,
-    delete_turtle
+    delete_turtle,
+    edit_turtle_data
 )
 
 turtle_views = Blueprint('turtle_views', __name__, template_folder='../templates')
@@ -62,3 +63,25 @@ def delete_turtle_action(turtleid):
     delete_turtle(turtleid)
     return jsonify(message="turtle deleted!"), 200
 
+
+@turtle_views.route('/api/turtles/edit/<int:turtle_id>', methods=["PUT"])
+#@login_required
+def edit_turtle_action(turtle_id):
+    data = request.json
+
+    turtle=get_turtle(turtle_id)
+    
+    if not turtle:
+        return jsonify(message="Nest not Found!"), 418
+
+    turtle = edit_turtle_data(
+                        turtle_id=turtle_id,
+                        new_name=data["name"],
+                        new_sex=data["sex"],
+                        new_dob=data['dob'],
+                        new_species=data["species"],
+                        )
+
+    #if turtle:
+    return jsonify(turtle.toJSON()), 201
+    #return jsonify(message="Nest not Changed!"), 418
