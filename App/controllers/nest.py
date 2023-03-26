@@ -28,3 +28,35 @@ def delete_nest(nest_id):
         db.session.delete(nest)
         return db.session.commit()
     return None
+
+# Update a nest
+def update_nest(nest_id, 
+                num_yolked,
+                num_unyolked,
+                location_name,
+                latitude,
+                longitude,
+                zone,
+                distance_from_vegetation,
+                distance_from_high_water
+                ):
+
+    nest = get_nest(nest_id)
+    
+    #print("-----!!!!HERE!!!!-----")
+    if not nest:
+        return []
+    
+    nest.num_yolked = num_yolked
+    nest.num_unyolked = num_unyolked
+    nest.location_name = location_name
+    nest.latitude = latitude
+    nest.longitude = longitude
+    nest.zone  = zone
+    nest.distance_from_vegetation = distance_from_vegetation
+    nest.distance_from_high_water = distance_from_high_water
+
+    db.session.add(nest)
+    db.session.commit()
+    
+    return nest
