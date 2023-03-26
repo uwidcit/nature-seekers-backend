@@ -43,7 +43,6 @@ def update_nest(nest_id,
 
     nest = get_nest(nest_id)
     
-    #print("-----!!!!HERE!!!!-----")
     if not nest:
         return []
     

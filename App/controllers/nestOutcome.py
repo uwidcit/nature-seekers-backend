@@ -28,3 +28,18 @@ def delete_nestOutcome(nestOutcome_id):
         db.session.delete(nestOutcome)
         return db.session.commit()
     return None
+
+# Update a nestOutcome
+def update_nestOutcome(nestOutcome_id, outcome):
+
+    nestOutcome = get_nestOutcome(nestOutcome_id)
+    
+    if not nestOutcome:
+        return []
+    
+    nestOutcome.outcome = outcome
+   
+    db.session.add(nestOutcome)
+    db.session.commit()
+    
+    return nestOutcome

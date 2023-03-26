@@ -7,7 +7,8 @@ from App.controllers import (
     create_nestOutcome,
     get_nestOutcome,
     get_all_nestOutcome_json,
-    delete_nestOutcome
+    delete_nestOutcome,
+    update_nestOutcome
 )
 
 nestOutcome_views = Blueprint('nestOutcome_views', __name__, template_folder='../templates')
@@ -47,3 +48,18 @@ def delete_capture_action(nestOutcomeId):
     delete_nestOutcome(nestOutcomeId)
     return jsonify(message="nestOutcome deleted!"), 200
 
+@nestOutcome_views.route('/api/nestOutcome/edit/<int:nestOutcome_id>', methods=["PUT"])
+#@login_required
+def edit_nestOutcome_action(nestOutcome_id):
+    data = request.json
+
+    nestOutcome=get_nestOutcome(nestOutcome_id)
+    
+    if not nestOutcome:
+        return jsonify(message="Nest not Found!"), 418
+
+    nestOutcome = update_nestOutcome(nestOutcome_id=nestOutcome_id, outcome=data["outcome"])
+
+    if nestOutcome:
+        return jsonify(nestOutcome.toJSON()), 201
+    return jsonify(message="Nest not Changed!"), 418
