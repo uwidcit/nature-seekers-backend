@@ -38,3 +38,15 @@ def delete_turtleTag(turtleTag_id):
         db.session.delete(turtleTag)
         return db.session.commit()
     return None
+
+
+#Update organization event name 
+def edit_turtleTag(turtleTagid, status):
+    turtleTag = TurtleTag.query.filter_by(id=turtleTagid).first()
+    if not turtleTag:
+        return ["No Turtle Injury found"]
+
+    turtleTag.status = status
+    db.session.add(turtleTag)
+    db.session.commit()
+    return turtleTag

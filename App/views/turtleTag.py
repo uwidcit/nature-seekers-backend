@@ -8,7 +8,7 @@ from App.controllers import (
     get_turtleTag,
     get_all_turtleTag_json,
     delete_turtleTag, 
-    approve
+    edit_turtleTag
 )
 
 turtleTag_views = Blueprint('turtleTag_views', __name__, template_folder='../templates')
@@ -47,3 +47,19 @@ def delete_capture_action(turtleTagId):
 
     delete_turtleTag(turtleTagId)
     return jsonify(message="turtleTag deleted!"), 200
+
+
+@turtleTag_views.route('/api/turtleTag/edit/<int:turtleTagid>', methods=['PUT'])
+def edit_turtleTag_action(turtleTagid):
+    data = request.json
+
+    turtleTag = get_turtleTag(turtleTagid)
+
+    if not turtleTag:
+        return jsonify(message="Turtle Tag not Found!"), 418
+    
+    turtleTag = edit_turtleTag(turtleTagid=turtleTagid, status=data["status"])
+    if( turtleTag.status.name == data["status"]):
+        return turtleTag.toJSON()
+    
+    return jsonify(message="Turtle Tag not Changed!"), 400
