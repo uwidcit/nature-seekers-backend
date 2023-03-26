@@ -36,3 +36,15 @@ def delete_turtleActivity(turtleActivity_id):
         db.session.delete(turtleActivity)
         return db.session.commit()
     return None
+
+
+#Update organization event name 
+def edit_turtleActivity(turtleActivityid, activity):
+    turtleActivity = TurtleActivity.query.filter_by(id=turtleActivityid).first()
+    if not turtleActivity:
+        return ["No turtle Activity found"]
+
+    turtleActivity.activity = activity
+    db.session.add(turtleActivity)
+    db.session.commit()
+    return turtleActivity

@@ -8,6 +8,7 @@ from App.controllers import (
     get_turtleActivity,
     get_all_turtleActivity_json,
     delete_turtleActivity, 
+    edit_turtleActivity,
     approve
 )
 
@@ -47,3 +48,18 @@ def delete_capture_action(turtleActivityId):
 
     delete_turtleActivity(turtleActivityId)
     return jsonify(message="turtleActivity deleted!"), 200
+
+@turtleActivity_views.route('/api/turtleActivity/edit/<int:turtleActivityid>', methods=['PUT'])
+def edit_turtleActivity_action(turtleActivityid):
+    data = request.json
+
+    turtleActivity = get_turtleActivity(turtleActivityid)
+
+    if not turtleActivity:
+        return jsonify(message="Turtle Activity not Found!"), 418
+    
+    turtleActivity = edit_turtleActivity(turtleActivityid=turtleActivityid, activity=data["activity"])
+    if( turtleActivity.activity.name == data["activity"]):
+        return turtleActivity.toJSON()
+    
+    return jsonify(message="Turtle Activity not Changed!"), 400
