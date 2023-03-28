@@ -17,7 +17,7 @@ from .excavation import excavation_views
 
 # from .captures import captures_views
 # from .orgEvent import orgEvent_views
-# from .report import report_views
+from .report import report_views
 # from .sighting import sighting_views
 # from .stranding import stranding_views
 # from .organization import organization_views
@@ -44,7 +44,7 @@ app_views = [
      excavation_views,
 #     captures_views,
 #     orgEvent_views,
-#     report_views,
+     report_views,
 #     sighting_views,
 #     stranding_views,
 #     organization_views
