@@ -24,6 +24,11 @@ def create_turtleTag(
 def get_turtleTag(turtleTag_id):
     return TurtleTag.query.get(turtleTag_id)
 
+#Get turtle tag by turtle_id
+def get_turtleTag_by_turtle(turtle_id):
+    turtleTags = TurtleTag.query.filter_by(turtle_id=turtle_id).all()
+    return [turtleTag.toJSON() for turtleTag in turtleTags]
+
 #Get all turtleTags
 def get_all_turtleTag_json():
     turtleTags = TurtleTag.query.all()

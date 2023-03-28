@@ -8,7 +8,8 @@ from App.controllers import (
     get_turtleTag,
     get_all_turtleTag_json,
     delete_turtleTag, 
-    edit_turtleTag
+    edit_turtleTag,
+    get_turtleTag_by_turtle
 )
 
 turtleTag_views = Blueprint('turtleTag_views', __name__, template_folder='../templates')
@@ -34,6 +35,13 @@ def create_turtleTag_action():
 def get_turtleTag_by_id_action(turtleTagId):
      turtleTag = get_turtleTag(turtleTagId)
      return jsonify(turtleTag .toJSON()), 200
+
+#get turtleTag by turtle id
+@turtleTag_views.route('/api/turtleTag/turtle/<int:turtleid>', methods=['GET'])
+def get_turtleTag_by_turtle_action(turtleid):
+    turtleTag = get_turtleTag_by_turtle(turtleid)
+    return jsonify(turtleTag), 200
+
 
 #delete turtleTag
 @turtleTag_views.route('/api/turtleTag/delete/<int:turtleTagId>', methods=['DELETE'])

@@ -14,6 +14,7 @@ from App.controllers import (
     get_all_users_json,
     login,
     get_all_organizations_json,
+    delete_organization,
     #citizen_login
 )
 
@@ -97,3 +98,12 @@ def identify_view():
 def logout_action():
 
   return jsonify( message='logged out'), 200
+
+
+
+@user_views.route('/api/delete/organization/<int:orgId>', methods=['DELETE'])
+#@jwt_required
+def delete_organization_action(orgId):
+   delete_organization(orgId)
+   return jsonify(message="Organization deleted!"), 200
+   

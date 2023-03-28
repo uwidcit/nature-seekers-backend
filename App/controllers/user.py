@@ -107,3 +107,11 @@ def update_user(id, username):
         db.session.add(user)
         return db.session.commit()
     return None
+
+def delete_organization(id):
+    organization = Organization.query.get(id)
+    if organization:
+        db.session.delete(organization)
+        return db.session.commit()
+    return None
+

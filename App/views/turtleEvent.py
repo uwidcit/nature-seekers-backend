@@ -10,6 +10,7 @@ from App.controllers import (
     delete_turtleEvent, 
     update_turtleEvent,
     get_unverified_turtleEvents,
+    get_turtleEvent_by_turtle,
     approve
 )
 
@@ -57,6 +58,14 @@ def create_turtleEvent_action():
 def get_turtleEvent_by_id_action(turtleEventId):
      turtleEvent = get_turtleEvent(turtleEventId)
      return jsonify(turtleEvent .toJSON()), 200
+
+#get turtleEvent by turtle id
+@turtleEvent_views.route('/api/turtleEvent/turtle/<int:turtleid>', methods=['GET'])
+def get_turtleEvent_by_turtle_action(turtleid):
+    turtleEvent = get_turtleEvent_by_turtle(turtleid)
+    return jsonify(turtleEvent), 200
+
+
 
 #delete turtleEvent
 @turtleEvent_views.route('/api/turtleEvent/delete/<int:turtleEventId>', methods=['DELETE'])
