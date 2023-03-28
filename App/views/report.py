@@ -5,7 +5,12 @@ from datetime import date, datetime
 #from App.models import Turtle
 
 from App.controllers import (
+
+    new_turtleTags,
     longest_turtle,
+    shortest_turtle,
+    heaviest_turtle,
+    lightest_turtle,
     get_turtle
 )
 
@@ -26,14 +31,28 @@ def get_report(report_id, from_date, to_date):
     to_date = date(year, month, day)
 
     match report_id:
+        
+        case 4: #new tags
+            turtleTags = new_turtleTags(from_date, to_date)
+            return [turtleTag.toJSON() for turtleTag in turtleTags]
+
         case 6: #largest by length
             turtleBio = longest_turtle(from_date, to_date)
             turtle = get_turtle(turtleBio.turtle_id)
-
             return [turtle.toJSON()] + [turtleBio.toJSON()]
-#    report = create_report(name=data["name"], sex=data["sex"], dob=dob, species=data["species"])
-#
-#    if report:
-#        return jsonify(report.toJSON()), 201
-#
-    return jsonify({"error": "report not created"}), 400
+        
+        case 7: #smallest by length
+            turtleBio = shortest_turtle(from_date, to_date)
+            turtle = get_turtle(turtleBio.turtle_id)
+            return [turtle.toJSON()] + [turtleBio.toJSON()]
+
+        case 8: #largest by weight
+            turtleBio = heaviest_turtle(from_date, to_date)
+            turtle = get_turtle(turtleBio.turtle_id)
+            return [turtle.toJSON()] + [turtleBio.toJSON()]
+        
+        case 9: #smallest by weight
+            turtleBio = lightest_turtle(from_date, to_date)
+            turtle = get_turtle(turtleBio.turtle_id)
+            return [turtle.toJSON()] + [turtleBio.toJSON()]
+    return jsonify({"error": "Report not created"}), 400
