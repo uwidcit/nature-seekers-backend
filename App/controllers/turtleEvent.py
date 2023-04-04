@@ -39,6 +39,13 @@ def get_turtleEvent_by_turtle(turtle_id):
     turtleEvents = TurtleEvent.query.filter_by(turtle_id=turtle_id).all()
     return [turtleEvent.toJSON() for turtleEvent in turtleEvents]
 
+#Get all turtleEvents by type
+def get_all_turtleEvent_by_type_json(type):
+    turtleEvents = TurtleEvent.query.filter_by(event_type = type )
+    if not turtleEvents:
+        return []
+    return [turtleEvent.toJSON() for turtleEvent in turtleEvents]
+    
 
 #Get all turtleEvents
 def get_all_turtleEvent_json():

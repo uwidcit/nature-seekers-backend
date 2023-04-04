@@ -4,7 +4,7 @@ from App.database import db
 import json
 
 #Report 4 - get new turtle tags between from_date to to_date
-def new_turtleTags(from_date, to_date):
+def new_turtleTags(from_date, to_date): 
 
     turtles = TurtleEvent.query.filter(TurtleEvent.timestamp.between(from_date, to_date), TurtleEvent.event_type == "TAG")
 

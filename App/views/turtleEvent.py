@@ -11,10 +11,16 @@ from App.controllers import (
     update_turtleEvent,
     get_unverified_turtleEvents,
     get_turtleEvent_by_turtle,
+    get_all_turtleEvent_by_type_json,
     approve
 )
 
 turtleEvent_views = Blueprint('turtleEvent_views', __name__, template_folder='../templates')
+
+@turtleEvent_views.route('/api/turtleEvent/<type>', methods=['GET'])
+def get_turtleEvent_by_type_action(type):
+     turtleEvents = get_all_turtleEvent_by_type_json(type)
+     return jsonify(turtleEvents)
 
 
 @turtleEvent_views.route('/api/turtleEvent', methods=['GET'])
