@@ -3,8 +3,7 @@ from flask import Blueprint, render_template, jsonify, request, send_from_direct
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_login import current_user, login_required, login_user, logout_user
 
-##stuff for identify
-from App.models import User, Admin, Citizen
+from App.models import User, Admin, Citizen, Organization
 
 
 from App.controllers import (
@@ -87,7 +86,7 @@ def login_view():
   if user and user.check_password(data['password']):
     login_user(user, remember = True)
     return jsonify(message='Logged-in Sucessfully'), 200
-  return jsonify(message='Log in Failed'), 200
+  return jsonify(message='Log in Failed'), 400
 
 #------------ Identify logged in User
 @user_views.route('/identify')

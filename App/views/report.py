@@ -37,6 +37,10 @@ def get_report(report_id, from_date, to_date):
             date_list, pop_list = population_trend(from_date, to_date)
             return [date_list, pop_list]
 
+        case 2: #-------Nest Distributions by Zone
+            
+            return []
+
         case 4: #new tags
             turtleTags = new_turtleTags(from_date, to_date)
             return [turtleTag.toJSON() for turtleTag in turtleTags]

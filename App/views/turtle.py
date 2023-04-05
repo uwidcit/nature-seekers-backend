@@ -19,7 +19,7 @@ turtle_views = Blueprint('turtle_views', __name__, template_folder='../templates
 
 #-----------Create Turtle
 @turtle_views.route('/api/turtles', methods=['POST'])
-@admin_required
+
 def create_turtle_action():
     data = request.json
 
@@ -58,13 +58,13 @@ def get_all_turtle_action():
 
 #-------Delete Turtle by Id
 @turtle_views.route('/api/turtles/delete/<int:turtleid>', methods=['DELETE'])
-@admin_required
+#@admin_required
 def delete_turtle_action(turtleid):
   
     turtle = get_turtle(turtleid)
 
     if not turtle:
-        return jsonify(error="this is a custom error Bad ID or unauthorized"), 401
+        return jsonify(error="this is a custom error Bad ID or unauthorized"), 404
 
     delete_turtle(turtleid)
     return jsonify(message="turtle deleted!"), 200
@@ -81,11 +81,17 @@ def edit_turtle_action(turtle_id):
     if not turtle:
         return jsonify(message="Nest not Found!"), 418
 
+    
+    #get data as python date objects
+    date_components = data["dob"].split('-'  or '/')
+    year, month, day = [int(item) for item in date_components]
+    dob = date(year, month, day)
+
     turtle = edit_turtle_data(
                         turtle_id=turtle_id,
                         new_name=data["name"],
                         new_sex=data["sex"],
-                        new_dob=data['dob'],
+                        new_dob= dob,
                         new_species=data["species"],
                         )
 

@@ -24,6 +24,6 @@ class Turtle(db.Model):
             'id': self.id,
             'name': self.name,
             'sex': self.sex.name,
-            'dateofbirth': self.dob.strftime(" %Y-%m-%d "),
+            'dateofbirth': self.dob.strftime("%Y-%m-%d"),
             'species': self.species.name
         }
