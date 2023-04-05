@@ -16,7 +16,6 @@ nest_views = Blueprint('nest_views', __name__, template_folder='../templates')
 
 #-----------Create Nest
 @nest_views.route('/api/nests', methods=['POST'])
-@admin_required
 def create_nest_action():
     data = request.json
 
@@ -59,7 +58,6 @@ def get_all_nest_action():
 
 #-----------Delete Nest by Id
 @nest_views.route('/api/nests/delete/<int:nestid>', methods=['DELETE'])
-@admin_required
 def delete_nest_action(nestid):
   
     nest = get_nest(nestid)
@@ -73,7 +71,6 @@ def delete_nest_action(nestid):
 
 #-----------Edit Nest by Id
 @nest_views.route('/api/nests/edit/<int:nest_id>', methods=["PUT"])
-@admin_required
 def edit_nest_action(nest_id):
     data = request.json
 

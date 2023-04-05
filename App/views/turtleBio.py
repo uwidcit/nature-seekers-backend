@@ -7,7 +7,7 @@ from App.controllers import (
     create_turtleBio,
     get_turtleBio,
     get_all_turtleBio_json,
-    delete_turtleBio, 
+    delete_turtleBio,
     get_turtleBio_by_turtle
 )
 
