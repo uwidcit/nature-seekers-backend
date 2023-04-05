@@ -1,7 +1,28 @@
-from App.models import TurtleBio, TurtleTag, TurtleEvent
+from datetime import timedelta
+from App.models import TurtleBio, Turtle, TurtleEvent
 from App.database import db
 
 import json
+
+def population_for_given_date(on_date):
+    pop=0
+    turtles = Turtle.query.filter(Turtle.dob <= on_date)
+    for turtle in turtles:
+        pop += 1
+    #pop = len(turtles)
+    return pop
+
+#Report 1 - population trend with time
+def population_trend(from_date, to_date):
+
+    delta = to_date - from_date
+    date_list = [from_date + timedelta(days=i) for i in range(delta.days+1)]
+
+    turtle_pop = []
+    for given_date in date_list:
+        turtle_pop += [population_for_given_date(given_date)]
+
+    return date_list, turtle_pop
 
 #Report 4 - get new turtle tags between from_date to to_date
 def new_turtleTags(from_date, to_date): 

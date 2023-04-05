@@ -11,7 +11,8 @@ from App.controllers import (
     shortest_turtle,
     heaviest_turtle,
     lightest_turtle,
-    get_turtle
+    get_turtle,
+    population_trend
 )
 
 report_views = Blueprint('report_views', __name__, template_folder='../templates')
@@ -32,6 +33,10 @@ def get_report(report_id, from_date, to_date):
 
     match report_id:
         
+        case 1: #-------Population Trends with Time
+            date_list, pop_list = population_trend(from_date, to_date)
+            return [date_list, pop_list]
+
         case 4: #new tags
             turtleTags = new_turtleTags(from_date, to_date)
             return [turtleTag.toJSON() for turtleTag in turtleTags]
