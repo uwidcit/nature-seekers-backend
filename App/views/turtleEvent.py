@@ -10,7 +10,7 @@ from App.controllers import (
     delete_turtleEvent, 
     update_turtleEvent,
     get_unverified_turtleEvents,
-    get_turtleEvent_by_turtle,
+    get_turtleBio_by_turtle,
     get_all_turtleEvent_by_type_json,
     approve
 )
@@ -68,7 +68,7 @@ def get_turtleEvent_by_id_action(turtleEventId):
 #get turtleEvent by turtle id
 @turtleEvent_views.route('/api/turtleEvent/turtle/<int:turtleid>', methods=['GET'])
 def get_turtleEvent_by_turtle_action(turtleid):
-    turtleEvent = get_turtleEvent_by_turtle(turtleid)
+    turtleEvent = get_turtleBio_by_turtle(turtleid)
     return jsonify(turtleEvent), 200
 
 

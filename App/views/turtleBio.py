@@ -8,7 +8,7 @@ from App.controllers import (
     get_turtleBio,
     get_all_turtleBio_json,
     delete_turtleBio, 
-    approve
+    get_turtleBio_by_turtle
 )
 
 turtleBio_views = Blueprint('turtleBio_views', __name__, template_folder='../templates')
@@ -34,6 +34,12 @@ def create_turtleBio_action():
 def get_turtleBio_by_id_action(turtleBioId):
      turtleBio = get_turtleBio(turtleBioId)
      return jsonify(turtleBio .toJSON()), 200
+
+#get turtleBoi by turtle id
+@turtleBio_views.route('/api/turtleBio/turtle/<int:turtleid>', methods=['GET'])
+def get_turtleBio_by_turtle_action(turtleid):
+    turtleBio = get_turtleBio_by_turtle(turtleid)
+    return jsonify(turtleBio), 200
 
 #delete turtleBio
 @turtleBio_views.route('/api/turtleBio/delete/<int:turtleBioId>', methods=['DELETE'])

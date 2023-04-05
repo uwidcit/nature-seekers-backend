@@ -17,6 +17,7 @@ from App.controllers import (
 
 turtle_views = Blueprint('turtle_views', __name__, template_folder='../templates')
 
+#-----------Create Turtle
 @turtle_views.route('/api/turtles', methods=['POST'])
 @admin_required
 def create_turtle_action():
@@ -35,6 +36,7 @@ def create_turtle_action():
     return jsonify({"error": "turtle not created"}), 400
 
 
+#-------Get Turtle by Id
 @turtle_views.route('/api/turtles/<int:turtleid>', methods=['GET'])
 def get_turtle_action(turtleid):
     turtle = get_turtle(turtleid)
@@ -45,6 +47,7 @@ def get_turtle_action(turtleid):
     return jsonify({"error": "turtle not found"}), 404
 
 
+#-------Get All Turtles
 @turtle_views.route('/api/turtles', methods=['GET'])
 def get_all_turtle_action():
     #turtles = []
@@ -53,6 +56,7 @@ def get_all_turtle_action():
     return jsonify(turtles)
 
 
+#-------Delete Turtle by Id
 @turtle_views.route('/api/turtles/delete/<int:turtleid>', methods=['DELETE'])
 @admin_required
 def delete_turtle_action(turtleid):
@@ -66,8 +70,9 @@ def delete_turtle_action(turtleid):
     return jsonify(message="turtle deleted!"), 200
 
 
+#-------Edit Turtle
 @turtle_views.route('/api/turtles/edit/<int:turtle_id>', methods=["PUT"])
-@admin_required
+#@admin_required
 def edit_turtle_action(turtle_id):
     data = request.json
 

@@ -26,6 +26,12 @@ def create_turtleBio(
 def get_turtleBio(turtle_bio_id):
     return TurtleBio.query.get(turtle_bio_id)
 
+#Get turtle bio by turtle_id
+def get_turtleBio_by_turtle(turtle_id):
+    turtleBios = TurtleBio.query.filter_by(turtle_id=turtle_id).all()
+    return [turtleBio.toJSON() for turtleBio in turtleBios]
+
+
 #Get all turtle_bios
 def get_all_turtleBio_json():
     turtle_bios = TurtleBio.query.all()

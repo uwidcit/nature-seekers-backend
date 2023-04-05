@@ -35,7 +35,7 @@ def get_turtleEvent(turtleEvent_id):
     return TurtleEvent.query.get(turtleEvent_id)
 
 #Get turtle event by turtle_id
-def get_turtleEvent_by_turtle(turtle_id):
+def get_turtleBio_by_turtle(turtle_id):
     turtleEvents = TurtleEvent.query.filter_by(turtle_id=turtle_id).all()
     return [turtleEvent.toJSON() for turtleEvent in turtleEvents]
 
