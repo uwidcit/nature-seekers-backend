@@ -18,13 +18,13 @@ class TurtleEvent(db.Model):
     __tablename__ = 'turtleEvent'
 
     id = db.Column(db.Integer, primary_key=True)
-    turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.id'))
+    turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.id'), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     beach_name = db.Column(db.String, nullable=False)
     latitude = db.Column(db.Float, nullable=False)
     longitude = db.Column(db.Float, nullable=False)
     verified  = db.Column(db.Boolean, nullable=False, default= False)
-    event_type = db.Column(db.Enum(TurtleEventType))
+    event_type = db.Column(db.Enum(TurtleEventType), nullable=True)
     state = db.Column(db.Enum(IsAlive))
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     

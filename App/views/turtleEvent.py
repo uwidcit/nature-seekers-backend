@@ -17,9 +17,9 @@ from App.controllers import (
 
 turtleEvent_views = Blueprint('turtleEvent_views', __name__, template_folder='../templates')
 
-@turtleEvent_views.route('/api/turtleEvent/<type>', methods=['GET'])
-def get_turtleEvent_by_type_action(type):
-     turtleEvents = get_all_turtleEvent_by_type_json(type)
+@turtleEvent_views.route('/api/turtleEvent/<type>/turtle/<int:turtleid>', methods=['GET'])
+def get_turtleEvent_by_type_action(type, turtleid):
+     turtleEvents = get_all_turtleEvent_by_type_json(type, turtleid)
      return jsonify(turtleEvents)
 
 

@@ -40,8 +40,8 @@ def get_turtleEvent_by_turtle(turtle_id):
     return [turtleEvent.toJSON() for turtleEvent in turtleEvents]
 
 #Get all turtleEvents by type
-def get_all_turtleEvent_by_type_json(type):
-    turtleEvents = TurtleEvent.query.filter_by(event_type = type )
+def get_all_turtleEvent_by_type_json(type, turtleid):
+    turtleEvents = TurtleEvent.query.filter_by(event_type = type, turtle_id = turtleid)
     if not turtleEvents:
         return []
     return [turtleEvent.toJSON() for turtleEvent in turtleEvents]
