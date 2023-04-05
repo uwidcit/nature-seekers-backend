@@ -1,3 +1,4 @@
+from functools import wraps
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_login import current_user, login_required, login_user, logout_user
@@ -19,6 +20,27 @@ from App.controllers import (
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
+
+
+
+def organization_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated or not isinstance(current_user, Organization):
+            return "Unauthorized", 401
+        return func(*args, **kwargs)
+    return wrapper
+
+def admin_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated or not isinstance(current_user, Admin):
+            return "Unauthorized", 401
+        return func(*args, **kwargs)
+    return wrapper
+
+
+
 
 
 @user_views.route('/users', methods=['GET'])

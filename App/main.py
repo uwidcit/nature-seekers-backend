@@ -1,3 +1,4 @@
+from functools import wraps
 import os
 from flask import Flask
 from flask_login import LoginManager, current_user
@@ -7,7 +8,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from datetime import timedelta
 
-from .models import User
+from .models import User, Organization, Admin
 
 from App.database import create_db
 
@@ -19,10 +20,13 @@ from App.views import app_views
 
 login_manager = LoginManager()
 
+
 @login_manager.user_loader
 def load_user(user_id):
-  return User.query.get(user_id)
-
+  user =  User.query.get(user_id)
+  if user:
+    return user
+  return Admin.query.get(user_id)
 
 # New views must be imported and added to this list
 

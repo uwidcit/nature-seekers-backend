@@ -3,7 +3,9 @@ from flask_jwt_extended import jwt_required
 
 from datetime import date, datetime
 
-from flask_login import login_required
+from flask_login import fresh_login_required, login_required
+
+from App.views.user import admin_required
 
 from App.controllers import (
     create_turtle,
@@ -16,11 +18,11 @@ from App.controllers import (
 turtle_views = Blueprint('turtle_views', __name__, template_folder='../templates')
 
 @turtle_views.route('/api/turtles', methods=['POST'])
-#@jwt_required()
+@admin_required
 def create_turtle_action():
     data = request.json
 
-    #get data as python date object
+    #get data as python date objects
     date_components = data["dob"].split('-')
     year, month, day = [int(item) for item in date_components]
     dob = date(year, month, day)
@@ -34,7 +36,6 @@ def create_turtle_action():
 
 
 @turtle_views.route('/api/turtles/<int:turtleid>', methods=['GET'])
-#@jwt_required()
 def get_turtle_action(turtleid):
     turtle = get_turtle(turtleid)
 
@@ -45,7 +46,6 @@ def get_turtle_action(turtleid):
 
 
 @turtle_views.route('/api/turtles', methods=['GET'])
-#@jwt_required()
 def get_all_turtle_action():
     #turtles = []
     turtles = get_all_turtles_json()
@@ -54,7 +54,7 @@ def get_all_turtle_action():
 
 
 @turtle_views.route('/api/turtles/delete/<int:turtleid>', methods=['DELETE'])
-#@jwt_required()
+@admin_required
 def delete_turtle_action(turtleid):
   
     turtle = get_turtle(turtleid)
@@ -67,7 +67,7 @@ def delete_turtle_action(turtleid):
 
 
 @turtle_views.route('/api/turtles/edit/<int:turtle_id>', methods=["PUT"])
-@login_required
+@admin_required
 def edit_turtle_action(turtle_id):
     data = request.json
 
