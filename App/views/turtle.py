@@ -3,6 +3,8 @@ from flask_jwt_extended import jwt_required
 
 from datetime import date, datetime
 
+from flask_login import login_required
+
 from App.controllers import (
     create_turtle,
     get_turtle,
@@ -65,7 +67,7 @@ def delete_turtle_action(turtleid):
 
 
 @turtle_views.route('/api/turtles/edit/<int:turtle_id>', methods=["PUT"])
-#@login_required
+@login_required
 def edit_turtle_action(turtle_id):
     data = request.json
 

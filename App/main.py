@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from datetime import timedelta
 
+from .models import User
 
 from App.database import create_db
 
@@ -15,6 +16,13 @@ from App.controllers import (
 )
 
 from App.views import app_views
+
+login_manager = LoginManager()
+
+@login_manager.user_loader
+def load_user(user_id):
+  return User.query.get(user_id)
+
 
 # New views must be imported and added to this list
 
@@ -54,5 +62,8 @@ def create_app(config={}):
     add_views(app)
     create_db(app)
     setup_jwt(app)
+
+    login_manager.init_app(app)
+    
     app.app_context().push()
     return app

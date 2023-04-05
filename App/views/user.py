@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_login import logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 
 ##stuff for identify
 from App.models import User, Admin, Citizen, TurtleEvent
@@ -72,37 +72,33 @@ def static_user_page():
 @user_views.route('/login', methods=['POST'])
 def login_view():
   data = request.json
-  print(data['username'], data['password'])
-  token = login(data['username'], data['password'])
-  if not token:
-    return jsonify(message='bad username or password givennn'), 401
-  return jsonify(access_token=token)
+
+  user = User.query.filter_by(username=data['username']).first()
+
+  if user and user.check_password(data['password']):
+    login_user(user, remember = True)
+    return jsonify(message='logged in Sucess'), 200
+  return jsonify(message='log in FAIL'), 200
+  
 
 # Mr. Mendez labs
 
 @user_views.route('/identify')
-@jwt_required()
+@login_required
 def identify_view():
-  username = get_jwt_identity() # convert sent token to user name
-  #retrieve regular user with given username
-  citizen = Citizen.query.filter_by(username=username).first()
-  if citizen:
-    return jsonify(citizen.toJSON()) #jsonify user object
-  #retrieve admin user with given username
-  admin = Admin.query.filter_by(username=username).first()
-  if admin:
-    return jsonify(admin.toJSON())#jsonify admin object
-
+  user = User.query.filter_by(username = current_user.username).first()
+  if user:
+    return (user.toJSON())
+  return jsonify( message='no user found'), 400
 
 @user_views.route('/logout', methods=['GET'])
 def logout_action():
-
+  logout_user()
   return jsonify( message='logged out'), 200
 
 
 
 @user_views.route('/api/delete/organization/<int:orgId>', methods=['DELETE'])
-#@jwt_required
 def delete_organization_action(orgId):
    delete_organization(orgId)
    return jsonify(message="Organization deleted!"), 200
