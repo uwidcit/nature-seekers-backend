@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_login import current_user, login_required, login_user, logout_user
 
 ##stuff for identify
-from App.models import User, Admin, Citizen, TurtleEvent
+from App.models import User, Admin, Citizen
 
 
 from App.controllers import (
@@ -13,15 +13,20 @@ from App.controllers import (
     create_organization,
     get_all_users,
     get_all_users_json,
-    login,
     get_all_organizations_json,
-    delete_organization,
-    #citizen_login
+    delete_organization
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
-
+#decorators to limit user permissions
+def citizen_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated or not isinstance(current_user, Citizen):
+            return "Unauthorized", 401
+        return func(*args, **kwargs)
+    return wrapper
 
 def organization_required(func):
     @wraps(func)
@@ -40,35 +45,20 @@ def admin_required(func):
     return wrapper
 
 
-
-
-
-@user_views.route('/users', methods=['GET'])
-def get_user_page():
-    users = get_all_users()
-    return render_template('users.html', users=users)
-
+#------------Get All Users
 @user_views.route('/api/users', methods=['GET'])
 def get_users_action():
     users = get_all_users_json()
     return jsonify(users)
 
-##  Create users 
 
+#---------Create users 
 @user_views.route('/api/citizens', methods=['POST'])
 def create_citizen_action():
     data = request.json
     res = create_citizen(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
     if res: 
         return jsonify({'message': f"citizen user {data['username']} created"}), 201
-    return jsonify({'message': f"error creating user"}), 401
-
-@user_views.route('/api/admins', methods=['POST'])
-def create_admin_action():
-    data = request.json
-    res = create_admin(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
-    if res: 
-        return jsonify({'message': f"admin user {data['username']} created"}), 201
     return jsonify({'message': f"error creating user"}), 401
 
 @user_views.route('/api/organization', methods=['POST'])
@@ -79,18 +69,15 @@ def create_organization_action():
         return jsonify({'message': f"organization user {data['username']} created"}), 201
     return jsonify({'message': f"error creating user"}), 401
 
-@user_views.route('/api/organization', methods=['GET'])
-def get_all_organizations_action():
-  organizations = get_all_organizations_json()
-  return jsonify(organizations)
+@user_views.route('/api/admins', methods=['POST'])
+def create_admin_action():
+    data = request.json
+    res = create_admin(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
+    if res: 
+        return jsonify({'message': f"admin user {data['username']} created"}), 201
+    return jsonify({'message': f"error creating user"}), 401
 
-
-@user_views.route('/static/users', methods=['GET'])
-def static_user_page():
-  return send_from_directory('static', 'static-user.html')
-
-
-#Login Users
+#-----------Login Users
 @user_views.route('/login', methods=['POST'])
 def login_view():
   data = request.json
@@ -99,12 +86,10 @@ def login_view():
 
   if user and user.check_password(data['password']):
     login_user(user, remember = True)
-    return jsonify(message='logged in Sucess'), 200
-  return jsonify(message='log in FAIL'), 200
-  
+    return jsonify(message='Logged-in Sucessfully'), 200
+  return jsonify(message='Log in Failed'), 200
 
-# Mr. Mendez labs
-
+#------------ Identify logged in User
 @user_views.route('/identify')
 @login_required
 def identify_view():
@@ -113,14 +98,23 @@ def identify_view():
     return (user.toJSON())
   return jsonify( message='no user found'), 400
 
+#---------------Log out User
 @user_views.route('/logout', methods=['GET'])
+@login_required
 def logout_action():
   logout_user()
   return jsonify( message='logged out'), 200
 
 
+#---------------Get All Organizations
+@user_views.route('/api/organization', methods=['GET'])
+def get_all_organizations_action():
+  organizations = get_all_organizations_json()
+  return jsonify(organizations)
 
+#-----------------Delete Organization
 @user_views.route('/api/delete/organization/<int:orgId>', methods=['DELETE'])
+@admin_required
 def delete_organization_action(orgId):
    delete_organization(orgId)
    return jsonify(message="Organization deleted!"), 200

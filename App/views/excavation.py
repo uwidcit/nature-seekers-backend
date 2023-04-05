@@ -3,6 +3,8 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from App.models import User, Admin, Citizen
 
+from .user import admin_required    
+
 from App.controllers import (
     create_excavation,
     get_excavation,
@@ -12,13 +14,9 @@ from App.controllers import (
 
 excavation_views = Blueprint('excavation_views', __name__, template_folder='../templates')
 
-@excavation_views.route('/api/excavation', methods=['GET'])
-def get_excavation_action():
-     all_excavation = get_all_excavation_json()
-     return jsonify(all_excavation)
-
+#-----------Create Excavation
 @excavation_views.route('/api/excavation', methods=['POST'])
-@jwt_required()
+@admin_required
 def create_excavation_action():
     data = request.json
 
@@ -40,15 +38,24 @@ def create_excavation_action():
         return jsonify({'message': f"excavation created"}), 201
     return jsonify({'message': f"error creating excavation"}), 401
 
-#get excavation by excavation id
+
+#-----------Get All Excavations
+@excavation_views.route('/api/excavation', methods=['GET'])
+def get_excavation_action():
+     all_excavation = get_all_excavation_json()
+     return jsonify(all_excavation)
+
+
+#-----------Get Excavation by Id
 @excavation_views.route('/api/excavation/<int:excavationId>', methods=['GET'])
 def get_excavation_by_id_action(excavationId):
      excavation = get_excavation(excavationId)
      return jsonify(excavation .toJSON()), 200
 
-#delete excavation
+
+#-----------Delete Excavation by Id
 @excavation_views.route('/api/excavation/delete/<int:excavationId>', methods=['DELETE'])
-@jwt_required()
+@admin_required
 def delete_capture_action(excavationId):
   
     excavation = get_excavation(excavationId)
