@@ -3,7 +3,7 @@ from App.database import db
 
 import json
 
-#Create turtleInjury object
+#----------Create turtleInjury object
 def create_turtleInjury(
                     turtle_id,
                     description
@@ -18,18 +18,18 @@ def create_turtleInjury(
     db.session.commit()
     return newturtleInjury
 
-#Get turtleInjury by turtleInjury_id
+#----------Get turtleInjury by turtleInjury_id
 def get_turtleInjury(turtleInjury_id):
     return TurtleInjury.query.get(turtleInjury_id)
 
-#Get all turtleInjurys
+#----------Get all turtleInjurys
 def get_all_turtleInjury_json():
     turtleInjurys = TurtleInjury.query.all()
     if not turtleInjurys:
         return []
     return [turtleInjury.toJSON() for turtleInjury in turtleInjurys]
     
-#Delete an turtleInjury by excavation_id
+#----------Delete an turtleInjury by excavation_id
 def delete_turtleInjury(turtleInjury_id):
     turtleInjury = get_turtleInjury(turtleInjury_id)
     if turtleInjury:
@@ -37,7 +37,7 @@ def delete_turtleInjury(turtleInjury_id):
         return db.session.commit()
     return None
 
-#Update organization event name 
+#----------Update organization event name 
 def edit_turtleInjury(turtleInjuryid, description):
     turtleInjury = TurtleInjury.query.filter_by(id=turtleInjuryid).first()
     if not turtleInjury:

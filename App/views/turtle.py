@@ -19,7 +19,6 @@ turtle_views = Blueprint('turtle_views', __name__, template_folder='../templates
 
 #-----------Create Turtle
 @turtle_views.route('/api/turtles', methods=['POST'])
-
 def create_turtle_action():
     data = request.json
 
@@ -58,7 +57,6 @@ def get_all_turtle_action():
 
 #-------Delete Turtle by Id
 @turtle_views.route('/api/turtles/delete/<int:turtleid>', methods=['DELETE'])
-#@admin_required
 def delete_turtle_action(turtleid):
   
     turtle = get_turtle(turtleid)

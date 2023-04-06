@@ -21,7 +21,6 @@ def get_turtleActivity_action():
      return jsonify(all_turtleActivity)
 
 @turtleActivity_views.route('/api/turtleActivity', methods=['POST'])
-@jwt_required()
 def create_turtleActivity_action():
     data = request.json
 
@@ -38,7 +37,6 @@ def get_turtleActivity_by_id_action(turtleActivityId):
 
 #delete turtleActivity
 @turtleActivity_views.route('/api/turtleActivity/delete/<int:turtleActivityId>', methods=['DELETE'])
-@jwt_required()
 def delete_capture_action(turtleActivityId):
   
     turtleActivity = get_turtleActivity(turtleActivityId)

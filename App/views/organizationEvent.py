@@ -14,7 +14,6 @@ from App.controllers import (
 organizationEvent_views = Blueprint('organizationEvent_views', __name__, template_folder='../templates')
 
 @organizationEvent_views.route('/api/organizationEvents', methods=['POST'])
-@jwt_required()
 def create_organizationEvent_action():
     data = request.json
 
@@ -38,7 +37,6 @@ def create_organizationEvent_action():
 
 
 @organizationEvent_views.route('/api/organizationEvents/<int:organizationEventid>', methods=['GET'])
-#@jwt_required()
 def get_organizationEvent_action(organizationEventid):
     organizationEvent = get_organizationEvent(organizationEventid)
 
@@ -49,16 +47,13 @@ def get_organizationEvent_action(organizationEventid):
 
 
 @organizationEvent_views.route('/api/organizationEvents', methods=['GET'])
-#@jwt_required()
 def get_all_organizationEvent_action():
-    #organizationEvents = []
     organizationEvents = get_all_organizationEvent_json()
 
     return jsonify(organizationEvents)
 
 
 @organizationEvent_views.route('/api/organizationEvents/delete/<int:organizationEventid>', methods=['DELETE'])
-@jwt_required()
 def delete_organizationEvent_action(organizationEventid):
   
     organizationEvent = get_organizationEvent(organizationEventid)

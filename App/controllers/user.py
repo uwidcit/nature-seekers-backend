@@ -99,7 +99,6 @@ def get_all_users_json():
     result += get_all_organizations_json()
     return result
     
-
 def update_user(id, username):
     user = get_user(id)
     if user:

@@ -18,7 +18,7 @@ from App.controllers import (
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
-#decorators to limit user permissions
+#----------Decorators to limit user permissions
 def citizen_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -104,7 +104,6 @@ def logout_action():
   logout_user()
   return jsonify( message='logged out'), 200
 
-
 #---------------Get All Organizations
 @user_views.route('/api/organization', methods=['GET'])
 def get_all_organizations_action():
@@ -113,7 +112,6 @@ def get_all_organizations_action():
 
 #-----------------Delete Organization
 @user_views.route('/api/delete/organization/<int:orgId>', methods=['DELETE'])
-@admin_required
 def delete_organization_action(orgId):
    delete_organization(orgId)
    return jsonify(message="Organization deleted!"), 200

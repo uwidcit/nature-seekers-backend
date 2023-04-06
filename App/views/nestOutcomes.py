@@ -20,7 +20,6 @@ def get_nestOutcome_action():
      return jsonify(all_nestOutcome)
 
 @nestOutcome_views.route('/api/nestOutcome', methods=['POST'])
-@jwt_required()
 def create_nestOutcome_action():
     data = request.json
 
@@ -29,15 +28,14 @@ def create_nestOutcome_action():
         return jsonify({'message': f"nestOutcome created"}), 201
     return jsonify({'message': f"error creating nestOutcome"}), 401
 
-#get nestOutcome by nestOutcome id
+#----------get nestOutcome by nestOutcome id
 @nestOutcome_views.route('/api/nestOutcome/<int:nestOutcomeId>', methods=['GET'])
 def get_nestOutcome_by_id_action(nestOutcomeId):
      nestOutcome = get_nestOutcome(nestOutcomeId)
      return jsonify(nestOutcome .toJSON()), 200
 
-#delete nestOutcome
+#----------delete nestOutcome
 @nestOutcome_views.route('/api/nestOutcome/delete/<int:nestOutcomeId>', methods=['DELETE'])
-@jwt_required()
 def delete_capture_action(nestOutcomeId):
   
     nestOutcome = get_nestOutcome(nestOutcomeId)
@@ -49,7 +47,6 @@ def delete_capture_action(nestOutcomeId):
     return jsonify(message="nestOutcome deleted!"), 200
 
 @nestOutcome_views.route('/api/nestOutcome/edit/<int:nestOutcome_id>', methods=["PUT"])
-#@login_required
 def edit_nestOutcome_action(nestOutcome_id):
     data = request.json
 

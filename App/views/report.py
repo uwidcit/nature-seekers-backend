@@ -18,7 +18,6 @@ from App.controllers import (
 report_views = Blueprint('report_views', __name__, template_folder='../templates')
 
 @report_views.route('/api/report/<int:report_id>/<from_date>/<to_date>', methods=['GET'])
-###@jwt_required()
 def get_report(report_id, from_date, to_date):
 
     #get from_date as python date object

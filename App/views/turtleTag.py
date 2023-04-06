@@ -21,7 +21,6 @@ def get_turtleTag_action():
      return jsonify(all_turtleTag)
 
 @turtleTag_views.route('/api/turtleTag', methods=['POST'])
-@jwt_required()
 def create_turtleTag_action():
     data = request.json
 
@@ -45,7 +44,6 @@ def get_turtleTag_by_turtle_action(turtleid):
 
 #delete turtleTag
 @turtleTag_views.route('/api/turtleTag/delete/<int:turtleTagId>', methods=['DELETE'])
-@jwt_required()
 def delete_capture_action(turtleTagId):
   
     turtleTag = get_turtleTag(turtleTagId)

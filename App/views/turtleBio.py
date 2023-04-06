@@ -20,7 +20,6 @@ def get_turtleBio_action():
      return jsonify(all_turtleBio)
 
 @turtleBio_views.route('/api/turtleBio', methods=['POST'])
-@jwt_required()
 def create_turtleBio_action():
     data = request.json
 
@@ -43,7 +42,6 @@ def get_turtleBio_by_turtle_action(turtleid):
 
 #delete turtleBio
 @turtleBio_views.route('/api/turtleBio/delete/<int:turtleBioId>', methods=['DELETE'])
-@jwt_required()
 def delete_capture_action(turtleBioId):
   
     turtleBio = get_turtleBio(turtleBioId)

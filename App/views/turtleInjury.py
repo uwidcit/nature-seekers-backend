@@ -20,7 +20,6 @@ def get_turtleInjury_action():
      return jsonify(all_turtleInjury)
 
 @turtleInjury_views.route('/api/turtleInjury', methods=['POST'])
-@jwt_required()
 def create_turtleInjury_action():
     data = request.json
 
@@ -37,7 +36,6 @@ def get_turtleInjury_by_id_action(turtleInjuryId):
 
 #delete turtleInjury
 @turtleInjury_views.route('/api/turtleInjury/delete/<int:turtleInjuryId>', methods=['DELETE'])
-@jwt_required()
 def delete_capture_action(turtleInjuryId):
   
     turtleInjury = get_turtleInjury(turtleInjuryId)

@@ -47,7 +47,7 @@ def nest_distributions(from_date, to_date):
                 
         
 
-    zone_list = [zone_1, zone_2, zone_3]           
+    zone_list = [zone_1, zone_2, zone_3, zone_4, zone_5, zone_6, zone_7, zone_8, zone_9, zone_10, zone_11, zone_12, zone_13]           
     return [zone_list]
 #Report 4 - get new turtle tags between from_date to to_date
 def new_turtleTags(from_date, to_date): 

@@ -20,7 +20,6 @@ def get_turtleEventMedia_action():
      return jsonify(all_turtleEventMedia)
 
 @turtleEventMedia_views.route('/api/turtleEventMedia', methods=['POST'])
-@jwt_required()
 def create_turtleEventMedia_action():
     data = request.json
 
@@ -29,15 +28,14 @@ def create_turtleEventMedia_action():
         return jsonify({'message': f"turtleEventMedia created"}), 201
     return jsonify({'message': f"error creating turtleEventMedia"}), 401
 
-#get turtleEventMedia by turtleEventMedia id
+#----------get turtleEventMedia by turtleEventMedia id
 @turtleEventMedia_views.route('/api/turtleEventMedia/<int:turtleEventMediaId>', methods=['GET'])
 def get_turtleEventMedia_by_id_action(turtleEventMediaId):
      turtleEventMedia = get_turtleEventMedia(turtleEventMediaId)
      return jsonify(turtleEventMedia .toJSON()), 200
 
-#delete turtleEventMedia
+#----------delete turtleEventMedia
 @turtleEventMedia_views.route('/api/turtleEventMedia/delete/<int:turtleEventMediaId>', methods=['DELETE'])
-@jwt_required()
 def delete_capture_action(turtleEventMediaId):
   
     turtleEventMedia = get_turtleEventMedia(turtleEventMediaId)
@@ -48,7 +46,7 @@ def delete_capture_action(turtleEventMediaId):
     delete_turtleEventMedia(turtleEventMediaId)
     return jsonify(message="turtleEventMedia deleted!"), 200
 
-#Approve
+#----------Approve
 @turtleEventMedia_views.route('/api/turtleEventMedia/approve/<int:turtleEventMediaId>', methods=['PUT'])
 def approve_turtleEventMedia_by_id(turtleEventMediaId):
     event = get_turtleEventMedia(turtleEventMediaId)

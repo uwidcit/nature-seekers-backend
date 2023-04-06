@@ -19,7 +19,6 @@ def get_nestRelocation_action():
      return jsonify(all_nestRelocation)
 
 @nestRelocation_views.route('/api/nestRelocation', methods=['POST'])
-@jwt_required()
 def create_nestRelocation_action():
     data = request.json
 
@@ -48,7 +47,6 @@ def get_nestRelocation_by_id_action(nestRelocationId):
 
 #delete nestRelocation
 @nestRelocation_views.route('/api/nestRelocation/delete/<int:nestRelocationId>', methods=['DELETE'])
-@jwt_required()
 def delete_capture_action(nestRelocationId):
   
     nestRelocation = get_nestRelocation(nestRelocationId)

@@ -3,7 +3,7 @@ from App.database import db
 
 import json
 
-#Create turtle object
+#----------Create turtle object
 def create_turtle(
                     name,
                     sex,
@@ -21,18 +21,18 @@ def create_turtle(
     db.session.commit()
     return newturtle
 
-#Get turtle by turtle_id
+#----------Get turtle by turtle_id
 def get_turtle(turtle_id):
     return Turtle.query.get(turtle_id)
 
-#Get all turtles
+#----------Get all turtles
 def get_all_turtles_json():
     turtles = Turtle.query.all()
     if not turtles:
         return []
     return [turtle.toJSON() for turtle in turtles]
 
-#Update turtle data 
+#----------Update turtle data 
 def edit_turtle_data(turtle_id, new_name, new_sex, new_dob, new_species):
     turtle = Turtle.query.filter_by(id=turtle_id).first()
     if not turtle:
@@ -47,7 +47,7 @@ def edit_turtle_data(turtle_id, new_name, new_sex, new_dob, new_species):
     db.session.commit()
     return turtle
     
-#Delete an turtle by excavation_id
+#----------Delete an turtle by excavation_id
 def delete_turtle(turtle_id):
     turtle = get_turtle(turtle_id)
     if turtle:

@@ -22,14 +22,12 @@ def get_turtleEvent_by_type_action(type, turtleid):
      turtleEvents = get_all_turtleEvent_by_type_json(type, turtleid)
      return jsonify(turtleEvents)
 
-
 @turtleEvent_views.route('/api/turtleEvent', methods=['GET'])
 def get_turtleEvent_action():
      all_turtleEvent = get_all_turtleEvent_json()
      return jsonify(all_turtleEvent)
 
 @turtleEvent_views.route('/api/turtleEvent', methods=['POST'])
-@jwt_required()
 def create_turtleEvent_action():
     data = request.json
 
@@ -71,11 +69,8 @@ def get_turtleEvent_by_turtle_action(turtleid):
     turtleEvent = get_turtleBio_by_turtle(turtleid)
     return jsonify(turtleEvent), 200
 
-
-
-#delete turtleEvent
+#----------delete turtleEvent
 @turtleEvent_views.route('/api/turtleEvent/delete/<int:turtleEventId>', methods=['DELETE'])
-@jwt_required()
 def delete_capture_action(turtleEventId):
   
     turtleEvent = get_turtleEvent(turtleEventId)
@@ -86,7 +81,7 @@ def delete_capture_action(turtleEventId):
     delete_turtleEvent(turtleEventId)
     return jsonify(message="turtleEvent deleted!"), 200
 
-#Approve
+#----------Approve
 @turtleEvent_views.route('/api/turtleEvent/approve/<int:turtleEventId>', methods=['PUT'])
 def approve_turtleEvent_by_id(turtleEventId):
     event = get_turtleEvent(turtleEventId)
@@ -97,9 +92,7 @@ def approve_turtleEvent_by_id(turtleEventId):
         return jsonify(error="not working"), 401
     return jsonify(message="Event Approved"), 200
 
-
 @turtleEvent_views.route('/api/turtleEvent/edit/<int:turtleEvent_id>', methods=["PUT"])
-#@login_required
 def edit_turtleEvent_action(turtleEvent_id):
     data = request.json
 
@@ -122,7 +115,6 @@ def edit_turtleEvent_action(turtleEvent_id):
     #if turtleEvent:
     return jsonify(turtleEvent.toJSON()), 201
     #return jsonify(message="Nest not Changed!"), 418
-
 
 @turtleEvent_views.route('/api/turtleEvent/unverified')
 def get_unverified_turtleEvents_action():

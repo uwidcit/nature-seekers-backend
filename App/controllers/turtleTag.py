@@ -3,7 +3,7 @@ from App.database import db
 
 import json
 
-#Create turtleTag object
+#----------Create turtleTag object
 def create_turtleTag(
                     turtle_id,
                     status,
@@ -20,23 +20,23 @@ def create_turtleTag(
     db.session.commit()
     return newturtleTag
 
-#Get turtleTag by turtleTag_id
+#----------Get turtleTag by turtleTag_id
 def get_turtleTag(turtleTag_id):
     return TurtleTag.query.get(turtleTag_id)
 
-#Get turtle tag by turtle_id
+#----------Get turtle tag by turtle_id
 def get_turtleTag_by_turtle(turtle_id):
     turtleTags = TurtleTag.query.filter_by(turtle_id=turtle_id).all()
     return [turtleTag.toJSON() for turtleTag in turtleTags]
 
-#Get all turtleTags
+#----------Get all turtleTags
 def get_all_turtleTag_json():
     turtleTags = TurtleTag.query.all()
     if not turtleTags:
         return []
     return [turtleTag.toJSON() for turtleTag in turtleTags]
     
-#Delete an turtleTag by excavation_id
+#----------Delete an turtleTag by excavation_id
 def delete_turtleTag(turtleTag_id):
     turtleTag = get_turtleTag(turtleTag_id)
     if turtleTag:
@@ -44,8 +44,7 @@ def delete_turtleTag(turtleTag_id):
         return db.session.commit()
     return None
 
-
-#Update organization event name 
+#----------Update organization event name 
 def edit_turtleTag(turtleTagid, status):
     turtleTag = TurtleTag.query.filter_by(id=turtleTagid).first()
     if not turtleTag:

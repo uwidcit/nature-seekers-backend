@@ -16,7 +16,6 @@ excavation_views = Blueprint('excavation_views', __name__, template_folder='../t
 
 #-----------Create Excavation
 @excavation_views.route('/api/excavation', methods=['POST'])
-@admin_required
 def create_excavation_action():
     data = request.json
 
@@ -55,7 +54,6 @@ def get_excavation_by_id_action(excavationId):
 
 #-----------Delete Excavation by Id
 @excavation_views.route('/api/excavation/delete/<int:excavationId>', methods=['DELETE'])
-@admin_required
 def delete_capture_action(excavationId):
   
     excavation = get_excavation(excavationId)

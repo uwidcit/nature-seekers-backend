@@ -3,7 +3,7 @@ from App.database import db
 
 import json
 
-#Create nestRelocation object
+#----------Create nestRelocation object
 def create_nestRelocation(
                             nest_id, 
                             from_location_name, 
@@ -39,18 +39,18 @@ def create_nestRelocation(
     db.session.commit()
     return newnestRelocation
 
-#Get nestRelocation by nestRelocation_id
+#----------Get nestRelocation by nestRelocation_id
 def get_nestRelocation(nestRelocation_id):
     return NestRelocation.query.get(nestRelocation_id)
 
-#Get all nestRelocations
+#----------Get all nestRelocations
 def get_all_nestRelocation_json():
     nestRelocations = NestRelocation.query.all()
     if not nestRelocations:
         return []
     return [nestRelocation.toJSON() for nestRelocation in nestRelocations]
 
-#Delete an nestRelocation by excavation_id
+#----------Delete an nestRelocation by excavation_id
 def delete_nestRelocation(nestRelocation_id):
     nestRelocation = get_nestRelocation(nestRelocation_id)
     if nestRelocation:
