@@ -79,14 +79,14 @@ def create_admin_action():
 #-----------Login Users
 @user_views.route('/login', methods=['POST'])
 def login_view():
-  data = request.json
+    username = request.json['username']
+    password = request.json['password']
+    user = User.query.filter_by(username=username).first()
 
-  user = User.query.filter_by(username=data['username']).first()
-
-  if user and user.check_password(data['password']):
-    login_user(user, remember = True)
-    return jsonify(message='Logged-in Sucessfully'), 200
-  return jsonify(message='Log in Failed'), 400
+    if user and user.check_password(password):
+        login_user(user, remember = True)
+        return jsonify(message='Logged-in Sucessfully'), 200
+    return jsonify(message='Log in Failed'), 400
 
 #------------ Identify logged in User
 @user_views.route('/identify')

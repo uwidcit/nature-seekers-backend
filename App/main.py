@@ -55,7 +55,7 @@ def loadConfig(app, config):
 
 def create_app(config={}):
     app = Flask(__name__, static_url_path='/static')
-    CORS(app,)
+    CORS(app, headers=['Content-Type'], supports_credentials=True) #from ,
     loadConfig(app, config)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['TEMPLATES_AUTO_RELOAD'] = True
