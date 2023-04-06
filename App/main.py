@@ -18,8 +18,8 @@ from App.controllers import (
 
 from App.views import app_views
 
+#----------login
 login_manager = LoginManager()
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -66,7 +66,7 @@ def create_app(config={}):
     add_views(app)
     create_db(app)
     setup_jwt(app)
-
+    #----------login
     login_manager.init_app(app)
     
     app.app_context().push()

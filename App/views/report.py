@@ -12,7 +12,8 @@ from App.controllers import (
     heaviest_turtle,
     lightest_turtle,
     get_turtle,
-    population_trend
+    population_trend,
+    nest_distributions
 )
 
 report_views = Blueprint('report_views', __name__, template_folder='../templates')
@@ -37,8 +38,8 @@ def get_report(report_id, from_date, to_date):
             return [date_list, pop_list]
 
         case 2: #-------Nest Distributions by Zone
-            
-            return []
+            zone_list = nest_distributions(from_date, to_date)
+            return [zone_list]
 
         case 4: #new tags
             turtleTags = new_turtleTags(from_date, to_date)

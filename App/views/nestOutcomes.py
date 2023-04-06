@@ -46,6 +46,7 @@ def delete_capture_action(nestOutcomeId):
     delete_nestOutcome(nestOutcomeId)
     return jsonify(message="nestOutcome deleted!"), 200
 
+#----------Edit Nest Outcome
 @nestOutcome_views.route('/api/nestOutcome/edit/<int:nestOutcome_id>', methods=["PUT"])
 def edit_nestOutcome_action(nestOutcome_id):
     data = request.json

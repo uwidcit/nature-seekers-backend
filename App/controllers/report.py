@@ -27,6 +27,21 @@ def population_trend(from_date, to_date):
 #-----Report 2 - Nest Distribution by Zones
 def nest_distributions(from_date, to_date):
     nests = Nest.query.filter(Nest.timestamp.between(from_date, to_date))
+    
+    zone_1 = 0
+    zone_2 = 0
+    zone_3 = 0
+    zone_4 = 0
+    zone_5 = 0
+    zone_6 = 0
+    zone_7 = 0
+    zone_8 = 0
+    zone_9 = 0
+    zone_10= 0
+    zone_11= 0
+    zone_12= 0
+    zone_13= 0
+    
     for nest in nests: 
         match nest.zone:
 
@@ -49,6 +64,7 @@ def nest_distributions(from_date, to_date):
 
     zone_list = [zone_1, zone_2, zone_3, zone_4, zone_5, zone_6, zone_7, zone_8, zone_9, zone_10, zone_11, zone_12, zone_13]           
     return [zone_list]
+
 #Report 4 - get new turtle tags between from_date to to_date
 def new_turtleTags(from_date, to_date): 
 
