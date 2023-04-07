@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
-from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, set_access_cookies, set_refresh_cookies
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
 from flask_login import current_user, login_required, login_user, logout_user
 
 from App.models import User, Admin, Citizen, Organization
@@ -42,7 +42,8 @@ def organization_required(func):
 def admin_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if not current_user.is_authenticated or not isinstance(current_user, Admin):
+        user = identify_view()
+        if not isinstance(current_user, Admin):
             return "Unauthorized", 401
         return func(*args, **kwargs)
     return wrapper
@@ -86,8 +87,6 @@ def create_admin_action():
     return jsonify({'message': f"error creating user"}), 401
 
 # -----------Login Users
-
-
 @user_views.route('/login', methods=['POST'])
 def login_view():
     username = request.json['username']
@@ -101,15 +100,14 @@ def login_view():
         # Set the JWT cookies in the response
         resp = jsonify({'message': 'Logged in successfully'})
         set_access_cookies(resp, access_token)
-        #return resp, 200
-        return jsonify(message='Logged-in Sucessfully'), 200
+
+        return jsonify(access_token= access_token), 200
+        #return jsonify(message='Logged-in Sucessfully'), 200
     return jsonify(message='Log in Failed'), 400
 
 
 
 # ------------ Identify logged in User
-
-
 @user_views.route('/identify')
 def identify_view():
     user = User.query.filter_by(username=current_user.username).first()
@@ -117,17 +115,17 @@ def identify_view():
         return (user.toJSON())
     return jsonify(message='no user found'), 400
 
+
 # ---------------Log out User
-
-
 @user_views.route('/logout', methods=['GET'])
 def logout_action():
-    logout_user()
-    return jsonify(message='logged out'), 200
+    resp = jsonify({'message': 'Logged out successfully'})
+    unset_jwt_cookies(resp)  # Clear the JWT token cookie from the response
+
+    return resp, 200
+
 
 # ---------------Get All Organizations
-
-
 @user_views.route('/api/organization', methods=['GET'])
 def get_all_organizations_action():
     organizations = get_all_organizations_json()
