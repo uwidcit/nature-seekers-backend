@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import date, timedelta
 
 from flask import jsonify, render_template_string
 from App.models import TurtleBio, Turtle, TurtleEvent, Nest
@@ -16,6 +16,8 @@ def population_for_given_date(on_date):
     return pop
 
 # -----Report 1 - population trend with time
+
+
 def population_trend(from_date, to_date):
 
     delta = to_date - from_date
@@ -46,11 +48,11 @@ def population_trend(from_date, to_date):
         'options': {
             'responsive': True,
             'maintainAspectRatio': True,
-            'scales': {
-                'y': {
-                    'beginAtZero': True
-                }
-            }
+            # 'scales': {
+            #     'y': {
+            #         'beginAtZero': True
+            #     }
+            # }
         }
 
 
@@ -147,12 +149,12 @@ def nest_distributions(from_date, to_date):
 
     return jsonify(chart_data)
 
-# Report 4 - get new turtle tags between from_date to to_date
+# -----Report 4 - get new turtle tags between from_date to to_date
 def new_turtleTags(from_date, to_date):
 
     turtles = TurtleEvent.query.filter(TurtleEvent.timestamp.between(
         from_date, to_date), TurtleEvent.event_type == "TAG")
-    
+
     turtles_list = []
     for turtle in turtles:
         turtles_list += [turtle.toJSON()]
@@ -176,9 +178,13 @@ def longest_turtle(from_date, to_date):
         if (turtle.length > largest_turtle_length):
             largest_turtle_length = turtle.length
             longest_turtle = turtle
+
+    
     return longest_turtle
 
 # Report 7 - get smallest turtle between from_date to to_date
+
+
 def shortest_turtle(from_date, to_date):
 
     shortest_turtle_length = 9999
@@ -193,6 +199,8 @@ def shortest_turtle(from_date, to_date):
     return shortest_turtle
 
 # Report 8 - get heaviest turtle between from_date to to_date
+
+
 def heaviest_turtle(from_date, to_date):
 
     heaviest_turtle_weight = 0
@@ -207,6 +215,8 @@ def heaviest_turtle(from_date, to_date):
     return heaviest_turtle
 
 # Report 9 - get smallest turtle between from_date to to_date
+
+
 def lightest_turtle(from_date, to_date):
 
     lightest_turtle_weight = 9999

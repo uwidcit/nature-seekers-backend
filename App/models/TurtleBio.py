@@ -16,5 +16,5 @@ class TurtleBio(db.Model):
             'length': self.length,
             'width': self.width,
             'weight': self.weight,
-            'timestamp': self.timestamp.strftime("%Y/%m/%d, %H:%M:%S")
+            'timestamp': self.timestamp.strftime("%Y/%m/%d")
         }

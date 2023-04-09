@@ -48,7 +48,12 @@ def get_report(report_id, from_date, to_date):
         case 6: #largest by length
             turtleBio = longest_turtle(from_date, to_date)
             turtle = get_turtle(turtleBio.turtle_id)
+            # turtleBio.timestamp = turtleBio.timestamp.strftime('%Y-%m-%d')
             data = [turtle.toJSON()] + [turtleBio.toJSON()]
+            data = {
+                'type': 'turtleAndBio',
+                'data': data
+            }
             return data
         
         case 7: #smallest by length
