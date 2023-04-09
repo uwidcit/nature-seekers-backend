@@ -38,17 +38,18 @@ def get_report(report_id, from_date, to_date):
             return (data)
 
         case 2: #-------Nest Distributions by Zone
-            zone_list = nest_distributions(from_date, to_date)
-            return [zone_list]
+            data = nest_distributions(from_date, to_date)
+            return (data)
 
         case 4: #new tags
-            turtleTags = new_turtleTags(from_date, to_date)
-            return [turtleTag.toJSON() for turtleTag in turtleTags]
+            data = new_turtleTags(from_date, to_date)
+            return (data)
 
         case 6: #largest by length
             turtleBio = longest_turtle(from_date, to_date)
             turtle = get_turtle(turtleBio.turtle_id)
-            return [turtle.toJSON()] + [turtleBio.toJSON()]
+            data = [turtle.toJSON()] + [turtleBio.toJSON()]
+            return data
         
         case 7: #smallest by length
             turtleBio = shortest_turtle(from_date, to_date)

@@ -28,6 +28,7 @@ def get_turtleEvent_action():
      return jsonify(all_turtleEvent)
 
 @turtleEvent_views.route('/api/turtleEvent', methods=['POST'])
+@jwt_required()
 def create_turtleEvent_action():
     data = request.json
 

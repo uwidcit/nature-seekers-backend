@@ -16,12 +16,11 @@ def population_for_given_date(on_date):
     return pop
 
 # -----Report 1 - population trend with time
-
-
 def population_trend(from_date, to_date):
 
     delta = to_date - from_date
-    date_list = [(from_date + timedelta(days=i)).strftime('%Y-%m-%d') for i in range(delta.days+1)]
+    date_list = [(from_date + timedelta(days=i)).strftime('%Y-%m-%d')
+                 for i in range(delta.days+1)]
 
     turtle_pop = []
     for given_date in date_list:
@@ -30,7 +29,7 @@ def population_trend(from_date, to_date):
 
     chart_data = {
 
-        'type': 'line',
+        'type': 'Line',
         'data': {
             'labels': date_list,
             'datasets': [
@@ -58,90 +57,6 @@ def population_trend(from_date, to_date):
     }
 
     return jsonify(chart_data)
-
-# '''
-#         <script>
-#         // Data for the chart
-#         var data = {
-#             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-#             datasets: [{
-#                 label: 'Sample Bar Chart',
-#                 data: [12, 19, 3, 5, 2, 3],
-#                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
-#                 borderColor: 'rgba(75, 192, 192, 1)',
-#                 borderWidth: 1
-#             }]
-#         };
-
-#         // Configuration for the chart
-#         var options = {
-#             responsive: true,
-#             maintainAspectRatio: false,
-#             scales: {
-#                 y: {
-#                     beginAtZero: true,
-#                     max: 25
-#                 }
-#             }
-#         };
-
-#         // Create the chart
-#         var ctx = document.getElementById('myChart').getContext('2d');
-#         var myChart = new Chart(ctx, {
-#             type: 'bar',
-#             data: data,
-#             options: options
-#         });
-#          </script>
-#    '''
-
-# render_template_string('''
-#        <!DOCTYPE html>
-# <html>
-# <head>
-#    <title>Chart.js Example</title>
-#    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-# </head>
-# <body>
-#    <canvas id="myChart"></canvas>
-#
-#    <script>
-#        // Data for the chart
-#        var data = {
-#            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-#            datasets: [{
-#                label: 'Sample Bar Chart',
-#                data: [12, 19, 3, 5, 2, 3],
-#                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-#                borderColor: 'rgba(75, 192, 192, 1)',
-#                borderWidth: 1
-#            }]
-#        };
-#
-#        // Configuration for the chart
-#        var options = {
-#            responsive: true,
-#            maintainAspectRatio: false,
-#            scales: {
-#                y: {
-#                    beginAtZero: true,
-#                    max: 25
-#                }
-#            }
-#        };
-#
-#        // Create the chart
-#        var ctx = document.getElementById('myChart').getContext('2d');
-#        var myChart = new Chart(ctx, {
-#            type: 'bar',
-#            data: data,
-#            options: options
-#        });
-#    </script>
-# </body>
-# </html>
-#    ''')
-#
 
 
 # -----Report 2 - Nest Distribution by Zones
@@ -182,21 +97,74 @@ def nest_distributions(from_date, to_date):
 
     zone_list = [zone_1, zone_2, zone_3, zone_4, zone_5, zone_6,
                  zone_7, zone_8, zone_9, zone_10, zone_11, zone_12, zone_13]
-    return [zone_list]
+
+    chart_data = {
+
+        'type': "Pie",
+        'data': {
+            'labels': ['zone_1', 'zone_2', 'zone_3', 'zone_4', 'zone_5', 'zone_6', 'zone_7', 'zone_8', 'zone_9', 'zone_10', 'zone_11', 'zone_12', 'zone_13'],
+            'datasets': [{
+                'backgroundColor': [
+                    "#b91d47",
+                    "#00aba9",
+                    "#2b5797",
+                    "#e8c3b9",
+                    "#1e7145",
+                    "#A23E48",
+                    "#D13D40",
+                    "#FF3C38",
+                    "#FF643D",
+                    "#FF8C42",
+                    "#6699CC",
+                    "#8DB0B7",
+                    "#FFF275"
+
+
+                ],
+                'data': zone_list
+            }]
+        },
+        'options': {
+            'title': {
+                'display': True,
+                'text': "World Wide Wine Production",
+            }
+        }
+
+        # 'type': "Bar",
+        # 'data': {
+        #     'labels': ['zone_1', 'zone_2', 'zone_3', 'zone_4', 'zone_5', 'zone_6', 'zone_7', 'zone_8', 'zone_9', 'zone_10', 'zone_11', 'zone_12', 'zone_13'],
+        #     'datasets': [{
+        #         'backgroundColor': 'rgba(0,0,255,1.0)',
+        #         'data': zone_list
+        #     }]
+        # },
+        # 'options': {
+        #     'responsive': True,
+        #     'maintainAspectRatio': True,
+        # }
+    }
+
+    return jsonify(chart_data)
 
 # Report 4 - get new turtle tags between from_date to to_date
-
-
 def new_turtleTags(from_date, to_date):
 
     turtles = TurtleEvent.query.filter(TurtleEvent.timestamp.between(
         from_date, to_date), TurtleEvent.event_type == "TAG")
+    
+    turtles_list = []
+    for turtle in turtles:
+        turtles_list += [turtle.toJSON()]
 
-    return turtles
+    data = {
+        'data': turtles_list,
+        'type': "Tags"
+
+    }
+    return jsonify(data)
 
 # Report 6 - get largest turtle between from_date to to_date
-
-
 def longest_turtle(from_date, to_date):
 
     largest_turtle_length = 0
@@ -211,8 +179,6 @@ def longest_turtle(from_date, to_date):
     return longest_turtle
 
 # Report 7 - get smallest turtle between from_date to to_date
-
-
 def shortest_turtle(from_date, to_date):
 
     shortest_turtle_length = 9999
@@ -227,8 +193,6 @@ def shortest_turtle(from_date, to_date):
     return shortest_turtle
 
 # Report 8 - get heaviest turtle between from_date to to_date
-
-
 def heaviest_turtle(from_date, to_date):
 
     heaviest_turtle_weight = 0
@@ -243,8 +207,6 @@ def heaviest_turtle(from_date, to_date):
     return heaviest_turtle
 
 # Report 9 - get smallest turtle between from_date to to_date
-
-
 def lightest_turtle(from_date, to_date):
 
     lightest_turtle_weight = 9999
