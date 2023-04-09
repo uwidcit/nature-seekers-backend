@@ -15,9 +15,7 @@ def population_for_given_date(on_date):
     # pop = len(turtles)
     return pop
 
-# -----Report 1 - population trend with time
-
-
+# ----------Report 1 - population trend with time
 def population_trend(from_date, to_date):
 
     delta = to_date - from_date
@@ -60,8 +58,7 @@ def population_trend(from_date, to_date):
 
     return jsonify(chart_data)
 
-
-# -----Report 2 - Nest Distribution by Zones
+#----------Report 2 - Nest Distribution by Zones
 def nest_distributions(from_date, to_date):
     nests = Nest.query.filter(Nest.timestamp.between(from_date, to_date))
 
@@ -149,7 +146,23 @@ def nest_distributions(from_date, to_date):
 
     return jsonify(chart_data)
 
-# -----Report 4 - get new turtle tags between from_date to to_date
+#----------Report 3 - New turtles between from_date to to_date
+def new_turtles(from_date, to_date):
+    turtles = Turtle.query.filter(Turtle.dob.between(from_date, to_date))
+
+    turtles_list = []
+    for turtle in turtles:
+        turtles_list += [turtle.toJSON()]
+
+    data = {
+        'title': 'New Turtles',
+        'data': turtles_list,
+        'type': "Turtle"
+
+    }
+    return jsonify(data)
+
+#----------Report 4 - New turtle tags between from_date to to_date
 def new_turtleTags(from_date, to_date):
 
     turtles = TurtleEvent.query.filter(TurtleEvent.timestamp.between(
@@ -160,13 +173,16 @@ def new_turtleTags(from_date, to_date):
         turtles_list += [turtle.toJSON()]
 
     data = {
+        'title': 'New Turtle Tags',
         'data': turtles_list,
         'type': "Tags"
 
     }
     return jsonify(data)
 
-# Report 6 - get largest turtle between from_date to to_date
+
+
+#---------- Report 6 - get largest turtle between from_date to to_date
 def longest_turtle(from_date, to_date):
 
     largest_turtle_length = 0
@@ -182,9 +198,7 @@ def longest_turtle(from_date, to_date):
     
     return longest_turtle
 
-# Report 7 - get smallest turtle between from_date to to_date
-
-
+#---------- Report 7 - get smallest turtle between from_date to to_date
 def shortest_turtle(from_date, to_date):
 
     shortest_turtle_length = 9999

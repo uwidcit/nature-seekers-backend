@@ -13,7 +13,8 @@ from App.controllers import (
     lightest_turtle,
     get_turtle,
     population_trend,
-    nest_distributions
+    nest_distributions,
+    new_turtles
 )
 
 report_views = Blueprint('report_views', __name__, template_folder='../templates')
@@ -41,6 +42,10 @@ def get_report(report_id, from_date, to_date):
             data = nest_distributions(from_date, to_date)
             return (data)
 
+        case 3: #new turtles
+            data = new_turtles(from_date, to_date)
+            return (data)
+
         case 4: #new tags
             data = new_turtleTags(from_date, to_date)
             return (data)
@@ -51,6 +56,7 @@ def get_report(report_id, from_date, to_date):
             # turtleBio.timestamp = turtleBio.timestamp.strftime('%Y-%m-%d')
             data = [turtle.toJSON()] + [turtleBio.toJSON()]
             data = {
+                'title': 'Largest Turtle by Length',
                 'type': 'turtleAndBio',
                 'data': data
             }
@@ -59,15 +65,35 @@ def get_report(report_id, from_date, to_date):
         case 7: #smallest by length
             turtleBio = shortest_turtle(from_date, to_date)
             turtle = get_turtle(turtleBio.turtle_id)
-            return [turtle.toJSON()] + [turtleBio.toJSON()]
+            data = [turtle.toJSON()] + [turtleBio.toJSON()]
+            data = {
+                'title': 'Smallest Turtle by Length',
+                'type': 'turtleAndBio',
+                'data': data
+            }
+            return data
+        
 
         case 8: #largest by weight
             turtleBio = heaviest_turtle(from_date, to_date)
             turtle = get_turtle(turtleBio.turtle_id)
-            return [turtle.toJSON()] + [turtleBio.toJSON()]
-        
+            data = [turtle.toJSON()] + [turtleBio.toJSON()]
+            data = {
+                'title': 'Largest Turtle by Weight',
+                'type': 'turtleAndBio',
+                'data': data
+            }
+            return data
+            
         case 9: #smallest by weight
             turtleBio = lightest_turtle(from_date, to_date)
             turtle = get_turtle(turtleBio.turtle_id)
-            return [turtle.toJSON()] + [turtleBio.toJSON()]
+            data = [turtle.toJSON()] + [turtleBio.toJSON()]
+            data = {
+                'title': 'Smallest Turtle by Weight',
+                'type': 'turtleAndBio',
+                'data': data
+            }
+            return data
+        
     return jsonify({"error": "Report not created"}), 400
