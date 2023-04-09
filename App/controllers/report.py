@@ -1,33 +1,153 @@
 from datetime import timedelta
+
+from flask import jsonify, render_template_string
 from App.models import TurtleBio, Turtle, TurtleEvent, Nest
 from App.database import db
 
 import json
 
+
 def population_for_given_date(on_date):
-    pop=0
+    pop = 0
     turtles = Turtle.query.filter(Turtle.dob <= on_date)
     for turtle in turtles:
         pop += 1
-    #pop = len(turtles)
+    # pop = len(turtles)
     return pop
 
-#-----Report 1 - population trend with time
+# -----Report 1 - population trend with time
+
+
 def population_trend(from_date, to_date):
 
     delta = to_date - from_date
-    date_list = [from_date + timedelta(days=i) for i in range(delta.days+1)]
+    date_list = [(from_date + timedelta(days=i)).strftime('%Y-%m-%d') for i in range(delta.days+1)]
 
     turtle_pop = []
     for given_date in date_list:
+
         turtle_pop += [population_for_given_date(given_date)]
 
-    return date_list, turtle_pop
+    chart_data = {
 
-#-----Report 2 - Nest Distribution by Zones
+        'type': 'line',
+        'data': {
+            'labels': date_list,
+            'datasets': [
+                {
+                    'label': 'Population',
+                    'data': turtle_pop,
+                    'backgroundColor': 'rgba(75, 192, 192, 0.2)',
+                    'borderColor': 'rgba(75, 192, 192, 1)',
+                    'borderWidth': 1,
+
+                }
+            ]
+        },
+        'options': {
+            'responsive': True,
+            'maintainAspectRatio': True,
+            'scales': {
+                'y': {
+                    'beginAtZero': True
+                }
+            }
+        }
+
+
+    }
+
+    return jsonify(chart_data)
+
+# '''
+#         <script>
+#         // Data for the chart
+#         var data = {
+#             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+#             datasets: [{
+#                 label: 'Sample Bar Chart',
+#                 data: [12, 19, 3, 5, 2, 3],
+#                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
+#                 borderColor: 'rgba(75, 192, 192, 1)',
+#                 borderWidth: 1
+#             }]
+#         };
+
+#         // Configuration for the chart
+#         var options = {
+#             responsive: true,
+#             maintainAspectRatio: false,
+#             scales: {
+#                 y: {
+#                     beginAtZero: true,
+#                     max: 25
+#                 }
+#             }
+#         };
+
+#         // Create the chart
+#         var ctx = document.getElementById('myChart').getContext('2d');
+#         var myChart = new Chart(ctx, {
+#             type: 'bar',
+#             data: data,
+#             options: options
+#         });
+#          </script>
+#    '''
+
+# render_template_string('''
+#        <!DOCTYPE html>
+# <html>
+# <head>
+#    <title>Chart.js Example</title>
+#    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+# </head>
+# <body>
+#    <canvas id="myChart"></canvas>
+#
+#    <script>
+#        // Data for the chart
+#        var data = {
+#            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+#            datasets: [{
+#                label: 'Sample Bar Chart',
+#                data: [12, 19, 3, 5, 2, 3],
+#                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+#                borderColor: 'rgba(75, 192, 192, 1)',
+#                borderWidth: 1
+#            }]
+#        };
+#
+#        // Configuration for the chart
+#        var options = {
+#            responsive: true,
+#            maintainAspectRatio: false,
+#            scales: {
+#                y: {
+#                    beginAtZero: true,
+#                    max: 25
+#                }
+#            }
+#        };
+#
+#        // Create the chart
+#        var ctx = document.getElementById('myChart').getContext('2d');
+#        var myChart = new Chart(ctx, {
+#            type: 'bar',
+#            data: data,
+#            options: options
+#        });
+#    </script>
+# </body>
+# </html>
+#    ''')
+#
+
+
+# -----Report 2 - Nest Distribution by Zones
 def nest_distributions(from_date, to_date):
     nests = Nest.query.filter(Nest.timestamp.between(from_date, to_date))
-    
+
     zone_1 = 0
     zone_2 = 0
     zone_3 = 0
@@ -37,15 +157,15 @@ def nest_distributions(from_date, to_date):
     zone_7 = 0
     zone_8 = 0
     zone_9 = 0
-    zone_10= 0
-    zone_11= 0
-    zone_12= 0
-    zone_13= 0
-    
-    for nest in nests: 
+    zone_10 = 0
+    zone_11 = 0
+    zone_12 = 0
+    zone_13 = 0
+
+    for nest in nests:
         match nest.zone:
 
-            #--if  nest in zone 1
+            # --if  nest in zone 1
             case 1: zone_1 += 1
             case 2: zone_2 += 1
             case 3: zone_3 += 1
@@ -59,25 +179,30 @@ def nest_distributions(from_date, to_date):
             case 11: zone_11 += 1
             case 12: zone_12 += 1
             case 13: zone_13 += 1
-                
-        
 
-    zone_list = [zone_1, zone_2, zone_3, zone_4, zone_5, zone_6, zone_7, zone_8, zone_9, zone_10, zone_11, zone_12, zone_13]           
+    zone_list = [zone_1, zone_2, zone_3, zone_4, zone_5, zone_6,
+                 zone_7, zone_8, zone_9, zone_10, zone_11, zone_12, zone_13]
     return [zone_list]
 
-#Report 4 - get new turtle tags between from_date to to_date
-def new_turtleTags(from_date, to_date): 
+# Report 4 - get new turtle tags between from_date to to_date
 
-    turtles = TurtleEvent.query.filter(TurtleEvent.timestamp.between(from_date, to_date), TurtleEvent.event_type == "TAG")
+
+def new_turtleTags(from_date, to_date):
+
+    turtles = TurtleEvent.query.filter(TurtleEvent.timestamp.between(
+        from_date, to_date), TurtleEvent.event_type == "TAG")
 
     return turtles
 
-#Report 6 - get largest turtle between from_date to to_date
+# Report 6 - get largest turtle between from_date to to_date
+
+
 def longest_turtle(from_date, to_date):
 
-    largest_turtle_length=0
+    largest_turtle_length = 0
 
-    turtles = TurtleBio.query.filter(TurtleBio.timestamp.between(from_date, to_date))
+    turtles = TurtleBio.query.filter(
+        TurtleBio.timestamp.between(from_date, to_date))
 
     for turtle in turtles:
         if (turtle.length > largest_turtle_length):
@@ -85,12 +210,15 @@ def longest_turtle(from_date, to_date):
             longest_turtle = turtle
     return longest_turtle
 
-#Report 7 - get smallest turtle between from_date to to_date
-def shortest_turtle(from_date, to_date):
-    
-    shortest_turtle_length=9999
+# Report 7 - get smallest turtle between from_date to to_date
 
-    turtles = TurtleBio.query.filter(TurtleBio.timestamp.between(from_date, to_date))
+
+def shortest_turtle(from_date, to_date):
+
+    shortest_turtle_length = 9999
+
+    turtles = TurtleBio.query.filter(
+        TurtleBio.timestamp.between(from_date, to_date))
 
     for turtle in turtles:
         if (turtle.length < shortest_turtle_length):
@@ -98,12 +226,15 @@ def shortest_turtle(from_date, to_date):
             shortest_turtle = turtle
     return shortest_turtle
 
-#Report 8 - get heaviest turtle between from_date to to_date
+# Report 8 - get heaviest turtle between from_date to to_date
+
+
 def heaviest_turtle(from_date, to_date):
 
-    heaviest_turtle_weight=0
+    heaviest_turtle_weight = 0
 
-    turtles = TurtleBio.query.filter(TurtleBio.timestamp.between(from_date, to_date))
+    turtles = TurtleBio.query.filter(
+        TurtleBio.timestamp.between(from_date, to_date))
 
     for turtle in turtles:
         if (turtle.weight > heaviest_turtle_weight):
@@ -111,12 +242,15 @@ def heaviest_turtle(from_date, to_date):
             heaviest_turtle = turtle
     return heaviest_turtle
 
-#Report 9 - get smallest turtle between from_date to to_date
-def lightest_turtle(from_date, to_date):
-    
-    lightest_turtle_weight=9999
+# Report 9 - get smallest turtle between from_date to to_date
 
-    turtles = TurtleBio.query.filter(TurtleBio.timestamp.between(from_date, to_date))
+
+def lightest_turtle(from_date, to_date):
+
+    lightest_turtle_weight = 9999
+
+    turtles = TurtleBio.query.filter(
+        TurtleBio.timestamp.between(from_date, to_date))
 
     for turtle in turtles:
         if (turtle.weight < lightest_turtle_weight):
