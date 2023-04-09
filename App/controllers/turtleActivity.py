@@ -29,6 +29,11 @@ def get_all_turtleActivity_json():
         return []
     return [turtleActivity.toJSON() for turtleActivity in turtleActivitys]
     
+#----------Get turtle Activity by turtle_id
+def get_turtleActivity_by_turtle(turtle_id):
+    turtleActivitys = TurtleActivity.query.filter_by(turtle_id=turtle_id).all()
+    return [turtleActivity.toJSON() for turtleActivity in turtleActivitys]
+
 #----------Delete an turtleActivity by excavation_id
 def delete_turtleActivity(turtleActivity_id):
     turtleActivity = get_turtleActivity(turtleActivity_id)

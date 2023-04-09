@@ -43,6 +43,12 @@ def create_nestRelocation(
 def get_nestRelocation(nestRelocation_id):
     return NestRelocation.query.get(nestRelocation_id)
 
+#----------Get turtle Relocation by nest_id
+def get_turtleRelocation_by_nest_id(nest_id):
+    turtleRelocations = NestRelocation.query.filter_by(nest_id=nest_id).all()
+    return [turtleRelocation.toJSON() for turtleRelocation in turtleRelocations]
+
+
 #----------Get all nestRelocations
 def get_all_nestRelocation_json():
     nestRelocations = NestRelocation.query.all()

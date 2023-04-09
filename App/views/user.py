@@ -18,7 +18,7 @@ from App.controllers import (
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
-# ----------Decorators to limit user permissions
+# ----------Decorators to limit user permissions for flask-login
 
 
 def citizen_required(func):

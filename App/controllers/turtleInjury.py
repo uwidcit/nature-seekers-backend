@@ -29,6 +29,11 @@ def get_all_turtleInjury_json():
         return []
     return [turtleInjury.toJSON() for turtleInjury in turtleInjurys]
     
+#----------Get turtle Injury by turtle_id
+def get_turtleInjury_by_turtle(turtle_id):
+    turtleInjurys = TurtleInjury.query.filter_by(turtle_id=turtle_id).all()
+    return [turtleInjury.toJSON() for turtleInjury in turtleInjurys]
+
 #----------Delete an turtleInjury by excavation_id
 def delete_turtleInjury(turtleInjury_id):
     turtleInjury = get_turtleInjury(turtleInjury_id)

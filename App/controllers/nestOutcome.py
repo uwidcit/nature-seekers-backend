@@ -21,7 +21,13 @@ def get_all_nestOutcome_json():
         return []
     return [nestOutcome.toJSON() for nestOutcome in nestOutcomes]
 
-#----------Delete an nestOutcome by excavation_id
+#----------Get turtle Outcome by nest_id
+def get_turtleOutcome_by_nest(nest_id):
+    turtleOutcomes = NestOutcome.query.filter_by(nest_id=nest_id).all()
+    return [turtleOutcome.toJSON() for turtleOutcome in turtleOutcomes]
+
+
+#----------Delete an nestOutcome by nest_id
 def delete_nestOutcome(nestOutcome_id):
     nestOutcome = get_nestOutcome(nestOutcome_id)
     if nestOutcome:

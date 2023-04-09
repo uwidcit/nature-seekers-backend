@@ -14,6 +14,12 @@ def create_excavation(nest_id):
 def get_excavation(exacavation_id):
     return Excavation.query.get(exacavation_id)
 
+#----------Get turtle Excavation by nest_id
+def get_turtleExcavation_by_nest(nest_id):
+    turtleExcavations = Excavation.query.filter_by(nest_id=nest_id).all()
+    return [turtleExcavation.toJSON() for turtleExcavation in turtleExcavations]
+
+
 #Get all excavations
 def get_all_excavation_json():
     excavations = Excavation.query.all()

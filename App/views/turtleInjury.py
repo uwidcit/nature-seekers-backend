@@ -8,7 +8,8 @@ from App.controllers import (
     get_turtleInjury,
     get_all_turtleInjury_json,
     delete_turtleInjury, 
-    edit_turtleInjury
+    edit_turtleInjury,
+    get_turtleInjury_by_turtle
 )
 
 turtleInjury_views = Blueprint('turtleInjury_views', __name__, template_folder='../templates')
@@ -33,6 +34,12 @@ def create_turtleInjury_action():
 def get_turtleInjury_by_id_action(turtleInjuryId):
      turtleInjury = get_turtleInjury(turtleInjuryId)
      return jsonify(turtleInjury .toJSON()), 200
+
+#get turtleInjury by turtle id
+@turtleInjury_views.route('/api/turtleInjury/turtle/<int:turtleid>', methods=['GET'])
+def get_turtleInjury_by_turtle_action(turtleid):
+    turtleInjury = get_turtleInjury_by_turtle(turtleid)
+    return jsonify(turtleInjury), 200
 
 #delete turtleInjury
 @turtleInjury_views.route('/api/turtleInjury/delete/<int:turtleInjuryId>', methods=['DELETE'])

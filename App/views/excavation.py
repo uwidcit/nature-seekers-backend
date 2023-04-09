@@ -9,7 +9,8 @@ from App.controllers import (
     create_excavation,
     get_excavation,
     get_all_excavation_json,
-    delete_excavation
+    delete_excavation,
+    get_turtleExcavation_by_nest
 )
 
 excavation_views = Blueprint('excavation_views', __name__, template_folder='../templates')
@@ -50,6 +51,12 @@ def get_excavation_action():
 def get_excavation_by_id_action(excavationId):
      excavation = get_excavation(excavationId)
      return jsonify(excavation .toJSON()), 200
+
+#get turtleBoi by nest id
+@excavation_views.route('/api/excavation/nest/<int:nest_id>', methods=['GET'])
+def get_turtleExcavation_by_nest_action(nest_id):
+    turtleExcavation = get_turtleExcavation_by_nest(nest_id)
+    return jsonify(turtleExcavation), 200
 
 
 #-----------Delete Excavation by Id

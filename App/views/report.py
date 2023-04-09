@@ -34,8 +34,8 @@ def get_report(report_id, from_date, to_date):
     match report_id:
         
         case 1: #-------Population Trends with Time
-            date_list, pop_list = population_trend(from_date, to_date)
-            return [date_list, pop_list]
+            data = population_trend(from_date, to_date)
+            return (data)
 
         case 2: #-------Nest Distributions by Zone
             zone_list = nest_distributions(from_date, to_date)

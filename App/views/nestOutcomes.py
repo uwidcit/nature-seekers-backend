@@ -8,7 +8,8 @@ from App.controllers import (
     get_nestOutcome,
     get_all_nestOutcome_json,
     delete_nestOutcome,
-    update_nestOutcome
+    update_nestOutcome,
+    get_turtleOutcome_by_nest
 )
 
 nestOutcome_views = Blueprint('nestOutcome_views', __name__, template_folder='../templates')
@@ -33,6 +34,12 @@ def create_nestOutcome_action():
 def get_nestOutcome_by_id_action(nestOutcomeId):
      nestOutcome = get_nestOutcome(nestOutcomeId)
      return jsonify(nestOutcome .toJSON()), 200
+
+#get turtleOutcome by nest id
+@nestOutcome_views.route('/api/nestOutcome/nest/<int:nest_id>', methods=['GET'])
+def get_turtleOutcome_by_nest_action(nest_id):
+    turtleOutcome = get_turtleOutcome_by_nest(nest_id)
+    return jsonify(turtleOutcome), 200
 
 #----------delete nestOutcome
 @nestOutcome_views.route('/api/nestOutcome/delete/<int:nestOutcomeId>', methods=['DELETE'])

@@ -9,6 +9,7 @@ from App.controllers import (
     get_all_turtleActivity_json,
     delete_turtleActivity, 
     edit_turtleActivity,
+    get_turtleActivity_by_turtle,
     approve
 )
 
@@ -34,6 +35,12 @@ def create_turtleActivity_action():
 def get_turtleActivity_by_id_action(turtleActivityId):
      turtleActivity = get_turtleActivity(turtleActivityId)
      return jsonify(turtleActivity .toJSON()), 200
+
+#get turtleActivity by turtle id
+@turtleActivity_views.route('/api/turtleActivity/turtle/<int:turtleid>', methods=['GET'])
+def get_turtleActivity_by_turtle_action(turtleid):
+    turtleActivity = get_turtleActivity_by_turtle(turtleid)
+    return jsonify(turtleActivity), 200
 
 #delete turtleActivity
 @turtleActivity_views.route('/api/turtleActivity/delete/<int:turtleActivityId>', methods=['DELETE'])

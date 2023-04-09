@@ -7,7 +7,8 @@ from App.controllers import (
     create_nestRelocation,
     get_nestRelocation,
     get_all_nestRelocation_json,
-    delete_nestRelocation
+    delete_nestRelocation,
+    get_turtleRelocation_by_nest_id
 )
 
 nestRelocation_views = Blueprint('nestRelocation_views', __name__, template_folder='../templates')
@@ -38,6 +39,13 @@ def create_nestRelocation_action():
     if res: 
         return jsonify({'message': f"nestRelocation created"}), 201
     return jsonify({'message': f"error creating nestRelocation"}), 401
+
+#get turtleRelocation by nest id
+@nestRelocation_views.route('/api/nestRelocation/nest/<int:nest_id>', methods=['GET'])
+def get_turtleRelocation_by_nest_action(nest_id):
+    turtleRelocation = get_turtleRelocation_by_nest_id(nest_id)
+    return jsonify(turtleRelocation), 200
+
 
 #get nestRelocation by nestRelocation id
 @nestRelocation_views.route('/api/nestRelocation/<int:nestRelocationId>', methods=['GET'])
