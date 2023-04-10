@@ -34,7 +34,9 @@ def create_turtleActivity_action():
 @turtleActivity_views.route('/api/turtleActivity/<int:turtleActivityId>', methods=['GET'])
 def get_turtleActivity_by_id_action(turtleActivityId):
      turtleActivity = get_turtleActivity(turtleActivityId)
-     return jsonify(turtleActivity .toJSON()), 200
+     if turtleActivity:
+        return jsonify(turtleActivity .toJSON()), 200
+     return []
 
 #get turtleActivity by turtle id
 @turtleActivity_views.route('/api/turtleActivity/turtle/<int:turtleid>', methods=['GET'])

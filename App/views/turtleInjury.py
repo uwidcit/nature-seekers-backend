@@ -33,7 +33,9 @@ def create_turtleInjury_action():
 @turtleInjury_views.route('/api/turtleInjury/<int:turtleInjuryId>', methods=['GET'])
 def get_turtleInjury_by_id_action(turtleInjuryId):
      turtleInjury = get_turtleInjury(turtleInjuryId)
-     return jsonify(turtleInjury .toJSON()), 200
+     if turtleInjury:
+        return jsonify(turtleInjury .toJSON()), 200
+     return []
 
 #get turtleInjury by turtle id
 @turtleInjury_views.route('/api/turtleInjury/turtle/<int:turtleid>', methods=['GET'])
