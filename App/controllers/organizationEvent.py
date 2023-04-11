@@ -14,6 +14,14 @@ def create_organizationEvent(organization_id, event_name):
 def get_organizationEvent(organizationEvent_id):
     return OrganizationEvent.query.get(organizationEvent_id)
 
+#----------Get all organizationEvents by Organization
+def get_organizationEvent_by_orgid(organization_id):
+    organizationEvents = OrganizationEvent.query.filter_by(organization_id=organization_id)
+    if not organizationEvents:
+        return []
+    return organizationEvents#[organizationEvent.toJSON() for organizationEvent in organizationEvents]
+
+
 #----------Get all organizationEvents
 def get_all_organizationEvent_json():
     organizationEvents = OrganizationEvent.query.all()

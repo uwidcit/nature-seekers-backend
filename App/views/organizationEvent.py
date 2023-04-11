@@ -8,7 +8,8 @@ from App.controllers import (
     get_organizationEvent,
     get_all_organizationEvent_json,
     delete_organizationEvent,
-    edit_organizationEvent_name
+    edit_organizationEvent_name,
+    get_organizationEvent_by_orgid
 )
 
 organizationEvent_views = Blueprint('organizationEvent_views', __name__, template_folder='../templates')
@@ -42,6 +43,15 @@ def get_organizationEvent_action(organizationEventid):
 
     if organizationEvent:
         return jsonify(organizationEvent.toJSON()), 200
+
+    return jsonify({"error": "organizationEvent not found"}), 404
+
+@organizationEvent_views.route('/api/organizationEvents/organization/<int:organization_id>', methods=['GET'])
+def get_organizationEvents_by_orgid_action(organization_id):
+    organizationEvents = get_organizationEvent_by_orgid(organization_id)
+
+    if organizationEvents:
+        return [organizationEvent.toJSON() for organizationEvent in organizationEvents], 200
 
     return jsonify({"error": "organizationEvent not found"}), 404
 

@@ -64,7 +64,7 @@ def create_citizen_action():
                          data['firstname'], data['lastname'], data['email'])
     if res:
         return jsonify({'message': f"citizen user {data['username']} created"}), 201
-    return jsonify({'message': f"error creating user"}), 401
+    return jsonify({'message': f"error creating user"}), 400
 
 
 @user_views.route('/api/organization', methods=['POST'])
@@ -74,7 +74,7 @@ def create_organization_action():
         data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
     if res:
         return jsonify({'message': f"organization user {data['username']} created"}), 201
-    return jsonify({'message': f"error creating user"}), 401
+    return jsonify({'message': f"error creating user"}), 400
 
 
 @user_views.route('/api/admins', methods=['POST'])
@@ -84,7 +84,7 @@ def create_admin_action():
                        data['firstname'], data['lastname'], data['email'])
     if res:
         return jsonify({'message': f"admin user {data['username']} created"}), 201
-    return jsonify({'message': f"error creating user"}), 401
+    return jsonify({'message': f"error creating user"}), 400
 
 # -----------Login Users
 @user_views.route('/login', methods=['POST'])
@@ -109,8 +109,10 @@ def login_view():
 
 # ------------ Identify logged in User
 @user_views.route('/identify')
+@jwt_required()
 def identify_view():
-    user = User.query.filter_by(username=current_user.username).first()
+    current_user_id = get_jwt_identity()
+    user = User.query.filter_by(username=current_user_id).first()
     if user:
         return (user.toJSON())
     return jsonify(message='no user found'), 400

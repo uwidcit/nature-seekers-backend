@@ -126,8 +126,10 @@ def nest_distributions(from_date, to_date):
         'options': {
             'title': {
                 'display': True,
-                'text': "World Wide Wine Production",
-            }
+                'text': "Nest Distribution by Zones",                
+            },
+            'width': 200, 
+            'height': 200 
         }
 
         # 'type': "Bar",
