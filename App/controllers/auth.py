@@ -3,7 +3,7 @@ from flask_jwt_extended import JWTManager, create_access_token
 from App.models import User, Admin, Citizen, Organization
 
 
-# Authenticate Admins / Citizens
+#----------Authenticate Admins / Citizens
 def authenticate(username, password):
     admin = Admin.query.filter_by(username=username).first()
     if admin and admin.check_password(password):
@@ -13,7 +13,7 @@ def authenticate(username, password):
         return contributor
     return None
 
-# Payload is a dictionary which is passed to the function by Flask JWT
+#----------Payload is a dictionary which is passed to the function by Flask JWT
 def identity(payload):
     admin = Admin.query.get(payload['identity'])
     if admin:
