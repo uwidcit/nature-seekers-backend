@@ -50,7 +50,7 @@ def get_nest_action(nestid):
 #-----------Get All Nests
 @nest_views.route('/api/nests', methods=['GET'])
 def get_all_nest_action():
-    #nests = []
+
     nests = get_all_nests_json()
 
     return jsonify(nests)

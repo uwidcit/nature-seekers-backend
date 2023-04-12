@@ -14,3 +14,4 @@ from .turtleInjury import *
 from .turtleTag import *
 from .user import *
 from .report import *
+from .ar import *
