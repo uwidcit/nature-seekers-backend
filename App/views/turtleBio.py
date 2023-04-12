@@ -47,7 +47,7 @@ def delete_capture_action(turtleBioId):
     turtleBio = get_turtleBio(turtleBioId)
 
     if not turtleBio:
-        return jsonify(error="this is a custom error Bad ID or unauthorized"), 401
+        return jsonify(error="this is a custom error Bad ID or unauthorized"), 400
 
     delete_turtleBio(turtleBioId)
     return jsonify(message="turtleBio deleted!"), 200

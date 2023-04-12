@@ -15,6 +15,7 @@ from App.controllers import (
 organizationEvent_views = Blueprint('organizationEvent_views', __name__, template_folder='../templates')
 
 @organizationEvent_views.route('/api/organizationEvents', methods=['POST'])
+@jwt_required()
 def create_organizationEvent_action():
     data = request.json
 
