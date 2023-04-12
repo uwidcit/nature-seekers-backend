@@ -111,8 +111,8 @@ def login_view():
 @user_views.route('/identify')
 @jwt_required()
 def identify_view():
-    current_user_id = get_jwt_identity()
-    user = User.query.filter_by(username=current_user_id).first()
+    current_user_name = get_jwt_identity()
+    user = User.query.filter_by(username=current_user_name).first()
     if user:
         return (user.toJSON())
     return jsonify(message='no user found'), 400
