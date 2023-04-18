@@ -18,6 +18,7 @@ excavation_views = Blueprint(
 
 # -----------Create Excavation
 @excavation_views.route('/api/excavation', methods=['POST'])
+@jwt_required()
 def create_excavation_action():
     data = request.json
 
