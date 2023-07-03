@@ -5,6 +5,7 @@ flask-jwt-extended==4.5.2
 Flask-Login==0.6.2 # I could prob look to remove this since the backend isn't gonna require this pkg
 Flask-Migrate==4.0.4
 Flask-Reuploaded==1.3.0
+flask-restful==0.3.10
 Flask-SQLAlchemy==3.0.5
 gunicorn==20.1.0
 pandas==2.0.3
