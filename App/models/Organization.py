@@ -1,18 +1,19 @@
 from App.models import User
+from App.database import db
 
-class Admin(User):
+class Organization(User):
 
-    __tablename__ = 'admin'
+    __tablename__ = 'organization'
 
     __mapper_args__ = {
-        'polymorphic_identity': 'admin'
+        'polymorphic_identity': 'organization'
     }
-    
-    def __init__(self, username, password, firstname="bob", lastname="bob", email="bob@mail.com"):
+
+    def __init__(self, username, password, firstname, lastname, email):
         super().__init__(username, password, firstname, lastname, email)
     
     def __repr__(self):
-        return f'<admin {self.id} {self.username}>'
+        return f'<organization {self.id} {self.username}>'
     
     def toJSON(self):
         return{

@@ -4,7 +4,7 @@ from flask.cli import with_appcontext, AppGroup
 
 from App.database import db, create_db, get_migrate
 from App.main import create_app
-from App.controllers import ( create_admin, create_contributor, get_all_users_json, get_all_users,  )
+from App.controllers import ( create_admin, create_citizen, get_all_users_json, get_all_users,  )
 
 # This commands file allow you to create convenient CLI commands for testing controllers
 
@@ -42,7 +42,7 @@ def create_user_command(username, password, firstname, lastname, email, admin):
         res = create_admin(username, password)
         level = 'admin'
     else :
-        res = create_contributor(username, password)
+        res = create_citizen(username, password)
         level = 'contributor'        
     print(f'{username} created as {level}')
 

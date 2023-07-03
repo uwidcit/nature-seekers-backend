@@ -1,15 +1,16 @@
+from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
-    username =  db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String(120), nullable=False)
     firstname =  db.Column(db.String, nullable=False)
     lastname =  db.Column(db.String, nullable=False)
+    username =  db.Column(db.String, nullable=False, unique=True)
     email =  db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String(120), nullable=False)
     type = db.Column(db.String, nullable=False)
 
     __mapper_args__ = {
@@ -17,11 +18,11 @@ class User(db.Model):
         "polymorphic_on": 'type'
     }
 
-    def __init__(self, username, password, firstname="bob", lastname="smith", email="bob@mail.com"):
+    def __init__(self, username, password, firstname, lastname, email):
         self.firstname = firstname
         self.lastname = lastname
-        self.email = email
         self.username = username
+        self.email = email
         self.set_password(password)
 
     def toJSON(self):

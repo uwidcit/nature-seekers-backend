@@ -1,3 +1,4 @@
+from functools import wraps
 import os
 from flask import Flask
 from flask_login import LoginManager, current_user
@@ -7,6 +8,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from datetime import timedelta
 
+from .models import User, Organization, Admin
 
 from App.database import create_db
 
@@ -43,7 +45,7 @@ def loadConfig(app, config):
 
 def create_app(config={}):
     app = Flask(__name__, static_url_path='/static')
-    CORS(app)
+    CORS(app, headers=['Content-Type'], supports_credentials=True) #from ,
     loadConfig(app, config)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -54,5 +56,6 @@ def create_app(config={}):
     add_views(app)
     create_db(app)
     setup_jwt(app)
+    
     app.app_context().push()
     return app

@@ -1,27 +1,27 @@
 from App.models import User
 from App.database import db
 
-class Contributor(User):
+class Citizen(User):
 
-    __tablename__ = 'contributor'
+    __tablename__ = 'citizen'
 
-    orgid = db.Column(db.Integer, db.ForeignKey('Organization.orgid'))
+    #orgid = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=True)
 
 
     __mapper_args__ = {
-        'polymorphic_identity': 'contributor'
+        'polymorphic_identity': 'citizen'
     }
 
-    def __init__(self, username, password, firstname="bob", lastname="bob", email="bob@mail.com"):
+    def __init__(self, username, password, firstname, lastname, email):
         super().__init__(username, password, firstname, lastname, email)
     
     def __repr__(self):
-        return f'<contributor {self.id} {self.username}>'
+        return f'<citizen {self.id} {self.username}>'
     
     def toJSON(self):
         return{
             'id': self.id,
-            'orgid': self.orgid,
+            #'orgid': self.orgid,
             'firstname': self.firstname,
             'lastname': self.lastname,
             'email': self.email,

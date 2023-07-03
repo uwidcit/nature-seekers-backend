@@ -1,49 +1,142 @@
+from functools import wraps
 from flask import Blueprint, render_template, jsonify, request, send_from_directory
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity, set_access_cookies, set_refresh_cookies, unset_jwt_cookies
+from flask_login import current_user, login_required, login_user, logout_user
+
+from App.models import User, Admin, Citizen, Organization
 
 
 from App.controllers import (
-    create_contributor,
-    create_admin, 
+    create_citizen,
+    create_admin,
+    create_organization,
     get_all_users,
     get_all_users_json,
+    get_all_organizations_json,
+    delete_organization
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
 
+# ----------Decorators to limit user permissions for flask-login
 
-@user_views.route('/users', methods=['GET'])
-def get_user_page():
-    users = get_all_users()
-    return render_template('users.html', users=users)
 
+def citizen_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated or not isinstance(current_user, Citizen):
+            return "Unauthorized", 401
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def organization_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated or not isinstance(current_user, Organization):
+            return "Unauthorized", 401
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def admin_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        user = identify_view()
+        if not isinstance(current_user, Admin):
+            return "Unauthorized", 401
+        return func(*args, **kwargs)
+    return wrapper
+
+
+# ------------Get All Users
 @user_views.route('/api/users', methods=['GET'])
 def get_users_action():
     users = get_all_users_json()
     return jsonify(users)
 
-@user_views.route('/api/contributors', methods=['POST'])
-def create_contributor_action():
+
+# ---------Create users
+@user_views.route('/api/citizens', methods=['POST'])
+def create_citizen_action():
     data = request.json
-    res = create_contributor(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
-    if res: 
-        return jsonify({'message': f"contributor user {data['username']} created"}), 201
-    return jsonify({'message': f"error creating user"}), 401
+    res = create_citizen(data['username'], data['password'],
+                         data['firstname'], data['lastname'], data['email'])
+    if res:
+        return jsonify({'message': f"citizen user {data['username']} created"}), 201
+    return jsonify({'message': f"error creating user"}), 400
+
+
+@user_views.route('/api/organization', methods=['POST'])
+def create_organization_action():
+    data = request.json
+    res = create_organization(
+        data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
+    if res:
+        return jsonify({'message': f"organization user {data['username']} created"}), 201
+    return jsonify({'message': f"error creating user"}), 400
+
 
 @user_views.route('/api/admins', methods=['POST'])
 def create_admin_action():
     data = request.json
-    res = create_admin(data['username'], data['password'], data['firstname'], data['lastname'], data['email'])
-    if res: 
+    res = create_admin(data['username'], data['password'],
+                       data['firstname'], data['lastname'], data['email'])
+    if res:
         return jsonify({'message': f"admin user {data['username']} created"}), 201
-    return jsonify({'message': f"error creating user"}), 401
+    return jsonify({'message': f"error creating user"}), 400
 
-@user_views.route('/identify', methods=['GET'])
+# -----------Login Users
+@user_views.route('/login', methods=['POST'])
+def login_view():
+    username = request.json['username']
+    password = request.json['password']
+    user = User.query.filter_by(username=username).first()
+
+    if user and user.check_password(password):
+        # Create the tokens we will be sending back to the user
+        access_token = create_access_token(identity=username)
+
+        # Set the JWT cookies in the response
+        resp = jsonify({'message': 'Logged in successfully'})
+        set_access_cookies(resp, access_token)
+
+        return jsonify(access_token= access_token), 200
+        #return jsonify(message='Logged-in Sucessfully'), 200
+    return jsonify(message='Log in Failed'), 400
+
+
+
+# ------------ Identify logged in User
+@user_views.route('/identify')
 @jwt_required()
-def identify_user_action():
-    current_identity = get_jwt_identity()
-    return jsonify({'message': f"username: {current_identity.username}, id : {current_identity.id}"})
+def identify_view():
+    current_user_name = get_jwt_identity()
+    user = User.query.filter_by(username=current_user_name).first()
+    if user:
+        return (user.toJSON())
+    return jsonify(message='no user found'), 400
 
-@user_views.route('/static/users', methods=['GET'])
-def static_user_page():
-  return send_from_directory('static', 'static-user.html')
+
+# ---------------Log out User
+@user_views.route('/logout', methods=['GET'])
+def logout_action():
+    resp = jsonify({'message': 'Logged out successfully'})
+    unset_jwt_cookies(resp)  # Clear the JWT token cookie from the response
+
+    return resp, 200
+
+
+# ---------------Get All Organizations
+@user_views.route('/api/organization', methods=['GET'])
+def get_all_organizations_action():
+    organizations = get_all_organizations_json()
+    return jsonify(organizations)
+
+# -----------------Delete Organization
+
+
+@user_views.route('/api/delete/organization/<int:orgId>', methods=['DELETE'])
+def delete_organization_action(orgId):
+    delete_organization(orgId)
+    return jsonify(message="Organization deleted!"), 200
