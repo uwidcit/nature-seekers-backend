@@ -39,10 +39,10 @@ user_cli = AppGroup('user', help='User object commands')
 @click.option('-a', '--admin', count=True, help="makes an admin user")
 def create_user_command(username, password, firstname, lastname, email, admin):
     if admin:
-        res = create_admin(username, password)
+        res = create_admin(username, password, firstname, lastname, email)
         level = 'admin'
     else :
-        res = create_citizen(username, password)
+        res = create_citizen(username, password, firstname, lastname, email)
         level = 'contributor'        
     print(f'{username} created as {level}')
 

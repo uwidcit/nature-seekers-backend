@@ -18,25 +18,12 @@ excavation_views = Blueprint(
 
 # -----------Create Excavation
 @excavation_views.route('/api/excavation', methods=['POST'])
-@jwt_required()
 def create_excavation_action():
     data = request.json
 
-    username = get_jwt_identity()  # convert sent token to user name
-
-    # retrieve regular user with given username
-    citizen = Citizen.query.filter_by(username=username).first()
-    if citizen:
-        userId = citizen.id
-
-    # retrieve admin user with given username
-    admin = Admin.query.filter_by(username=username).first()
-    if admin:
-        userId = admin.id
-
-    res = create_excavation(data['nest_id'])
+    res = create_excavation(data['nest_id'],data['num_yolked'], data['num_yolkless'], data['timestamp_excavated'], data['timestamp_reburied'])
     if res:
-        return jsonify({'message': f"excavation created"}), 201
+        return jsonify(res.toJSON()), 201
     return jsonify({'message': f"error creating excavation"}), 401
 
 

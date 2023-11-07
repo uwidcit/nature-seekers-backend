@@ -4,8 +4,8 @@ from App.database import db
 import json
 
 #Create nest object
-def create_nest(num_yolked, num_unyolked, location_name, latitude, longitude, zone, distance_from_vege, distance_from_high_water):
-    newnest = Nest(num_yolked=num_yolked, num_unyolked=num_unyolked, location_name=location_name, latitude=latitude, longitude=longitude, zone=zone, distance_from_vege=distance_from_vege, distance_from_high_water=distance_from_high_water)
+def create_nest(location_name,latitude,longitude,zone,turtle_id,):
+    newnest = Nest(location_name=location_name, latitude=latitude, longitude=longitude, zone=zone, turtle_id=int(turtle_id))
     db.session.add(newnest)
     db.session.commit()
     return newnest
@@ -30,32 +30,18 @@ def delete_nest(nest_id):
     return None
 
 # Update a nest
-def update_nest(nest_id, 
-                num_yolked,
-                num_unyolked,
-                location_name,
-                latitude,
-                longitude,
-                zone,
-                distance_from_vegetation,
-                distance_from_high_water
-                ):
+def update_nest( nest_id,location_name,latitude,longitude,zone,turtle_id,):
 
     nest = get_nest(nest_id)
     
-    if not nest:
-        return []
-    
-    nest.num_yolked = num_yolked
-    nest.num_unyolked = num_unyolked
-    nest.location_name = location_name
-    nest.latitude = latitude
-    nest.longitude = longitude
-    nest.zone  = zone
-    nest.distance_from_vegetation = distance_from_vegetation
-    nest.distance_from_high_water = distance_from_high_water
-
-    db.session.add(nest)
-    db.session.commit()
-    
-    return nest
+    if nest:
+        nest.nest_id = nest_id
+        nest.location_name = location_name
+        nest.latitude = latitude
+        nest.longitude = longitude
+        nest.zone = zone
+        nest.turtle_id = turtle_id
+        db.session.add(nest)
+        db.session.commit()
+        
+        return nest

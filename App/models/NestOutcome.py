@@ -17,6 +17,7 @@ class NestOutcome(db.Model):
     outcome = db.Column(db.Enum(Outcome))
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
+    nest = db.relationship("Nest", backref=db.backref("outcome", uselist=False))
 
     def toJSON(self):
         return {

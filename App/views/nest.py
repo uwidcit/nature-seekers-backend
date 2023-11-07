@@ -20,14 +20,11 @@ def create_nest_action():
     data = request.json
 
     nest = create_nest(
-                        num_yolked=data["num_yolked"],
-                        num_unyolked=data["num_unyolked"], 
-                        location_name=data["location_name"],
+                        location_name=data["location"],
                         latitude=data["latitude"],
                         longitude=data["longitude"],
                         zone=data["zone"],
-                        distance_from_vege=data["distance_from_vege"],
-                        distance_from_high_water=data["distance_from_high_water"]
+                        turtle_id=data["turtle_id"],
                       )
 
     if nest:
@@ -42,7 +39,13 @@ def get_nest_action(nestid):
     nest = get_nest(nestid)
 
     if nest:
-        return jsonify(nest.toJSON()), 200
+        return jsonify({
+            "nest": nest.toJSON(),
+            "outcome": nest.outcome.toJSON() if nest.outcome else {},
+            "relocations": [relocation.toJSON() for relocation in nest.relocations],
+            "activities": [activity.toJSON() for activity in nest.activities],
+            "excavations": [excavation.toJSON() for excavation in nest.excavations]
+        }), 200
 
     return jsonify({"error": "nest not found"}), 404
 
@@ -81,16 +84,11 @@ def edit_nest_action(nest_id):
 
     nest = update_nest(
                         nest_id=nest_id,
-                        num_yolked=data["num_yolked"],
-                        num_unyolked=data["num_unyolked"],
-                        location_name=data['location_name'],
+                        location_name=data["location_name"],
                         latitude=data["latitude"],
                         longitude=data["longitude"],
                         zone=data["zone"],
-                        distance_from_vegetation=data["distance_from_vege"],
-                        distance_from_high_water= data["distance_from_high_water"]
-                       )
+                        turtle_id=data["turtle_id"],
+                    )
 
-    #if nest:
     return jsonify(nest.toJSON()), 201
-    #return jsonify(message="Nest not Changed!"), 418

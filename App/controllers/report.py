@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
 from flask import jsonify, render_template_string
-from App.models import TurtleBio, Turtle, TurtleEvent, Nest
+from App.models import TurtleBio, Turtle, TurtleEvent, Nest, Tag, Organization
 from App.database import db
 
 import json
@@ -245,3 +245,11 @@ def lightest_turtle(from_date, to_date):
             lightest_turtle_weight = turtle.weight
             lightest_turtle = turtle
     return lightest_turtle
+
+def dashboard_report():
+    return {
+        "turtle_count": Turtle.query.count(),
+        "nest_count": Nest.query.count(),
+        "tag_count": Tag.query.count(),
+        "org_count": Organization.query.count(),
+    }

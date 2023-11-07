@@ -14,7 +14,8 @@ from App.controllers import (
     get_turtle,
     population_trend,
     nest_distributions,
-    new_turtles
+    new_turtles,
+    dashboard_report
 )
 
 report_views = Blueprint('report_views', __name__, template_folder='../templates')
@@ -97,3 +98,8 @@ def get_report(report_id, from_date, to_date):
             return data
         
     return jsonify({"error": "Report not created"}), 400
+
+@report_views.route('/api/report/dashboard', methods=['GET'])
+def get_dashboard():
+    return jsonify(dashboard_report())
+

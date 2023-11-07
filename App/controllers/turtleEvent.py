@@ -7,23 +7,25 @@ import json
 def create_turtleEvent(
                     turtle_id,
                     user_id,
-                    beach_name,
+                    location_name,
                     latitude,
                     longitude,
                     verified,
                     event_type,
-                    isAlive
+                    state,
+                    timestamp
                     ):
     
     newturtleEvent = TurtleEvent(
                     turtle_id=turtle_id,
                     user_id=user_id,
-                    beach_name=beach_name,
+                    location_name=location_name,
                     latitude=latitude,
                     longitude=longitude,
                     verified=verified,
                     event_type=event_type,
-                    state=isAlive
+                    state=state,
+                    timestamp=timestamp
                     )
     
     db.session.add(newturtleEvent)

@@ -26,7 +26,7 @@ def create_nestOutcome_action():
 
     res = create_nestOutcome(nest_id=data["nest_id"], outcome=data["outcome"])
     if res: 
-        return jsonify({'message': f"nestOutcome created"}), 201
+        return jsonify(res.toJSON()), 201
     return jsonify({'message': f"error creating nestOutcome"}), 401
 
 #----------get nestOutcome by nestOutcome id

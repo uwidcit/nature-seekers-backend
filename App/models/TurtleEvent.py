@@ -20,7 +20,7 @@ class TurtleEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     turtle_id = db.Column(db.Integer, db.ForeignKey('turtle.id'), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    beach_name = db.Column(db.String, nullable=False)
+    location_name = db.Column(db.String, nullable=False)
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
     verified  = db.Column(db.Boolean, nullable=False, default= False)
@@ -28,12 +28,14 @@ class TurtleEvent(db.Model):
     state = db.Column(db.Enum(IsAlive))
     timestamp =  db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     
+    turtle = db.relationship("Turtle", backref=db.backref("events"))
+    
     def toJSON(self):
         return {
             'id': self.id,
             'turtle_id': self.turtle_id,
             'user_id': self.user_id,
-            'beach_name': self.beach_name,
+            'location_name': self.location_name,
             'latitude': self.latitude,
             'longitude': self.longitude,
             'verified': self.verified,

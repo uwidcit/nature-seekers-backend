@@ -11,6 +11,7 @@ from datetime import timedelta
 from .models import User, Organization, Admin
 
 from App.database import create_db
+from App.resources import register_api_v2
 
 from App.controllers import (
     setup_jwt
@@ -45,7 +46,8 @@ def loadConfig(app, config):
 
 def create_app(config={}):
     app = Flask(__name__, static_url_path='/static')
-    CORS(app, headers=['Content-Type'], supports_credentials=True) #from ,
+    # CORS(app, headers=['Content-Type'], supports_credentials=True) #from ,
+    # TODO: Re-enable cors when complete with frontend
     loadConfig(app, config)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -55,7 +57,8 @@ def create_app(config={}):
     configure_uploads(app, photos)
     add_views(app)
     create_db(app)
-    setup_jwt(app)
+    setup_jwt(app) 
+    register_api_v2(app)
     
     app.app_context().push()
     return app

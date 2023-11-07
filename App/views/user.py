@@ -119,7 +119,7 @@ def identify_view():
 
 
 # ---------------Log out User
-@user_views.route('/logout', methods=['GET'])
+@user_views.route('/logout', methods=['GET','POST'])
 def logout_action():
     resp = jsonify({'message': 'Logged out successfully'})
     unset_jwt_cookies(resp)  # Clear the JWT token cookie from the response

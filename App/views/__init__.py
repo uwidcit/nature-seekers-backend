@@ -13,6 +13,8 @@ from .turtleTag import turtleTag_views
 from .excavation import excavation_views
 from .report import report_views
 from .ar import ar_views
+from .tag import tag_views
+from .nestActivities import nestActivity_views
 
 app_views = [
     
@@ -31,5 +33,6 @@ app_views = [
      excavation_views,
      report_views,
      ar_views,
-    
+     tag_views,
+     nestActivity_views
  ]
