@@ -2,7 +2,7 @@ from .User import *
 from .Admin import *    
 from .Citizen import *
 from .Organization import *
-
+from .Tag import *
 from .OrganizationEvent import *
 from .Turtle import *
 from .TurtleActivity import *
@@ -15,3 +15,4 @@ from .Nest import *
 from .NestOutcome import *
 from .NestRelocation import *
 from .Excavation import *
+from .NestActivity import *

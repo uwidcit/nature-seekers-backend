@@ -6,34 +6,20 @@ import json
 #----------Create nestRelocation object
 def create_nestRelocation(
                             nest_id, 
-                            from_location_name, 
-                            from_latitude, 
-                            from_longitude, 
-                            from_zone, 
-                            from_distance_from_vege, 
-                            from_distance_from_high_water, 
                             to_location_name, 
                             to_latitude, 
                             to_longitude, 
-                            to_zone, 
-                            to_distance_from_vege, 
-                            to_distance_from_high_water
+                            to_zone,
+                            to_timestamp 
                           ):
     
     newnestRelocation = NestRelocation(
                                         nest_id=nest_id, 
-                                        from_location_name=from_location_name, 
-                                        from_latitude=from_latitude, 
-                                        from_longitude=from_longitude, 
-                                        from_zone=from_zone, 
-                                        from_distance_from_vege=from_distance_from_vege, 
-                                        from_distance_from_high_water=from_distance_from_high_water, 
                                         to_location_name=to_location_name, 
                                         to_latitude=to_latitude, 
                                         to_longitude=to_longitude, 
-                                        to_zone=to_zone, 
-                                        to_distance_from_vege=to_distance_from_vege, 
-                                        to_distance_from_high_water=to_distance_from_high_water
+                                        to_zone=to_zone,
+                                        timestamp=to_timestamp
                                     )
     db.session.add(newnestRelocation)
     db.session.commit()

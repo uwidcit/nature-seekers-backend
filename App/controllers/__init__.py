@@ -15,3 +15,5 @@ from .turtleTag import *
 from .user import *
 from .report import *
 from .ar import *
+from .tag import *
+from .nestActivity import *

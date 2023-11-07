@@ -24,20 +24,14 @@ def create_nestRelocation_action():
     data = request.json
 
     res = create_nestRelocation(nest_id=data["nest_id"], 
-                                from_location_name=data["from_location_name"], 
-                                from_latitude=data["from_latitude"], 
-                                from_longitude=data["from_longitude"], 
-                                from_zone=data["from_zone"], 
-                                from_distance_from_vege=data["from_distance_from_vege"], 
-                                from_distance_from_high_water=data["from_distance_from_high_water"], 
-                                to_location_name=data["to_location_name"],
-                                to_latitude=data["to_latitude"], 
-                                to_longitude=data["to_longitude"], 
-                                to_zone=data["to_zone"], 
-                                to_distance_from_vege=data["to_distance_from_vege"], 
-                                to_distance_from_high_water=data["to_distance_from_high_water"])
+                                to_location_name=data["location_name"],
+                                to_latitude=data["latitude"], 
+                                to_longitude=data["longitude"], 
+                                to_zone=data["zone"], 
+                                to_timestamp=data['timestamp'],
+                                )
     if res: 
-        return jsonify({'message': f"nestRelocation created"}), 201
+        return jsonify(res.toJSON()), 201
     return jsonify({'message': f"error creating nestRelocation"}), 401
 
 #get turtleRelocation by nest id

@@ -1,4 +1,4 @@
-from App.models import TurtleTag
+from App.models import TurtleTag, Tag, Turtle
 from App.database import db
 
 import json
@@ -6,19 +6,28 @@ import json
 #----------Create turtleTag object
 def create_turtleTag(
                     turtle_id,
-                    status,
+                    tag_id,
                     location
                     ):
+    tag = Tag.query.get(tag_id)
+    turtle = Turtle.query.get(turtle_id)
+    if tag and turtle:
+        turtleTag = TurtleTag()
+        turtleTag.turtle_id = turtle.id
+        tag.turtle_id = turtle.id
+        turtleTag.tag_id = tag.id
+        turtleTag.location = location
+        turtleTag.status = "ACTIVE"
+        db.session.add(turtleTag)
+        db.session.add(tag)
+        db.session.commit()
+        return turtleTag
+
+def get_turtle_tag_by_id(tag_id):
+    return TurtleTag.query.get(tag_id)
     
-    newturtleTag = TurtleTag(
-                    turtle_id=turtle_id,
-                    status=status,
-                    location=location
-                    )
-    
-    db.session.add(newturtleTag)
-    db.session.commit()
-    return newturtleTag
+def get_turtle_tag_by_turtle_and_tag(tag_id, turtle_id):
+    return TurtleTag.query.filter_by(turtle_id=int(turtle_id), tag_id=int(tag_id)).first()
 
 #----------Get turtleTag by turtleTag_id
 def get_turtleTag(turtleTag_id):
@@ -31,10 +40,13 @@ def get_turtleTag_by_turtle(turtle_id):
 
 #----------Get all turtleTags
 def get_all_turtleTag_json():
-    turtleTags = TurtleTag.query.all()
-    if not turtleTags:
-        return []
-    return [turtleTag.toJSON() for turtleTag in turtleTags]
+    allTurtles = Turtle.query.all()
+    return [
+        {
+            "turtle": turtle.toJSON(),
+            "tags": [tag.toJSON() for tag in turtle.tags]
+        } for turtle in allTurtles
+    ]
     
 #----------Delete an turtleTag by excavation_id
 def delete_turtleTag(turtleTag_id):
@@ -45,12 +57,12 @@ def delete_turtleTag(turtleTag_id):
     return None
 
 #----------Update organization event name 
-def edit_turtleTag(turtleTagid, status):
-    turtleTag = TurtleTag.query.filter_by(id=turtleTagid).first()
-    if not turtleTag:
-        return ["No Turtle Injury found"]
-
-    turtleTag.status = status
-    db.session.add(turtleTag)
-    db.session.commit()
-    return turtleTag
+def edit_turtleTag(turtle_tag_id, turtle_id, location, status):
+    turtleTag = TurtleTag.query.filter_by(id=turtle_tag_id).first()
+    if turtleTag:
+        turtleTag.status = status
+        turtleTag.turtle_id = turtle_id
+        turtleTag.location = location
+        db.session.add(turtleTag)
+        db.session.commit()
+        return turtleTag

@@ -41,8 +41,11 @@ def get_turtle_action(turtleid):
     turtle = get_turtle(turtleid)
 
     if turtle:
-        return jsonify(turtle.toJSON()), 200
-        return jsonify(turtle.toJSON()), 200
+        return jsonify({
+            "turtle": turtle.toJSON(),
+            "tags": [tag.toJSON() for tag in turtle.tags],
+            "events": [event.toJSON() for event in turtle.events]
+        }), 200
 
     return jsonify({"error": "turtle not found"}), 404
 

@@ -4,8 +4,8 @@ from App.database import db
 import json
 
 #Create excavation object
-def create_excavation(nest_id):
-    newexcavation = Excavation(nest_id=nest_id)
+def create_excavation(nest_id, num_yolked, num_yolkless, timestamp_excavated, timestamp_reburied):
+    newexcavation = Excavation(nest_id=nest_id, num_yolked=num_yolked, num_yolkless=num_yolkless, timestamp_excavated=timestamp_excavated, timestamp_reburied=timestamp_reburied)
     db.session.add(newexcavation)
     db.session.commit()
     return newexcavation

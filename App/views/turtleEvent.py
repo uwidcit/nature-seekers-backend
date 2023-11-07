@@ -33,6 +33,7 @@ def create_turtleEvent_action():
     data = request.json
 
     username = get_jwt_identity() # convert sent token to user name
+    verified=False
     
     #retrieve regular user with given username
     citizen = Citizen.query.filter_by(username=username).first()
@@ -43,19 +44,17 @@ def create_turtleEvent_action():
     admin = Admin.query.filter_by(username=username).first()
     if admin:
         userId = admin.id
+        verified = True
 
     #retrieve organization user with given username
     org = Organization.query.filter_by(username=username).first()
     if org:
         userId = org.id
 
-    if(data["verified"]=="True"):
-        veri=True
-    else: veri=False
 
-    res = create_turtleEvent(turtle_id=data['turtle_id'],user_id= data['user_id'], beach_name=data['beach_name'], latitude=data['latitude'], longitude=data['longitude'], verified=veri, event_type=data["event_type"], isAlive=data["isAlive"])
+    res = create_turtleEvent(turtle_id=data['turtle_id'],user_id= userId, location_name=data['location_name'], latitude=data['latitude'], longitude=data['longitude'], verified=verified, event_type=data["event_type"], state=data["state"], timestamp=data['timestamp'])
     if res: 
-        return jsonify({'message': f"turtleEvent created"}), 201
+        return jsonify(res.toJSON()), 201
     return jsonify({'message': f"error creating turtleEvent"}), 401
 
 #get turtleEvent by turtleEvent id
